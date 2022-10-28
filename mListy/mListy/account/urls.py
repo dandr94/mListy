@@ -1,3 +1,7 @@
 from django.urls import path
 
-url_patterns = []
+from mListy.account.views import HomeViewNoProfile
+
+urlpatterns = [
+    path('', HomeViewNoProfile.as_view(), name='index')
+]
