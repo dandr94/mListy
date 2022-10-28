@@ -7,7 +7,7 @@ from mListy.account.managers import MovieListUserManager
 from mListy.account.validators import validate_only_letters_and_numbers, validate_only_letters
 
 
-class MovieListUser(AbstractBaseUser, PermissionsMixin):
+class mListyUser(AbstractBaseUser, PermissionsMixin):
     EMAIL_UNIQUE_ERROR_MESSAGE = 'This email is already in use.'
 
     email = models.EmailField(
@@ -93,7 +93,7 @@ class Profile(models.Model):
         null=True,
     )
 
-    user = models.OneToOneField(MovieListUser, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(mListyUser, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
         return self.username
