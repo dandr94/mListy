@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'mListy.account'
 ]
 
 MIDDLEWARE = [
@@ -50,20 +52,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mListy.wsgi.application'
 
-DATABASES = {}
+DEFAULT_DATABASE_CONFIG = {
+    'ENGINE': 'django.db.backends.postgresql',
+    'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+    'PORT': os.getenv('DB_PORT', '5432'),
+    'NAME': os.getenv('DB_NAME', 'mListy-db'),
+    'USER': os.getenv('DB_USER', 'postgres'),
+    'PASSWORD': os.getenv('DB_PASSWORD', '1123QwER'),
 
-if os.getenv('APP_ENVIRONMENT') != 'Development':
-    DATABASES['default'] = dj_database_url.config(conn_max_age=int(os.getenv('CONN_MAX_AGE')))
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': os.getenv('DB_ENGINE'),
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT'),
-        }
+}
+
+DATABASES = {
+        'default': DEFAULT_DATABASE_CONFIG
     }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -98,3 +98,4 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'account.mListyUser'
