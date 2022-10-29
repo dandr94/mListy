@@ -63,8 +63,8 @@ DEFAULT_DATABASE_CONFIG = {
 }
 
 DATABASES = {
-        'default': DEFAULT_DATABASE_CONFIG
-    }
+    'default': DEFAULT_DATABASE_CONFIG
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,3 +99,4 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.mListyUser'
+LOGOUT_REDIRECT_URL = 'index'
