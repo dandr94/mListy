@@ -7,13 +7,32 @@ from mListy.account.managers import mListyUserManager
 from mListy.account.validators import validate_only_letters_and_numbers, validate_only_letters
 
 
-User
-
 class mListyUser(AbstractBaseUser, PermissionsMixin):
+    USERNAME_MAX_LEN = 15
+    USERNAME_MIN_LEN = 2
+    USERNAME_UNIQUE_ERROR_MESSAGE = 'Username is not available'
+
+    EMAIL_UNIQUE_ERROR_MESSAGE = 'This email is already used'
+
+    username = models.CharField(
+        unique=True,
+        null=False,
+        blank=False,
+        max_length=USERNAME_MAX_LEN,
+        validators=[MinLengthValidator(USERNAME_MIN_LEN),
+                    validate_only_letters_and_numbers],
+        error_messages={
+            'unique': USERNAME_UNIQUE_ERROR_MESSAGE
+        }
+    )
+
     email = models.EmailField(
         unique=True,
         null=False,
-        blank=False
+        blank=False,
+        error_messages={
+            'unique': EMAIL_UNIQUE_ERROR_MESSAGE
+        }
 
     )
     date_joined = models.DateTimeField(
@@ -28,28 +47,19 @@ class mListyUser(AbstractBaseUser, PermissionsMixin):
         default=False
     )
 
-    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     objects = mListyUserManager()
 
 
 class Profile(models.Model):
-    USERNAME_MAX_CHAR = 15
-    USERNAME_MIN_CHAR = 2
-
     FIRST_NAME_MAX_CHAR = 15
     FIRST_NAME_MIN_CHAR = 2
 
     LAST_NAME_MAX_CHAR = 15
     LAST_NAME_MIN_CHAR = 2
-
-    username = models.CharField(
-        max_length=USERNAME_MAX_CHAR,
-        validators=[
-            MinLengthValidator(USERNAME_MIN_CHAR),
-            validate_only_letters_and_numbers,
-        ]
-    )
 
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_CHAR,
@@ -94,5 +104,8 @@ class Profile(models.Model):
 
     user = models.OneToOneField(mListyUser, on_delete=models.CASCADE, primary_key=True)
 
-    def __str__(self):
-        return self.username
+    def get_short_name(self):
+        return self.first_name
+
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
