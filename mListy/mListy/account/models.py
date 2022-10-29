@@ -1,17 +1,16 @@
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin, User
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-from mListy.account.managers import MovieListUserManager
+from mListy.account.managers import mListyUserManager
 from mListy.account.validators import validate_only_letters_and_numbers, validate_only_letters
 
 
-class mListyUser(AbstractBaseUser, PermissionsMixin):
-    EMAIL_UNIQUE_ERROR_MESSAGE = 'This email is already in use.'
+User
 
+class mListyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
-        error_messages={'required': EMAIL_UNIQUE_ERROR_MESSAGE},
         unique=True,
         null=False,
         blank=False
@@ -31,7 +30,7 @@ class mListyUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
-    objects = MovieListUserManager()
+    objects = mListyUserManager()
 
 
 class Profile(models.Model):
@@ -48,7 +47,7 @@ class Profile(models.Model):
         max_length=USERNAME_MAX_CHAR,
         validators=[
             MinLengthValidator(USERNAME_MIN_CHAR),
-            validate_only_letters_and_numbers
+            validate_only_letters_and_numbers,
         ]
     )
 
