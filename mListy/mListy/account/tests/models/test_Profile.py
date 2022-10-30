@@ -74,7 +74,6 @@ class ProfileTests(TestCase):
 
         self.assertIsNotNone(context.exception)
 
-
     # Profile last_name tests
 
     def test_profile_create__when_last_name_contains_only_letters_and_numbers__expect_success(self):
