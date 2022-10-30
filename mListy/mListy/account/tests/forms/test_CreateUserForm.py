@@ -58,6 +58,14 @@ class CreateUserFormTests(TestCase):
         response = self.__get_response(post_credentials)
         self.assertFormError(response, self.FORM, field_name_key, mListyUser.EMAIL_UNIQUE_ERROR_MESSAGE)
 
+    def test_email_without_at_symbol__should_return_correct_msg(self):
+        field_name_key = 'email'
+        post_credentials = {'email': 'foobar.barz'}
+        user = self.__create_user(**VALID_USER_CREDENTIALS)
+        response = self.__get_response(post_credentials)
+        expected_error_msg = 'Enter a valid email address.'
+        self.assertFormError(response, self.FORM, field_name_key, expected_error_msg)
+
     def test_password_does_not_match__should_return_correct_error_msg(self):
         field_name_key = 'password2'
         post_credentials = {'username': 'foobar',
@@ -65,5 +73,16 @@ class CreateUserFormTests(TestCase):
                             'password1': 'foobarbarz',
                             'password2': 'barz134foo'}
         expected_error_msg = 'The two password fields didn’t match.'
+        response = self.__get_response(post_credentials)
+        self.assertFormError(response, self.FORM, field_name_key, expected_error_msg)
+
+    def test_short_password__should_return_correct_error_msg(self):
+        field_name_key = 'password2'
+        post_credentials = {'username': 'foobar',
+                            'email': 'foo123@bar.barz',
+                            'password1': 'foo',
+                            'password2': 'foo'}
+
+        expected_error_msg = 'This password is too short. It must contain at least 8 characters.'
         response = self.__get_response(post_credentials)
         self.assertFormError(response, self.FORM, field_name_key, expected_error_msg)
