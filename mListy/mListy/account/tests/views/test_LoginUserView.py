@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase, RequestFactory
+from django.test import TestCase
 from mListy.account.tests.utils import VALID_LOGIN_CREDENTIALS, VALID_USER_CREDENTIALS
 
 UserModel = get_user_model()
@@ -7,7 +7,6 @@ UserModel = get_user_model()
 
 class LoginUserViewTests(TestCase):
     def setUp(self):
-        self.factory = RequestFactory()
         self.user = UserModel.objects.create_user(
             **VALID_USER_CREDENTIALS)
 
