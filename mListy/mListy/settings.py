@@ -4,7 +4,7 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'asdaslda(**$#*$Ufjdsfjsdfs')
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
@@ -18,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'mListy.account'
+    'mListy.account',
+    'coverage'
 ]
 
 MIDDLEWARE = [
