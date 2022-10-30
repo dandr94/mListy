@@ -14,17 +14,6 @@ class CreateUserForm(UserCreationForm):
         for field_name in self.FIELD_NAME_HELP_TEXT_TO_IGNORE:
             self.fields[field_name].help_text = None
 
-    def save(self, commit=True):
-        user = super().save(commit=commit)
-
-        profile = Profile(
-            user=user
-        )
-
-        if commit:
-            profile.save()
-        return user
-
     class Meta:
         model = UserModel
         fields = ['username', 'email', 'password1', 'password2']
