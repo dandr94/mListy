@@ -7,8 +7,8 @@ VALID_USER_CREDENTIALS = {
 VALID_REGISTER_FORM_CREDENTIALS = {
     'username': 'foobar',
     'email': 'foo@bar.barz',
-    'password1': 'foo123barz',
-    'password2': 'foo123barz'
+    'password1': 'foo123barz1337',
+    'password2': 'foo123barz1337'
 }
 
 VALID_LOGIN_CREDENTIALS = {
