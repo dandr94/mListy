@@ -12,7 +12,7 @@ class RegisterUserViewTests(TestCase):
     def test_correct_page_is_used(self):
         response = self.client.get(self.PATH)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(self.REGISTER_TEMPLATE)
+        self.assertTemplateUsed(response, self.REGISTER_TEMPLATE)
 
     def test_register_with_valid_credentials(self):
         self.client.post(self.PATH, data=VALID_REGISTER_FORM_CREDENTIALS)
