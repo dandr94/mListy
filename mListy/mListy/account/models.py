@@ -61,6 +61,8 @@ class Profile(models.Model):
     LAST_NAME_MAX_CHAR = 15
     LAST_NAME_MIN_CHAR = 2
 
+    SLUG_MAX_CHAR = 15
+
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_CHAR,
         blank=True,
@@ -81,6 +83,8 @@ class Profile(models.Model):
             validate_only_letters
         ]
     )
+
+    slug = models.SlugField(max_length=SLUG_MAX_CHAR, blank=True, null=True)
 
     website = models.URLField(
         blank=True,
