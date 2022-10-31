@@ -26,6 +26,6 @@ class RegisterUserViewTests(TestCase):
     def test_redirect_after_valid_register(self):
         response = self.client.post(self.PATH, data=VALID_REGISTER_FORM_CREDENTIALS)
 
-        expected_url = '/'
+        expected_url = '/dashboard/'
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, expected_url)
