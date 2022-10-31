@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from mListy.account.tests.utils import VALID_LOGIN_CREDENTIALS, VALID_USER_CREDENTIALS
+from mListy.account.tests.utils import VALID_USER_CREDENTIALS
 from mListy.account.models import Profile
 
 UserModel = get_user_model()
