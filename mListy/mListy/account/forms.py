@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.utils.text import slugify
 
 from mListy.account.models import Profile
 
@@ -13,6 +14,18 @@ class CreateUserForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         for field_name in self.FIELD_NAME_HELP_TEXT_TO_IGNORE:
             self.fields[field_name].help_text = None
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+
+        profile = Profile(
+            slug=slugify(user.username),
+            user=user
+        )
+
+        if commit:
+            profile.save()
+        return user
 
     class Meta:
         model = UserModel
