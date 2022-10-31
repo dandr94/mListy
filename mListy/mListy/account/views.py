@@ -34,9 +34,6 @@ class LogoutUserView(LogoutView):
     pass
 
 
-UserModel = get_user_model()
-
-
 class ProfileDetailsView(DetailView):
     model = Profile
     template_name = 'account/profile_details.html'
@@ -45,5 +42,4 @@ class ProfileDetailsView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_owner'] = self.object.user_id == self.request.user.id
-        context['owner'] = UserModel.objects.get(username=self.object.slug)
         return context
