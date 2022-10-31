@@ -21,6 +21,12 @@ class List(models.Model):
 
     )
 
+    date_created = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    last_updated = models.DateTimeField(auto_now=True)
+
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE
