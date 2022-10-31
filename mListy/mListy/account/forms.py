@@ -19,7 +19,6 @@ class CreateUserForm(UserCreationForm):
         user = super().save(commit=commit)
 
         profile = Profile(
-            slug=slugify(user.username),
             user=user
         )
 
