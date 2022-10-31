@@ -9,7 +9,7 @@ UserModel = get_user_model()
 
 class LoginUserViewTests(TestCase):
     PATH = '/login/'
-    REDIRECT_TEMPLATE = 'index.html'
+    REDIRECT_TEMPLATE = 'dashboard.html'
 
     def setUp(self):
         self.user = UserModel.objects.create_user(
