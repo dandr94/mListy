@@ -1,9 +1,24 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
+
+from mListy.list.models import List
 
 
 class HomeViewNoProfile(TemplateView):
     template_name = 'index.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('dashboard')
 
-class Dashboard(ListView):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class Dashboard(LoginRequiredMixin, ListView):
     template_name = 'dashboard.html'
+    context_object_name = 'lists'
+
+    def get_queryset(self):
+        queryset = List.objects.filter(user=self.request.user)
+        return queryset
