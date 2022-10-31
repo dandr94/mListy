@@ -1,7 +1,11 @@
+from django.contrib.auth import get_user_model
+
+from mListy.account.models import Profile
+
 VALID_USER_CREDENTIALS = {
     'username': 'foobar',
     'email': 'foo@bar.barz',
-    'password': 'foo123barz'
+    'password': 'foo123barz1337'
 }
 
 VALID_REGISTER_FORM_CREDENTIALS = {
@@ -13,5 +17,14 @@ VALID_REGISTER_FORM_CREDENTIALS = {
 
 VALID_LOGIN_CREDENTIALS = {
     'username': 'foobar',
-    'password': 'foo123barz'
+    'password': 'foo123barz1337'
+}
+
+VALID_PROFILE_META_DATA = {
+    'first_name': 'foo',
+    'last_name': 'bar',
+    'website': 'www.foo@bar.barz',
+    'twitter': 'www.twitter.com/foobar',
+    'instagram': 'www.instagram.com/foobar',
+    'facebook': 'www.facebook.com/foobar',
 }
