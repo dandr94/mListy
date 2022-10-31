@@ -113,3 +113,9 @@ class Profile(models.Model):
 
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.user.username
+
+        return super().save(*args, **kwargs)
