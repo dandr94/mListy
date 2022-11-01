@@ -1,10 +1,56 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+    <title>{% block page_title %} {% endblock %}</title>
 </head>
-<body>
+<body class="body-content">
+<header class="header-content">
+    <article class="header-logo">
+        <h1 class="header-logo-title">
+            <a href="/">mListy</a>
+        </h1>
+    </article>
+    <nav class="header-nav">
+        <ul class="header-nav-items">
+            {% if not request.user.is_authenticated %}
+            <li class="header-nav-item">
+                <a href="{% url 'login' %}">Login</a>
+            </li>
+            {% else %}
+                <li class="header-nav-item">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </li>
+                <li class="header-nav-item">
+                    <a href="{% url 'create list' %}">Create List</a>
+                </li>
+                <li class="header-nav-item">
+                    <a href="{% url 'profile details' user.profile.slug %}">Profile</a>
+            {% endif %}
+            <li class="header-nav-item">
+                <button id="switch" onclick="toggleTheme()"></button>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main-content">
+    {% block page_content %}
 
+    {% endblock %}
+</main>
+<footer class="footer-content">
+    <ul class="footer-items">
+        <li class="footer-item">
+            <p class="footer-item-text">
+                &copy; dandr94
+            </p>
+        </li>
+    </ul>
+</footer>
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
