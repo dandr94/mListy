@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block page_title %} Create List{% endblock %}
+
+{% block page_content %}
+     <form method="POST" action="{% url 'create list' %}" class="sign__form">
+        {% csrf_token %}
+        {{ form }}
+        <button class="sign__btn" type="submit">Create</button>
+    </form>
+
+{% endblock %}
