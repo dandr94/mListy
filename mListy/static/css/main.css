@@ -1,0 +1,104 @@
+@import url("reset.css");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css");
+
+:root {
+    ---dark-color: rgba(0, 0, 0, 0.2);
+    ---section-padding: 100px 0px 40px 0px;
+    ---border-color: #FFD075;
+    ---text-margin-bottom: 15px;
+    ---card-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    ---polygon: polygon(0 0, 100% 0, 100% 100%, 0 90%);
+
+}
+
+/* Themes */
+.light-theme {
+    ---text-color: black;
+    ---title-color: #FFD075;
+    ---bg-color: #ffff;
+    ---bg-switch-btn: #1a1a1a;
+    ---text-color-switch-btn: #e1dee1;
+}
+
+.dark-theme {
+    ---text-color: #e1dee1;
+    ---title-color: #FFD075;
+    ---bg-color: #1A191F;
+    ---bg-switch-btn: #ffff;
+    ---text-color-switch-btn: #black;
+
+}
+
+
+html {
+    background: var(---bg-color);
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    border: 1px solid var(---border-color);
+}
+
+/* Header content */
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 250px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo-title a {
+    text-decoration: none;
+    font-size: 36px;
+    padding-right: 15px;
+    color: var(---title-color);
+}
+
+.header-nav-items {
+    display: flex;
+}
+
+.header-nav-item {
+    list-style: none;
+    padding: 18px 36px;
+    margin: 0 5px;
+}
+
+.header-nav-item a {
+    color: var(---text-color);
+    text-decoration: none;
+    margin-right: 50px;
+}
+
+.header-nav-item a:last-child {
+    margin-right: 0;
+}
+
+.header-nav-item a:hover {
+    background: var(---title-color);
+    padding: 15px;
+    transition: all 0.3s;
+
+}
+
+#switch {
+    color: var(---text-color);
+    padding: 5px 10px;
+    background: transparent;
+    cursor: pointer;
+    border: 1px solid var(---border-color);
+    border-radius: 15px;
+}
+
+#switch:hover {
+    background: var(---bg-switch-btn);
+    color: var(---text-color-switch-btn);
+}
