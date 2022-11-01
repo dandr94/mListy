@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block page_title %} Register {% endblock %}
+{% block page_content %}
+    <form method="POST" action="{% url 'login' %}" class="sign__form">
+        {% csrf_token %}
+        {{ form }}
+        <button class="sign__btn" type="submit">Log in</button>
+        <span class="sign__text">Don't have an account? <a href="{% url 'register' %}">Register!</a></span>
+    </form>
+{% endblock %}
