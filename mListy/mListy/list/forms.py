@@ -1,6 +1,5 @@
 from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 from django.forms import ModelForm
-from django.utils.text import slugify
 
 from mListy.list.models import List
 
@@ -50,3 +49,16 @@ class EditListForm(ModelForm):
     class Meta:
         model = List
         exclude = ['user', 'slug']
+
+
+class DeleteListForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        self.instance.delete()
+        return self.instance
+
+    class Meta:
+        model = List
+        fields = []
