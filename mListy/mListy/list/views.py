@@ -1,9 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from mListy.account.mixins import PermissionHandlerMixin
-from mListy.list.forms import CreateListForm, EditListForm
+from mListy.list.forms import CreateListForm, EditListForm, DeleteListForm
 from mListy.list.models import List
 
 
@@ -24,3 +24,9 @@ class EditListView(LoginRequiredMixin, PermissionHandlerMixin, UpdateView):
     form_class = EditListForm
     success_url = reverse_lazy('dashboard')
 
+
+class DeleteListView(DeleteView):
+    template_name = 'list/delete_list.html'
+    form_class = DeleteListForm
+    model = List
+    success_url = reverse_lazy('dashboard')
