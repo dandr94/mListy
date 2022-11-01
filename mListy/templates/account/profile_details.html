@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block page_title %} Profile {% endblock %}
+{% block page_content %}
+    {% if is_owner %}
+    <p>Hello owner</p>
+    {% endif %}
+    <h1>Username: {{ profile.user.username }}</h1>
+    <ul>
+        <li>First name: {{ profile.first_name }}</li>
+        <li>Last name: {{ profile.last_name }}</li>
+        <li>Website: {{ profile.website }}</li>
+        <li>Twitter: {{ profile.twitter|default_if_none:'' }}</li>
+        <li>Instagram: {{ profile.instagram }}</li>
+        <li>Facebook: {{ profile.facebook }}</li>
+
+    </ul>
+{% endblock %}
