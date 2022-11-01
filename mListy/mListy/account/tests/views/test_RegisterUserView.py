@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from mListy.account.tests.utils import VALID_REGISTER_FORM_CREDENTIALS, VALID_USER_CREDENTIALS
+from mListy.account.tests.utils import VALID_REGISTER_FORM_CREDENTIALS
 
 UserModel = get_user_model()
 
