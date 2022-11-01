@@ -2,5 +2,9 @@
 {% block page_title %} Edit - FIX THIS {% endblock %}
 
 {% block page_content %}
-
+    <form method="POST" action="{% url 'edit list' list.slug %}" class="sign__form">
+        {% csrf_token %}
+        {{ form }}
+        <button class="sign__btn" type="submit">Submit</button>
+    </form>
 {% endblock %}
