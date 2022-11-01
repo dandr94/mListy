@@ -1,6 +1,7 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 
 UserModel = get_user_model()
 
@@ -21,6 +22,8 @@ class List(models.Model):
 
     )
 
+    slug = models.SlugField(blank=True, null=True)
+
     date_created = models.DateTimeField(
         auto_now_add=True
     )
@@ -31,6 +34,12 @@ class List(models.Model):
         UserModel,
         on_delete=models.CASCADE
     )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+
+        return super().save(*args, **kwargs)
 
     class Meta:
         unique_together = (('title', 'user'),)
