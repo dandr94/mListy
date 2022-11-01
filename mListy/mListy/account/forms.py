@@ -1,7 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.utils.text import slugify
-
 from mListy.account.models import Profile
 
 UserModel = get_user_model()
