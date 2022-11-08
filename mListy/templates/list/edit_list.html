@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block page_title %} Edit - FIX THIS {% endblock %}
+{% block page_title %} Edit {{ list.title }} {% endblock %}
 
 {% block page_content %}
     <form method="POST" action="{% url 'edit list' list.slug %}" class="sign__form">
