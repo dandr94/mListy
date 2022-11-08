@@ -9,9 +9,13 @@
     {% else %}
         {% for list in lists %}
             <ul>
-                <li>List name: {{ list.title }}</li>
+                <li>List name:{{ list.title }} </li>
+                <li>Slug: {{ list.slug }}</li>
                 <li>List created: {{ list.date_created }}</li>
                 <li>List last updated: {{ list.last_updated }}</li>
+                <li><a href="{% url 'edit list' list.slug %}">EDIT</a>
+                <li><a href="{% url 'delete list' list.slug %}">Delete</a>
+                </li>
             </ul>
         {% endfor %}
     {% endif %}
