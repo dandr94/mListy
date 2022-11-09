@@ -20,6 +20,7 @@ INSTALLED_APPS = [
 
     'mListy.account',
     'mListy.list',
+    'mListy.movie',
     'coverage'
 ]
 
