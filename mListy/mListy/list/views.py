@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from mListy.account.mixins import PermissionHandlerMixin
 from mListy.list.forms import CreateListForm, EditListForm, DeleteListForm
-from mListy.list.models import List
+from mListy.list.models import List, ListEntry
 
 
 class CreateListView(LoginRequiredMixin, CreateView):
@@ -30,3 +30,13 @@ class DeleteListView(DeleteView):
     form_class = DeleteListForm
     model = List
     success_url = reverse_lazy('dashboard')
+
+
+class DetailsListView(ListView):
+    model = ListEntry
+    template_name = 'list/list_details.html'
+    context_object_name = 'movie_list'
+
+    def get_queryset(self):
+        queryset = ListEntry.objects.filter(list__slug=self.kwargs['slug'])
+        return queryset
