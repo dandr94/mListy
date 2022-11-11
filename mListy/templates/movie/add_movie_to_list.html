@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block page_title %} Add Movie - 555 {% endblock %}
+
+{% block page_content %}
+    <form method="POST" action="{% url 'add movie to list' movie_slug %}" class="sign__form">
+        {% csrf_token %}
+        {{ form }}
+        <button class="sign__btn" type="submit">Add</button>
+    </form>
+
+{% endblock %}
