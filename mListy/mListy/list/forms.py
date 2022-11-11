@@ -1,4 +1,4 @@
-from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
 from mListy.list.models import List
