@@ -86,7 +86,7 @@ class MovieDB(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(str(self.movie_id) + '-' + self.name)
 
         return super().save(*args, **kwargs)
 
