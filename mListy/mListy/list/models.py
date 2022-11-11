@@ -111,7 +111,7 @@ class ListEntry(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.movie_name)
+            self.slug = slugify(str(self.movie_id) + '-' + self.movie_name)
 
         return super().save(*args, **kwargs)
 
