@@ -11,4 +11,5 @@
     <p>Movie name: {{ movie.budget }}</p>
     <p>Movie name: {{ movie.production_companies }}</p>
     <p>Movie name: {{ movie.duration }}</p>
+    <a href="{% url 'add movie to list' movie.slug %}">ADD</a>
 {% endblock %}
