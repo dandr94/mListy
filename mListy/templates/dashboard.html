@@ -13,9 +13,9 @@
                 <li>Slug: {{ list.slug }}</li>
                 <li>List created: {{ list.date_created }}</li>
                 <li>List last updated: {{ list.last_updated }}</li>
-                <li><a href="{% url 'details list' list.slug %}">DETAILS</a></li>
-                <li><a href="{% url 'edit list' list.slug %}">EDIT</a>
-                <li><a href="{% url 'delete list' list.slug %}">Delete</a>
+                <li><a href="{% url 'details list' user list.slug %}">DETAILS</a></li>
+                <li><a href="{% url 'edit list' user list.slug %}">EDIT</a>
+                <li><a href="{% url 'delete list' user list.slug %}">Delete</a>
                 </li>
             </ul>
         {% endfor %}
