@@ -7,6 +7,7 @@
     {% for movie in movie_list %}
         <p>Movie name: {{ movie.movie_name }}</p>
         <p>Would Recommend: {{ movie.would_recommend }}</p>
+        <p>Grade: {{ movie.grade }}</p>
         <p><a href="{% url 'details movie' movie.slug %}">DETAILS</a></p>
     {% endfor %}
 {% endblock %}
