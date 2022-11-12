@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.urls import reverse
+
 from mListy.account.tests.utils import VALID_USER_CREDENTIALS, VALID_LOGIN_CREDENTIALS
 
 from mListy.account.models import Profile
@@ -18,8 +20,6 @@ class CreateListFormTests(TestCase):
     }
 
     VALID_TITLE_NAME = 'Drama'
-
-    PATH = '/list/edit/'
     FORM = 'form'
 
     def setUp(self):
@@ -31,9 +31,10 @@ class CreateListFormTests(TestCase):
         self.client.login(**VALID_LOGIN_CREDENTIALS)
         self.list = List(title=self.VALID_TITLE_NAME, user=self.user)
         self.list.save()
+        self.path = reverse('edit list', kwargs={'str': self.user.username, 'slug': self.list.slug})
 
     def __get_response(self, credentials):
-        return self.client.post(self.PATH + self.list.slug + '/', credentials)
+        return self.client.post(self.path, credentials)
 
     def test_empty_title_field__should_return_correct_error_msg(self):
         field_name_key = 'title'
