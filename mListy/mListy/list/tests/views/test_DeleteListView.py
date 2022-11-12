@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.urls import reverse
+
 from mListy.account.tests.utils import VALID_USER_CREDENTIALS, VALID_LOGIN_CREDENTIALS
 
 from mListy.account.models import Profile
@@ -16,7 +18,6 @@ class CreateListFormTests(TestCase):
 
     VALID_TITLE_NAME = 'Drama'
 
-    PATH = '/list/delete/'
     FORM = 'form'
 
     def setUp(self):
@@ -28,12 +29,13 @@ class CreateListFormTests(TestCase):
         self.client.login(**VALID_LOGIN_CREDENTIALS)
         self.list = List(title=self.VALID_TITLE_NAME, user=self.user)
         self.list.save()
+        self.path = reverse('delete list', kwargs={'str': self.user.username, 'slug': self.list.slug})
 
     def __get_post_response(self, credentials):
-        return self.client.post(self.PATH + self.list.slug + '/', args=credentials)
+        return self.client.post(self.path, args=credentials)
 
     def __get_get_response(self):
-        return self.client.get(self.PATH + self.list.slug + '/')
+        return self.client.get(self.path)
 
     def test_correct_template_is_used(self):
         response = self.__get_get_response()
