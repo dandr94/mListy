@@ -37,8 +37,6 @@ class List(models.Model):
         on_delete=models.CASCADE
     )
 
-    movie_list = models.ManyToManyField(MovieDB)
-
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
