@@ -2,7 +2,7 @@
 {% block page_title %} Delete {{ list.title }} {% endblock %}
 
 {% block page_content %}
-    <form method="POST" action="{% url 'delete list' list.slug %}" class="sign__form">
+    <form method="POST" action="{% url 'delete list' user.username list.slug %}" class="sign__form">
         {% csrf_token %}
         <h3>Delete {{ list.title }}?</h3>
         {{ form }}
