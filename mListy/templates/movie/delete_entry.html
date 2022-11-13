@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block page_title %} Delete {{ list.title }} {% endblock %}
+
+{% block page_content %}
+    <form method="POST" action="{% url 'delete entry' entry.pk entry.slug %}" class="sign__form">
+        {% csrf_token %}
+        <h3>Delete {{ entry.movie_name }} from {{ entry.list }}?</h3>
+        {{ form }}
+        <button type="submit">Delete</button>
+    </form>
+{% endblock %}
