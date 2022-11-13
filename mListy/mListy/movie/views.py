@@ -2,13 +2,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from mListy.list.models import List, ListEntry
-from mListy.movie.forms import AddMovieToListForm, EditListEntryForm, DeleteListEntryForm
+from mListy.movie.forms import AddListEntryForm, EditListEntryForm, DeleteListEntryForm
 from mListy.movie.models import MovieDB
 
 
 class AddListEntryView(CreateView):
-    template_name = 'movie/add_movie_to_list.html'
-    form_class = AddMovieToListForm
+    template_name = 'movie/add_entry.html'
+    form_class = AddListEntryForm
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
