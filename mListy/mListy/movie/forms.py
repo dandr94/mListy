@@ -1,9 +1,10 @@
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
 from mListy.list.models import ListEntry
 
 
-class AddMovieToListForm(ModelForm):
+class AddListEntryForm(ModelForm):
     def __init__(self, user, user_lists, movie, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
@@ -24,6 +25,14 @@ class AddMovieToListForm(ModelForm):
             entry.save()
 
         return entry
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        user_list = cleaned_data.get('list')
+
+        if ListEntry.objects.filter(slug=self.movie.slug, user_id=self.user.pk).exists():
+            raise ValidationError(f'{self.movie.name} is already in {user_list}.')
 
     class Meta:
         model = ListEntry
