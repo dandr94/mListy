@@ -28,3 +28,27 @@ class AddMovieToListForm(ModelForm):
     class Meta:
         model = ListEntry
         fields = ['grade', 'list', 'would_recommend']
+
+
+class EditListEntryForm(ModelForm):
+    def __init__(self, user_lists, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = self.instance.user
+        self.fields['list'].queryset = user_lists
+
+    class Meta:
+        model = ListEntry
+        fields = ['grade', 'list', 'would_recommend']
+
+
+class DeleteListEntryForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        self.instance.delete()
+        return self.instance
+
+    class Meta:
+        model = ListEntry
+        fields = []
