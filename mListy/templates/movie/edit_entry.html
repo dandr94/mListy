@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block page_title %} Edit {% endblock %}
+
+{% block page_content %}
+    <form method="POST" action="{% url 'edit entry' entry.pk entry.slug %}" class="sign__form">
+        <h1>{{ entry.movie_name }}</h1>
+        {% csrf_token %}
+        {{ form }}
+        <button class="sign__btn" type="submit">Edit</button>
+    </form>
+
+{% endblock %}
