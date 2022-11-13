@@ -1,7 +1,3 @@
-from django.contrib.auth import get_user_model
-
-from mListy.account.models import Profile
-
 VALID_USER_CREDENTIALS = {
     'username': 'foobar',
     'email': 'foo@bar.barz',
