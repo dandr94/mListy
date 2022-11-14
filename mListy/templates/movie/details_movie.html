@@ -3,13 +3,15 @@
 
 {% block page_content %}
     <p>Movie name: {{ movie.name }}</p>
-    <p>Movie name: {{ movie.description }}</p>
-    <p>Movie name: {{ movie.release_date }}</p>
-    <p>Movie name: {{ movie.actors }}</p>
-    <p>Movie name: {{ movie.roles }}</p>
-    <p>Movie name: {{ movie.average_grade }}</p>
-    <p>Movie name: {{ movie.budget }}</p>
-    <p>Movie name: {{ movie.production_companies }}</p>
-    <p>Movie name: {{ movie.duration }}</p>
+    <p>Movie description: {{ movie.description }}</p>
+    <p>Movie release_date: {{ movie.release_date }}</p>
+    <p>Movie actors: {{ movie.actors }}</p>
+    <p>Movie roles: {{ movie.roles }}</p>
+    <p>Movie average_grade: {{ movie.average_grade }}</p>
+    <p>Movie budget: {{ movie.budget }}</p>
+    <p>Movie production_companies: {{ movie.production_companies }}</p>
+    <p>Movie duration: {{ movie.duration }}</p>
+    <p>Movie imdb: {{ movie.imdb_link }}</p>
+
     <a href="{% url 'add entry' movie.slug %}">ADD</a>
 {% endblock %}
