@@ -105,3 +105,5 @@ AUTH_USER_MODEL = 'account.mListyUser'
 LOGOUT_REDIRECT_URL = 'index'
 
 CSRF_TRUSTED_ORIGINS = ['*.http://127.0.0.1/']
+
+TMDB_API_KEY = os.getenv('TMDB_API_KEY')
