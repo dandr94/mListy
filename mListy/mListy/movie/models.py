@@ -13,6 +13,7 @@ class MovieDB(models.Model):
     PRODUCTION_COMPANIES_MAX_CHAR = 1000
     LANGUAGE_MAX_CHAR = 10
     STATUS_MAX_CHAR = 100
+    SLUG_MAX_CHAR = 255
 
     movie_id = models.IntegerField(
         unique=True
@@ -101,7 +102,11 @@ class MovieDB(models.Model):
         auto_now=True
     )
 
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField(
+        max_length=SLUG_MAX_CHAR,
+        blank=True,
+        null=True
+    )
 
     def save(self, *args, **kwargs):
         if not self.slug:
