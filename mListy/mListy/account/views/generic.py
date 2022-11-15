@@ -20,5 +20,5 @@ class Dashboard(LoginRequiredMixin, ListView):
     context_object_name = 'lists'
 
     def get_queryset(self):
-        queryset = List.objects.filter(user=self.request.user)
+        queryset = List.objects.filter(user=self.request.user).order_by('date_created')
         return queryset
