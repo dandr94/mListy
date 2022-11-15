@@ -1,16 +1,17 @@
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
-
+from mListy.movie.mixins import CssStyleFormMixin
 from mListy.list.models import List
 
 UNIQUE_TITLE_ERROR_MESSAGE = 'You already have a list with that title. Please choose another.'
 
 
-class CreateListForm(ModelForm):
+class CreateListForm(ModelForm, CssStyleFormMixin):
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
+        self._init_css_style_form_controls()
 
     def save(self, commit=True):
         user_list = super().save(commit=False)
@@ -34,9 +35,10 @@ class CreateListForm(ModelForm):
         fields = ['title', 'cover']
 
 
-class EditListForm(ModelForm):
+class EditListForm(ModelForm, CssStyleFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._init_css_style_form_controls()
 
     def clean(self):
         cleaned_data = super().clean()
@@ -51,9 +53,10 @@ class EditListForm(ModelForm):
         exclude = ['user', 'slug']
 
 
-class DeleteListForm(ModelForm):
+class DeleteListForm(ModelForm, CssStyleFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._init_css_style_form_controls()
 
     def save(self, commit=True):
         self.instance.delete()
