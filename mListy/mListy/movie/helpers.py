@@ -1,11 +1,20 @@
-from django.core.exceptions import ObjectDoesNotExist
+import requests
 import tmdbsimple as tmdb
+from django.core.exceptions import ObjectDoesNotExist
+
 from mListy.movie.models import MovieDB
+from mListy.settings import YOUTUBE_SEARCH_API_KEY
 
 TMDB_IMG_PATH = 'https://image.tmdb.org/t/p/w500/'
 IMDB_PATH = 'https://www.imdb.com/title/'
 IMG_NOT_FOUND = 'https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png'
 NOT_AVAILABLE = 'N/A'
+YOUTUBE_SEARCH_PATH = 'https://www.googleapis.com/youtube/v3/search'
+YOUTUBE_BASIC_PATH = 'https://www.youtube.com/watch?v='
+YOUTUBE_ADDITIONAL_QUERY_SEARCH_WORD = 'trailer hd'
+YOUTUBE_MAX_RESULT_PAGES = 1
+YOUTUBE_SEARCH_TYPE = 'video'
+YOUTUBE_API_KEY = YOUTUBE_SEARCH_API_KEY
 
 
 def check_if_in_db(movie_id: int) -> object:
@@ -65,3 +74,23 @@ def return_list_with_additional_stats(user_lists: list, entries: list) -> dict:
             data[l]['average_grade'] = 0
 
     return data
+
+
+def return_youtube_trailer(movie_name: str, release_date: str) -> str:
+    search_url: str = YOUTUBE_SEARCH_PATH
+    basic_path: str = YOUTUBE_BASIC_PATH
+    query_params: str = movie_name + " " + release_date + " " + YOUTUBE_ADDITIONAL_QUERY_SEARCH_WORD
+
+    search_params = {
+        'part': 'snippet',
+        'q': query_params,
+        'key': YOUTUBE_API_KEY,
+        'maxResults': YOUTUBE_MAX_RESULT_PAGES,
+        'type': YOUTUBE_SEARCH_TYPE,
+        'definition': 'hd',
+    }
+
+    search_result = requests.get(search_url, params=search_params)
+    json_result = search_result.json()['items']
+    for result in json_result:
+        return basic_path + result['id']['videoId']
