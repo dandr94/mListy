@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView, ListView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from mListy.list.models import List, ListEntry
 from mListy.movie.forms import AddListEntryForm, EditListEntryForm, DeleteListEntryForm
 from mListy.movie.helpers import check_if_in_db, add_movie_to_db
