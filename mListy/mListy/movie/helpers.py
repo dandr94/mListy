@@ -43,3 +43,25 @@ def add_movie_to_db(movie_id: int):
     }
 
     MovieDB(**data).save()
+
+
+def return_list_with_additional_stats(user_lists: list, entries: list) -> dict:
+    data: dict = {}
+
+    for l in user_lists:
+        data[l] = {'average_grade': "", 'total_movies': 0}
+        grades = 0
+        total_movies = 0
+        for e in entries:
+            if e.list.id == l.id:
+                grades += e.grade
+                total_movies += 1
+
+        if total_movies:
+            data[l]['total_movies'] += total_movies
+            data[l]['average_grade'] = f'{grades / total_movies:.2f}'
+        else:
+            data[l]['total_movies'] = 0
+            data[l]['average_grade'] = 0
+
+    return data
