@@ -38,5 +38,14 @@ class DetailsListView(ListView):
     context_object_name = 'movie_list'
 
     def get_queryset(self):
-        queryset = ListEntry.objects.filter(list__slug=self.kwargs['slug'])
+        queryset = ListEntry.objects.filter(list__slug=self.kwargs['slug']).order_by('-grade')
+
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_time_minutes'] = sum([movie.movie.duration for movie in context['movie_list']])
+        context['total_time_hours'] = context['total_time_minutes'] / 60
+        context['total_time_days'] = context['total_time_hours'] / 24
+        context['average_grade'] = sum([movie.grade for movie in context['movie_list']]) // len(context['movie_list'])
+        return context
