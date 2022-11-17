@@ -1,5 +1,9 @@
-from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, UpdateView
 
+from mListy.account.forms import EditListForm
+from mListy.account.mixins import PermissionHandlerMixin
 from mListy.account.models import Profile
 from mListy.list.models import List, ListEntry
 from mListy.movie.helpers import return_list_with_additional_stats
@@ -7,7 +11,7 @@ from mListy.movie.helpers import return_list_with_additional_stats
 
 class ProfileDetailsView(DetailView):
     model = Profile
-    template_name = 'account/profile_details.html'
+    template_name = 'account/details_profile.html'
     context_object_name = 'profile'
 
     def get_context_data(self, **kwargs):
@@ -19,3 +23,12 @@ class ProfileDetailsView(DetailView):
         context['user_lists_dict'] = return_list_with_additional_stats(context['user_lists'], context['entries'])
 
         return context
+
+
+class EditProfileView(LoginRequiredMixin, PermissionHandlerMixin, UpdateView):
+    model = Profile
+    template_name = 'account/edit_profile.html'
+    form_class = EditListForm
+
+    def get_success_url(self):
+        return reverse_lazy('details profile', kwargs={'slug': self.object.slug})
