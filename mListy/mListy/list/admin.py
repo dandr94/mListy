@@ -10,4 +10,5 @@ class List(admin.ModelAdmin):
 
 @admin.register(ListEntry)
 class ListEntry(admin.ModelAdmin):
-    list_display = ['movie_id', 'movie_name', 'grade', 'would_recommend', 'user', 'list']
+    list_display = ['grade', 'would_recommend', 'list']
+
