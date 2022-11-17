@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView
 
-from mListy.account.forms import EditListForm
+from mListy.account.forms import EditListForm, ChangePasswordForm
 from mListy.account.mixins import PermissionHandlerMixin
 from mListy.account.models import Profile
 from mListy.list.models import List, ListEntry
@@ -32,3 +33,9 @@ class EditProfileView(LoginRequiredMixin, PermissionHandlerMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('details profile', kwargs={'slug': self.object.slug})
+
+
+class ChangeUserPasswordView(LoginRequiredMixin, PasswordChangeView):
+    form_class = ChangePasswordForm
+    template_name = 'account/change_password.html'
+    success_url = reverse_lazy('dashboard')
