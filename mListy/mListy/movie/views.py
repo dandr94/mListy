@@ -5,7 +5,7 @@ from django.utils.text import slugify
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from mListy.list.models import List, ListEntry
 from mListy.movie.forms import AddListEntryForm, EditListEntryForm, DeleteListEntryForm
-from mListy.movie.helpers import check_if_in_db, add_movie_to_db
+from mListy.movie.helpers import check_if_in_db, add_movie_to_db, return_youtube_trailer
 from mListy.movie.models import MovieDB
 import tmdbsimple as tmdb
 
@@ -68,6 +68,11 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
             add_movie_to_db(movie_id)
         kwargs['movie'] = exists
         return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['youtube_trailer'] = return_youtube_trailer(context['movie'].name, str(context['movie'].release_date.year))
+        return context
 
 
 class SearchMovieView(LoginRequiredMixin, ListView):
