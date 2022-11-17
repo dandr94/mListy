@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from mListy.account.models import Profile
 from mListy.movie.mixins import CssStyleFormMixin
-
+from django.forms import ModelForm
 UserModel = get_user_model()
 
 
@@ -39,3 +39,14 @@ class LoginAccountForm(AuthenticationForm, CssStyleFormMixin):
     class Meta:
         model = UserModel
         fields = ['username', 'password']
+
+
+class EditListForm(CssStyleFormMixin, ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_css_style_form_controls()
+
+    class Meta:
+        model = Profile
+        fields = '__all__'
+        exclude = ['slug', 'user']
