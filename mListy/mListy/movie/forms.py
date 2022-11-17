@@ -1,12 +1,15 @@
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
+from django.utils.text import slugify
 
+from mListy.movie.mixins import CssStyleFormMixin
 from mListy.list.models import ListEntry
 
 
-class AddListEntryForm(ModelForm):
+class AddListEntryForm(ModelForm, CssStyleFormMixin):
     def __init__(self, user, user_lists, movie, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._init_css_style_form_controls()
         self.user = user
         self.user_lists = user_lists
         self.movie = movie
@@ -14,9 +17,7 @@ class AddListEntryForm(ModelForm):
 
     def save(self, commit=True):
         entry = super().save(commit=False)
-        entry.movie_id = self.movie.movie_id
-        entry.movie_name = self.movie.name
-        entry.user = self.user
+        entry.movie = self.movie
         entry.would_recommend = self.cleaned_data['would_recommend']
         entry.grade = self.cleaned_data['grade']
         entry.list = self.cleaned_data['list']
@@ -31,28 +32,31 @@ class AddListEntryForm(ModelForm):
 
         user_list = cleaned_data.get('list')
 
-        if ListEntry.objects.filter(slug=self.movie.slug, user_id=self.user.pk).exists():
+        exists = ListEntry.objects.filter(movie_id=self.movie.id, list_id=user_list.id).exists()
+
+        if exists:
             raise ValidationError(f'{self.movie.name} is already in {user_list}.')
 
     class Meta:
         model = ListEntry
-        fields = ['grade', 'list', 'would_recommend']
+        fields = ['grade', 'list', 'would_recommend', 'status']
 
 
-class EditListEntryForm(ModelForm):
+class EditListEntryForm(ModelForm, CssStyleFormMixin):
     def __init__(self, user_lists, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.user = self.instance.user
+        self._init_css_style_form_controls()
         self.fields['list'].queryset = user_lists
 
     class Meta:
         model = ListEntry
-        fields = ['grade', 'list', 'would_recommend']
+        fields = ['grade', 'list', 'would_recommend', 'status']
 
 
-class DeleteListEntryForm(ModelForm):
+class DeleteListEntryForm(ModelForm, CssStyleFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._init_css_style_form_controls()
 
     def save(self, commit=True):
         self.instance.delete()
