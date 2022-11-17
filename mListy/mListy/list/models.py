@@ -51,10 +51,11 @@ class List(models.Model):
 
 
 class ListEntry(models.Model):
-    MOVIE_NAME_MAX_CHAR = 50
-    MOVIE_NAME_MIN_CHAR = 2
-
     GRADE_MAX_CHAR = 10
+    SLUG_MAX_CHAR = 255
+
+    CHOICES_MAX_CHAR = 15
+
     GRADE_CHOICE = (
         (1, 1),
         (2, 2),
@@ -73,20 +74,21 @@ class ListEntry(models.Model):
         ('---', '---')
     ]
 
+    WOULD_RECOMMEND_VERBOSE = 'Would Recommend'
+
+    STATUS_CHOICE = [
+        ('Completed', 'Completed'),
+        ('Watching', 'Watching'),
+        ('Dropped', 'Dropped')
+    ]
+
     RELEASE_DATE_MAX_CHAR = 15
 
-    movie_id = models.IntegerField(
-
+    slug = models.SlugField(
+        max_length=SLUG_MAX_CHAR,
+        blank=True,
+        null=True
     )
-
-    movie_name = models.CharField(
-        max_length=MOVIE_NAME_MAX_CHAR,
-        validators=[
-            MinLengthValidator(MOVIE_NAME_MIN_CHAR)
-        ]
-    )
-
-    slug = models.SlugField(blank=True, null=True)
 
     grade = models.IntegerField(
         choices=GRADE_CHOICE
@@ -94,13 +96,27 @@ class ListEntry(models.Model):
     )
 
     would_recommend = models.CharField(
-        max_length=15,
+        max_length=CHOICES_MAX_CHAR,
         choices=WOULD_RECOMMEND_CHOICE,
         default=WOULD_RECOMMEND_CHOICE[2],
+        verbose_name=WOULD_RECOMMEND_VERBOSE
     )
 
-    user = models.ForeignKey(
-        UserModel, on_delete=models.CASCADE
+    status = models.CharField(
+        max_length=CHOICES_MAX_CHAR,
+        choices=STATUS_CHOICE,
+    )
+
+    date_created = models.DateField(
+        auto_now_add=True
+    )
+
+    last_updated = models.DateTimeField(
+        auto_now=True
+    )
+
+    movie = models.ForeignKey(
+        MovieDB, on_delete=models.CASCADE
     )
 
     list = models.ForeignKey(
@@ -109,12 +125,9 @@ class ListEntry(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(str(self.movie_id) + '-' + self.movie_name)
+            self.slug = slugify(str(self.movie.movie_id) + '-' + self.movie.name)
 
         return super().save(*args, **kwargs)
 
-    class Meta:
-        unique_together = ('movie_id', 'list')
-
     def __str__(self):
-        return f'{self.movie_name}'
+        return self.movie.name
