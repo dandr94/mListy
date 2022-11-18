@@ -33,19 +33,21 @@ class DeleteListView(DeleteView):
 
 
 class DetailsListView(ListView):
-    model = ListEntry
+    model = List
     template_name = 'list/list_details.html'
     context_object_name = 'movie_list'
 
     def get_queryset(self):
-        queryset = ListEntry.objects.filter(list__slug=self.kwargs['slug']).order_by('-grade')
-
+        queryset = List.objects.prefetch_related('listentry_set__movie').get(slug=self.kwargs['slug'])
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['total_time_minutes'] = sum([movie.movie.duration for movie in context['movie_list']])
-        context['total_time_hours'] = context['total_time_minutes'] / 60
-        context['total_time_days'] = context['total_time_hours'] / 24
-        context['average_grade'] = sum([movie.grade for movie in context['movie_list']]) // len(context['movie_list'])
+        context['total_time_minutes'] = sum(
+            [movie.movie.duration for movie in context['movie_list'].listentry_set.all()])
+        context['total_time_hours'] = context['total_time_minutes'] // 60
+        context['total_time_days'] = context['total_time_hours'] // 24
+        context['average_grade'] = sum([movie.grade for movie in context['movie_list'].listentry_set.all()]) // len(
+            context['movie_list'].listentry_set.all()) \
+            if context['movie_list'].listentry_set.all() else 0
         return context
