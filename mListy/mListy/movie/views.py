@@ -71,7 +71,8 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['youtube_trailer'] = return_youtube_trailer(context['movie'].name, str(context['movie'].release_date.year))
+        context['youtube_trailer'] = return_youtube_trailer(context['movie'].name,
+                                                            str(context['movie'].release_date.year))
         return context
 
 
