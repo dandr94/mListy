@@ -41,7 +41,7 @@ class LoginAccountForm(AuthenticationForm, CssStyleFormMixin):
         fields = ['username', 'password']
 
 
-class EditListForm(CssStyleFormMixin, ModelForm):
+class EditProfileForm(CssStyleFormMixin, ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_css_style_form_controls()
