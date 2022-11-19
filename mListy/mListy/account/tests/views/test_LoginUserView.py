@@ -1,23 +1,38 @@
-from django.contrib.auth import get_user_model
-from django.test import TestCase
+from audioop import reverse
 
-from mListy.account.models import Profile
 from mListy.account.tests.utils import VALID_LOGIN_CREDENTIALS, VALID_USER_CREDENTIALS
+from mListy.account.tests.BaseAccountTestClass import BaseAccountTestClass
 
-UserModel = get_user_model()
 
+class LoginUserViewTests(BaseAccountTestClass):
+    PATH = 'login'
+    TEMPLATE = 'account/login.html'
 
-class LoginUserViewTests(TestCase):
-    PATH = '/login/'
-    REDIRECT_TEMPLATE = 'dashboard.html'
+    def setUp(self) -> None:
+        self.user, self.profile = self.create_valid_user_and_profile()
 
-    def setUp(self):
-        self.user = UserModel.objects.create_user(
-            **VALID_USER_CREDENTIALS)
-        self.profile = Profile(user=self.user)
-        self.profile.save()
+    def test_correct_template_is_used(self):
+        response = self.return_get_response()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, self.TEMPLATE)
 
     def test_login_with_valid_credentials(self):
-        response = self.client.post(self.PATH, VALID_LOGIN_CREDENTIALS, follow=True)
-        self.assertTemplateUsed(response, self.REDIRECT_TEMPLATE)
-        self.assertTrue(response.context['user'].is_authenticated)
+        self.return_post_response(VALID_LOGIN_CREDENTIALS)
+
+        self.assertEqual(int(self.client.session['_auth_user_id']), self.user.pk)
+
+    def test_status_code_after_valid_login__expect_302(self):
+        response = self.return_post_response(VALID_LOGIN_CREDENTIALS)
+
+        expected_status_code = 302
+
+        self.assertEqual(response.status_code, expected_status_code)
+
+    def test_redirect_after_valid_login(self):
+        response = self.return_post_response(VALID_LOGIN_CREDENTIALS)
+
+        expected_url = '/dashboard/'
+
+        self.assertRedirects(response, expected_url)
+
