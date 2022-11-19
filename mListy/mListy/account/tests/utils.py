@@ -19,8 +19,8 @@ VALID_LOGIN_CREDENTIALS = {
 VALID_PROFILE_META_DATA = {
     'first_name': 'foo',
     'last_name': 'bar',
-    'website': 'www.foo@bar.barz',
-    'twitter': 'www.twitter.com/foobar',
-    'instagram': 'www.instagram.com/foobar',
-    'facebook': 'www.facebook.com/foobar',
+    'website': 'http://www.foo@bar.barz',
+    'twitter': 'http://www.twitter.com/foobar',
+    'instagram': 'http://www.instagram.com/foobar',
+    'facebook': 'http://www.facebook.com/foobar',
 }
