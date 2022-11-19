@@ -1,31 +1,33 @@
-from django.contrib.auth import get_user_model
-from django.test import TestCase
 from mListy.account.tests.utils import VALID_REGISTER_FORM_CREDENTIALS
+from mListy.account.tests.BaseAccountTestClass import BaseAccountTestClass
 
-UserModel = get_user_model()
 
+class RegisterUserViewTests(BaseAccountTestClass):
+    PATH = 'register'
+    TEMPLATE = 'account/register.html'
 
-class RegisterUserViewTests(TestCase):
-    PATH = '/register/'
-    REGISTER_TEMPLATE = 'account/register.html'
-
-    def test_correct_page_is_used(self):
-        response = self.client.get(self.PATH)
+    def test_correct_template_is_used(self):
+        response = self.return_get_response()
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, self.REGISTER_TEMPLATE)
+        self.assertTemplateUsed(response, self.TEMPLATE)
 
     def test_register_with_valid_credentials(self):
-        self.client.post(self.PATH, data=VALID_REGISTER_FORM_CREDENTIALS)
+        user = self.UserModel.objects.first()
 
-        user = UserModel.objects.first()
+        self.assertIsNone(user)
+
+        self.return_post_response(VALID_REGISTER_FORM_CREDENTIALS)
+
+        user = self.UserModel.objects.first()
 
         self.assertIsNotNone(user)
         self.assertEqual(VALID_REGISTER_FORM_CREDENTIALS['username'], user.username)
         self.assertEqual(VALID_REGISTER_FORM_CREDENTIALS['email'], user.email)
 
     def test_redirect_after_valid_register(self):
-        response = self.client.post(self.PATH, data=VALID_REGISTER_FORM_CREDENTIALS)
+        response = self.return_post_response(VALID_REGISTER_FORM_CREDENTIALS)
 
         expected_url = '/dashboard/'
+
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, expected_url)
