@@ -1,54 +1,41 @@
-from django.test import TestCase
-from django.contrib.auth import get_user_model
 from django.urls import reverse
-
 from mListy.account.models import Profile
-from mListy.account.tests.utils import VALID_USER_CREDENTIALS, VALID_LOGIN_CREDENTIALS, VALID_PROFILE_META_DATA
+from mListy.account.tests.BaseAccountTestClass import BaseAccountTestClass
+from mListy.account.tests.utils import VALID_PROFILE_META_DATA
+from mListy.list.models import ListEntry
+from mListy.movie.models import MovieDB
+from mListy.movie.tests.utils import VALID_MOVIEDB_DATA_2, VALID_LIST_ENTRY_DATA_2
 
-UserModel = get_user_model()
 
+class ProfileDetailsViewTests(BaseAccountTestClass):
+    PATH = 'details profile'
+    TEMPLATE = 'account/details_profile.html'
 
-class ProfileDetailsViewTests(TestCase):
-    PATH = 'profile details'
-    PROFILE_TEMPLATE = 'account/profile_details.html'
+    CONTEXT_KEY = 'profile'
 
     def setUp(self):
-        self.user = UserModel.objects.create_user(**VALID_USER_CREDENTIALS)
-        self.profile = Profile.objects.create(**VALID_PROFILE_META_DATA, user=self.user)
-        self.profile.save()
-
-    @staticmethod
-    def __create_user(**credentials):
-        return UserModel.objects.create_user(**credentials)
-
-    def __create_valid_user_and_profile(self):
-        user = self.__create_user(**VALID_USER_CREDENTIALS)
-        profile = Profile.objects.create(user=user)
-
-        return user, profile
-
-    def __get_response_for_profile(self, profile):
-        return self.client.get(reverse(self.PATH, kwargs={'slug': profile.slug}))
+        self.user, self.profile = self.create_valid_user_and_profile()
+        self.login_user()
 
     def test_when_valid__should_return_correct_template(self):
-        response = self.__get_response_for_profile(self.profile)
-        self.assertTemplateUsed(response, self.PROFILE_TEMPLATE)
+        response = self.get_response_for_profile(self.profile)
+
+        self.assertTemplateUsed(response, self.TEMPLATE)
 
     def test_when_opening_valid_profile__expect_200(self):
-        valid_slug_data = {'slug': self.user.username}
+        response = self.get_response_for_profile(self.profile)
 
-        response = self.client.get(reverse(self.PATH, kwargs=valid_slug_data))
         self.assertEqual(response.status_code, 200)
 
     def test_when_opening_no_existing_profile__expect_404(self):
         invalid_slug_data = {'slug': 'foobarbarz'}
 
         response = self.client.get(reverse(self.PATH, kwargs=invalid_slug_data))
+
         self.assertEqual(response.status_code, 404)
 
     def test_when_user_is_owner__is_owner_should_be_true(self):
-        self.client.login(**VALID_LOGIN_CREDENTIALS)
-        response = self.__get_response_for_profile(self.profile)
+        response = self.get_response_for_profile(self.profile)
         self.assertTrue(response.context['is_owner'])
 
     def test_when_user_is_not_owner__is_owner__should_be_false(self):
@@ -57,43 +44,92 @@ class ProfileDetailsViewTests(TestCase):
             'email': 'barz@barz.foo',
             'password': 'hypermonkey'
         }
-        user = self.__create_user(**credentials)
-        profile = Profile(user=user)
-        profile.save()
+
+        user = self.create_user(**credentials)
+        Profile.objects.create(user=user)
+
+        self.logout_user()
 
         self.client.login(**credentials)
 
-        response = self.__get_response_for_profile(self.profile)
+        response = self.get_response_for_profile(self.profile)
 
         self.assertFalse(response.context['is_owner'])
 
     def test_profile_with_full_data_expect_correct_values(self):
-        expected_values = {
-            'username': 'foobar',
-            'first_name': 'foo',
-            'last_name': 'bar',
-            'website': 'www.foo@bar.barz',
-            'twitter': 'www.twitter.com/foobar',
-            'instagram': 'www.instagram.com/foobar',
-            'facebook': 'www.facebook.com/foobar'
-        }
+        response = self.get_response_for_profile(self.profile)
 
-        response = self.__get_response_for_profile(self.profile)
-
-        self.assertEqual(expected_values['username'],
-                         response.context['profile'].user.username)  # can check for slug too
-        self.assertEqual(expected_values['first_name'], response.context['profile'].first_name)
-        self.assertEqual(expected_values['last_name'], response.context['profile'].last_name)
-        self.assertEqual(expected_values['website'], response.context['profile'].website)
-        self.assertEqual(expected_values['twitter'], response.context['profile'].twitter)
-        self.assertEqual(expected_values['instagram'], response.context['profile'].instagram)
-        self.assertEqual(expected_values['facebook'], response.context['profile'].facebook)
+        for k, v in VALID_PROFILE_META_DATA.items():
+            self.assertEqual(v, getattr(response.context[self.CONTEXT_KEY], k))
 
     def test_profile_with_none_data_expect_correct_values(self):
-        self.profile.first_name = ''
-        self.profile.facebook = ''
+        self.profile.first_name = None
+        self.profile.facebook = None
         self.profile.save()
-        response = self.__get_response_for_profile(self.profile)
 
-        self.assertFalse(response.context['profile'].first_name)
-        self.assertFalse(response.context['profile'].facebook)
+        response = self.get_response_for_profile(self.profile)
+
+        self.assertFalse(response.context[self.CONTEXT_KEY].first_name)
+        self.assertFalse(response.context[self.CONTEXT_KEY].facebook)
+
+    def test_profile_details_list_count__expect_1(self):
+        self.create_list(self.user)
+        response = self.get_response_for_profile(self.profile)
+
+        expected_value = 1
+
+        self.assertEqual(len(response.context_data['user_lists']), expected_value)
+
+    def test_profile_details_list_count__expect_0(self):
+        response = self.get_response_for_profile(self.profile)
+
+        expected_value = 0
+
+        self.assertEqual(len(response.context_data['user_lists']), expected_value)
+
+    def test_profile_details_total_entries_count__expect_1(self):
+        self.create_list_movie_and_entry(self.user)
+        response = self.get_response_for_profile(self.profile)
+
+        expected_value = 1
+
+        self.assertEqual(len(response.context_data['entries']), expected_value)
+
+    def test_profile_details_total_entries_count__expect_0(self):
+        response = self.get_response_for_profile(self.profile)
+
+        expected_value = 0
+
+        self.assertEqual(len(response.context_data['entries']), expected_value)
+
+    def test_profile_details_average_grade_with_one_entry__expect_grade_to_be_4(self):
+        self.create_list_movie_and_entry(self.user)
+        response = self.get_response_for_profile(self.profile)
+
+        expected_value = 4
+
+        self.assertEqual(response.context_data['total_average_grade'], expected_value)
+
+    def test_profile_details_average_grade_with_two_entries__expect_grade_to_be_6(self):
+        # entry_1_grade = 4
+        # entry_2_grade = 8
+
+        user_list, _, _ = self.create_list_movie_and_entry(self.user)
+
+        movie = MovieDB.objects.create(**VALID_MOVIEDB_DATA_2)
+        ListEntry.objects.create(**VALID_LIST_ENTRY_DATA_2, movie=movie, list=user_list)
+
+        response = self.get_response_for_profile(self.profile)
+
+        expected_value = 6
+
+        self.assertEqual(response.context_data['total_average_grade'], expected_value)
+
+    def test_profile_details_average_grade_with_no_entries__expect_0(self):
+        response = self.get_response_for_profile(self.profile)
+
+        expected_value = 0
+
+        self.assertEqual(response.context_data['total_average_grade'], expected_value)
+
+
