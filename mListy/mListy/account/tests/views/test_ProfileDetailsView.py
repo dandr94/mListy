@@ -2,7 +2,8 @@ from django.urls import reverse
 from mListy.account.models import Profile
 from mListy.account.tests.BaseAccountTestClass import BaseAccountTestClass
 from mListy.account.tests.utils import VALID_PROFILE_META_DATA
-from mListy.list.models import ListEntry
+from mListy.list.models import ListEntry, List
+from mListy.list.tests.utils import VALID_LIST_DATA2
 from mListy.movie.models import MovieDB
 from mListy.movie.tests.utils import VALID_MOVIEDB_DATA_2, VALID_LIST_ENTRY_DATA_2
 
@@ -87,20 +88,20 @@ class ProfileDetailsViewTests(BaseAccountTestClass):
 
         self.assertEqual(len(response.context_data['user_lists']), expected_value)
 
-    def test_profile_details_total_entries_count__expect_1(self):
+    def test_profile_details_total_movies_count__expect_1(self):
         self.create_list_movie_and_entry(self.user)
         response = self.get_response_for_profile(self.profile)
 
         expected_value = 1
 
-        self.assertEqual(len(response.context_data['entries']), expected_value)
+        self.assertEqual(response.context_data['total_movies'], expected_value)
 
-    def test_profile_details_total_entries_count__expect_0(self):
+    def test_profile_details_total_movies_count__expect_0(self):
         response = self.get_response_for_profile(self.profile)
 
         expected_value = 0
 
-        self.assertEqual(len(response.context_data['entries']), expected_value)
+        self.assertEqual(response.context_data['total_movies'], expected_value)
 
     def test_profile_details_average_grade_with_one_entry__expect_grade_to_be_4(self):
         self.create_list_movie_and_entry(self.user)
@@ -132,4 +133,33 @@ class ProfileDetailsViewTests(BaseAccountTestClass):
 
         self.assertEqual(response.context_data['total_average_grade'], expected_value)
 
+    def test_profile_details_last_added_elements(self):
+        user_list, movie, entry = self.create_list_movie_and_entry(self.user)
 
+        response = self.get_response_for_profile(self.profile)
+
+        self.assertEqual(response.context['last_added'][0][0], entry)
+
+    def test_profile_details_last_added_elements_are_sorted_correctly_by_date_created(self):
+        _, _, entry = self.create_list_movie_and_entry(
+            self.user
+        )  # Drama, FooBarBarz, Grade-4
+
+        user_list_2 = List.objects.create(
+            **VALID_LIST_DATA2,
+            user=self.user
+        )  # Fantasy
+
+        movie_2 = MovieDB.objects.create(
+            **VALID_MOVIEDB_DATA_2
+        )  # 'leetlizard'
+
+        entry_2 = ListEntry.objects.create(
+            **VALID_LIST_ENTRY_DATA_2,
+            movie=movie_2,
+            list=user_list_2)  # Grade-8
+
+        response = self.get_response_for_profile(self.profile)
+
+        self.assertEqual(response.context['last_added'][0][0], entry_2)
+        self.assertEqual(response.context['last_added'][1][0], entry)
