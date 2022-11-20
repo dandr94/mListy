@@ -1,1 +1,9 @@
-VALID_LIST_TITLE_NAME = 'Drama'
+VALID_LIST_DATA = {
+    'title': 'Drama',
+    'cover': ''
+}
+
+VALID_LIST_DATA2 = {
+    'title': 'Fantasy',
+    'cover': ''
+}
