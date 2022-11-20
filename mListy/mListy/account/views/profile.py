@@ -36,7 +36,7 @@ class EditProfileView(LoginRequiredMixin, PermissionHandlerMixin, UpdateView):
         return reverse_lazy('details profile', kwargs={'slug': self.object.slug})
 
 
-class ChangeUserPasswordView(LoginRequiredMixin, PasswordChangeView):
+class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class = ChangePasswordForm
     template_name = 'account/change_password.html'
     success_url = reverse_lazy('dashboard')
