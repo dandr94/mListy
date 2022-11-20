@@ -38,8 +38,12 @@ class List(models.Model):
     )
 
     def save(self, *args, **kwargs):
+        slug = slugify(self.title)
+
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slug
+        elif self.slug != slug:
+            self.slug = slug
 
         return super().save(*args, **kwargs)
 
