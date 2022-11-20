@@ -1,70 +1,59 @@
-from django.contrib.auth import get_user_model
-from django.test import TestCase
-from django.urls import reverse
-
-from mListy.account.models import Profile
-from mListy.account.tests.utils import VALID_USER_CREDENTIALS, VALID_LOGIN_CREDENTIALS
-from mListy.list.models import List
-
-UserModel = get_user_model()
+from mListy.list.tests.BaseListTestClass import BaseListTestClass
 
 
-class CreateListViewTests(TestCase):
-    EDIT_LIST_TEMPLATE = 'list/edit_list.html'
+class EditListViewTests(BaseListTestClass):
+    TEMPLATE = 'list/edit_list.html'
+
+    PATH = 'edit list'
+
+    TITLE_KEY = 'title'
+    COVER_KEY = 'cover'
 
     VALID_LIST_DATA = {
-        'title': 'Drama'
+        TITLE_KEY: 'Drama',
+        COVER_KEY: ''
     }
-    VALID_TITLE_NAME = 'Drama'
-    MOCK_TITLE = 'Horror'
-    MOCK_COVER = ''
 
-    DATA_TITLE_KEY = 'title'
-    DATA_COVER_KEY = 'cover'
-
-    FORM = 'form'
+    NEW_VALUES = {
+        TITLE_KEY: 'Horror',
+        COVER_KEY: 'https://editedwebsite.com',
+    }
 
     def setUp(self):
-        self.user = UserModel.objects.create_user(**VALID_USER_CREDENTIALS)
-        self.profile = Profile.objects.create(
-            user=self.user
-        )
-        self.profile.save()
-        self.client.login(**VALID_LOGIN_CREDENTIALS)
-        self.list = List(title=self.VALID_TITLE_NAME, user=self.user)
-        self.list.save()
-        self.path = reverse('edit list', kwargs={'str': self.user.username, 'slug': self.list.slug})
+        super().setUp()
+        self.user_list = self.create_list(self.user)
 
     def test_correct_template_is_used(self):
-        response = self.client.get(self.path)
+        response = self.get_response_for_list(self.user_list, self.profile)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, self.EDIT_LIST_TEMPLATE)
+        self.assertTemplateUsed(response, self.TEMPLATE)
 
     def test_edit_list_with_valid_credentials(self):
-        response = self.client.get(self.path)
+        response = self.get_response_for_list(self.user_list, self.profile)
         form = response.context[self.FORM]
         data = form.initial
 
-        self.assertContains(response, self.VALID_TITLE_NAME)
+        self.assertContains(response, self.VALID_LIST_DATA[self.TITLE_KEY])
 
-        data[self.DATA_TITLE_KEY] = self.MOCK_TITLE
-        data[self.DATA_COVER_KEY] = self.MOCK_COVER
+        data[self.TITLE_KEY] = self.NEW_VALUES[self.TITLE_KEY]
+        data[self.COVER_KEY] = self.NEW_VALUES[self.COVER_KEY]
 
-        response = self.client.post(self.path, data, follow=True)
+        response = self.post_response_for_list(self.user_list, self.profile, data, follow=True)
 
-        self.assertContains(response, self.MOCK_TITLE)
+        self.assertContains(response, self.NEW_VALUES[self.TITLE_KEY])
+        self.assertNotContains(response, self.VALID_LIST_DATA[self.TITLE_KEY])
 
     def test_redirect_after_valid_edit(self):
-        response = self.client.get(self.path)
+        response = self.get_response_for_list(self.user_list, self.profile)
         form = response.context[self.FORM]
         data = form.initial
 
-        self.assertContains(response, self.VALID_TITLE_NAME)
+        self.assertContains(response, self.VALID_LIST_DATA[self.TITLE_KEY])
 
-        data[self.DATA_TITLE_KEY] = self.MOCK_TITLE
-        data[self.DATA_COVER_KEY] = self.MOCK_COVER
+        data[self.TITLE_KEY] = self.NEW_VALUES[self.TITLE_KEY]
+        data[self.COVER_KEY] = self.NEW_VALUES[self.COVER_KEY]
 
-        response = self.client.post(self.path, data)
+        response = self.post_response_for_list(self.user_list, self.profile, data)
         expected_url = '/dashboard/'
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, expected_url)
