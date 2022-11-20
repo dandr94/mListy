@@ -111,7 +111,7 @@ class ListEntry(models.Model):
         choices=STATUS_CHOICE,
     )
 
-    date_created = models.DateField(
+    date_created = models.DateTimeField(
         auto_now_add=True
     )
 
