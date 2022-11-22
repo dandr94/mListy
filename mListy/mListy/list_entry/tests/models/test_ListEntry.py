@@ -1,37 +1,37 @@
 from mListy.list_entry.models import ListEntry
-from mListy.list.tests.BaseListTestClass import BaseListTestClass
-from mListy.movie.models import MovieDB
-from mListy.movie.tests.utils import VALID_MOVIEDB_DATA
+from mListy.list_entry.tests.BaseListEntryTestClass import BaseListEntryTestClass
+from mListy.list_entry.tests.utils import VALID_LIST_ENTRY_DATA
 
 
-class ListEntryTests(BaseListTestClass):
-    VALID_LIST_TITLE_NAME = 'Drama'
+class ListEntryTests(BaseListEntryTestClass):
 
-    def setUp(self):
-        super().setUp()
-        self.user_list = self.create_list(self.user)
-        self.movie = MovieDB.objects.create(**VALID_MOVIEDB_DATA)
-        self.valid_entry_data = {
-            'grade': 5,
-            'list': self.user_list,
-            'movie': self.movie}
+    def test_create_list_entry(self):
+        entry = ListEntry.objects.first()
 
-    def test_create_list_with_valid_data__expect_correct_values(self):
-        ListEntry.objects.create(**self.valid_entry_data)
+        self.assertIsNone(entry)
 
-        entry = ListEntry.objects.get(list_id=self.user_list.id)
+        self.create_entry()
+
+        entry = ListEntry.objects.first()
 
         self.assertIsNotNone(entry)
 
-    def test_create_list_with_valid_data__expect_slug_to_be_correct_value(self):
-        entry = ListEntry.objects.create(**self.valid_entry_data)
+    def test_creat_list_entry__expect_correct_values(self):
+        self.create_entry()
+
+        entry = ListEntry.objects.get(list__id=self.user.id)
 
         expected_slug_value = '54212-foobarbarz'
 
-        self.assertEqual(expected_slug_value, entry.slug)
+        self.assertEqual(entry.grade, VALID_LIST_ENTRY_DATA['grade'])
+        self.assertEqual(entry.would_recommend, VALID_LIST_ENTRY_DATA['would_recommend'])
+        self.assertEqual(entry.status, VALID_LIST_ENTRY_DATA['status'])
+        self.assertEqual(entry.movie, self.movie)
+        self.assertEqual(entry.list, self.user_list)
+        self.assertEqual(entry.slug, expected_slug_value)
 
     def test_return_title(self):
-        entry = ListEntry.objects.create(**self.valid_entry_data)
+        entry = self.create_entry()
 
         expected_title_value = 'FooBarBarz'
 
