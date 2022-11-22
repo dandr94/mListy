@@ -4,7 +4,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from mListy.account.mixins import PermissionHandlerMixin
 from mListy.list.forms import CreateListForm, EditListForm, DeleteListForm
-from mListy.list.models import List, ListEntry
+from mListy.list.models import List
 
 
 class CreateListView(LoginRequiredMixin, CreateView):
@@ -34,7 +34,7 @@ class DeleteListView(DeleteView):
 
 class DetailsListView(ListView):
     model = List
-    template_name = 'list/list_details.html'
+    template_name = 'list/details_list.html'
     context_object_name = 'movie_list'
 
     def get_queryset(self):
