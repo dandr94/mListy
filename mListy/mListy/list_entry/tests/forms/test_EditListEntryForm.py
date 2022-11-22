@@ -24,11 +24,11 @@ class EditListEntryFormTests(BaseMovieTest):
     def test_empty_grade_field__should_return_correct_error_msg(self):
         field_name_key = 'grade'
 
-        response = self.get_post_response(self.INVALID_GRADE_FIELD_DATA)
+        response = self.return_post_response(self.INVALID_GRADE_FIELD_DATA)
         self.assertFormError(response, self.FORM, field_name_key, self.EMPTY_FIELD_ERROR_MSG)
 
     def test_empty_list_field__should_return_correct_error_msg(self):
         field_name_key = 'list'
 
-        response = self.get_post_response(self.INVALID_LIST_FIELD_DATA)
+        response = self.return_post_response(self.INVALID_LIST_FIELD_DATA)
         self.assertFormError(response, self.FORM, field_name_key, self.EMPTY_FIELD_ERROR_MSG)

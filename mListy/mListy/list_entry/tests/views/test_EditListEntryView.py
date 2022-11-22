@@ -19,12 +19,12 @@ class EditListEntryViewTests(BaseMovieTest):
         self.path = self.get_path(self.PATH, {'pk': self.entry.pk, 'slug': self.entry.slug})
 
     def test_correct_template_is_used(self):
-        response = self.get_get_response()
+        response = self.return_get_response()
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.TEMPLATE)
 
     def test_edit_entry_to_list_with_valid_credentials(self):
-        response = self.get_get_response()
+        response = self.return_get_response()
         form = response.context[self.FORM]
         data = form.initial
 
@@ -39,7 +39,7 @@ class EditListEntryViewTests(BaseMovieTest):
         self.assertContains(response, self.MOCK_GRADE)
 
     def test_redirect_after_valid_edit(self):
-        response = self.get_get_response()
+        response = self.return_get_response()
         form = response.context[self.FORM]
         data = form.initial
 

@@ -1,4 +1,4 @@
-from mListy.list.models import ListEntry
+from mListy.list_entry.models import ListEntry
 from mListy.movie.tests.BaseMovieTest import BaseMovieTest
 
 
@@ -13,7 +13,7 @@ class DeleteListEntryFormTests(BaseMovieTest):
         entry = ListEntry.objects.filter(pk=self.entry.pk).exists()
         self.assertTrue(entry)
 
-        self.get_post_response({})
+        self.return_post_response({})
 
         entry = ListEntry.objects.filter(pk=self.entry.pk).exists()
         self.assertFalse(entry)

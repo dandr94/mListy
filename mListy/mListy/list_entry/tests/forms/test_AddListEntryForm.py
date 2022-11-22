@@ -25,19 +25,19 @@ class AddListEntryFormTests(BaseMovieTest):
     def test_empty_grade_field__should_return_correct_error_msg(self):
         field_name_key = 'grade'
 
-        response = self.get_post_response(self.INVALID_GRADE_FIELD_DATA)
+        response = self.return_post_response(self.INVALID_GRADE_FIELD_DATA)
         self.assertFormError(response, self.FORM, field_name_key, self.EXPECTED_EMPTY_FIELD_ERROR_MSG)
 
     def test_empty_list_field__should_return_correct_error_msg(self):
         field_name_key = 'list'
 
-        response = self.get_post_response(self.INVALID_LIST_FIELD_DATA)
+        response = self.return_post_response(self.INVALID_LIST_FIELD_DATA)
         self.assertFormError(response, self.FORM, field_name_key, self.EXPECTED_EMPTY_FIELD_ERROR_MSG)
 
     def test_add_entry_in_a_list_with_existing_identical_entry__expect_correct_error_msg(self):
         VALID_LIST_ENTRY_DATA['list'] = self.list.id
-        VALID_LIST_ENTRY_DATA['user'] = self.user
-        response = self.get_post_response(VALID_LIST_ENTRY_DATA)
+        VALID_LIST_ENTRY_DATA['movie'] = self.movie
+        response = self.return_post_response(VALID_LIST_ENTRY_DATA)
         expected_unique_list_entry_error_msg = f'{self.movie.name} is already in {self.list.title}.'
         self.assertFormError(response, self.FORM, None, expected_unique_list_entry_error_msg)
 
