@@ -1,19 +1,20 @@
 from mListy.list_entry.models import ListEntry
-from mListy.movie.tests.BaseMovieTest import BaseMovieTest
+from mListy.list_entry.tests.BaseListEntryTestClass import BaseListEntryTestClass
 
 
-class DeleteListEntryFormTests(BaseMovieTest):
+class DeleteListEntryFormTests(BaseListEntryTestClass):
     PATH = 'delete entry'
 
     def setUp(self):
         super().setUp()
-        self.path = self.get_path(self.PATH, {'pk': self.entry.pk, 'slug': self.entry.slug})
+        self.entry = self.create_entry()
 
     def test_successful_list_deletion(self):
-        entry = ListEntry.objects.filter(pk=self.entry.pk).exists()
+        entry = ListEntry.objects.first()
+
         self.assertTrue(entry)
 
-        self.return_post_response({})
+        self.post_response_for_list_entry(self.entry, {})
 
-        entry = ListEntry.objects.filter(pk=self.entry.pk).exists()
+        entry = ListEntry.objects.first()
         self.assertFalse(entry)
