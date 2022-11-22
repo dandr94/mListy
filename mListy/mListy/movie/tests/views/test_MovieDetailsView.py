@@ -11,7 +11,7 @@ class MovieDetailsViewTests(BaseMovieTestClass):
         super().setUp()
         self.movie = self.create_movie()
 
-    def test_correct_template_is_user(self):
+    def test_correct_template_is_used(self):
         response = self.return_get_response(self.movie)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.DETAILS_MOVIE_TEMPLATE)
