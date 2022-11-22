@@ -20,6 +20,13 @@ class MovieDBTests(BaseMovieTestClass):
         for k in VALID_MOVIEDB_DATA.keys():
             self.assertEqual(getattr(movie, k), VALID_MOVIEDB_DATA[k])
 
+    def test_slug(self):
+        movie = self.create_movie()
+
+        expected_slug_value = '54212-foobarbarz'
+
+        self.assertEqual(expected_slug_value, movie.slug)
+
     def test_return_title(self):
         movie = self.create_movie()
 
