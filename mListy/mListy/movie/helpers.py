@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 import requests
 import tmdbsimple as tmdb
 from django.core.exceptions import ObjectDoesNotExist
@@ -17,7 +19,7 @@ YOUTUBE_SEARCH_TYPE = 'video'
 YOUTUBE_API_KEY = YOUTUBE_SEARCH_API_KEY
 
 
-def check_if_in_db(movie_id: int) -> object:
+def check_if_in_db(movie_id: int) -> object or bool:  # FIX
     try:
         movie = MovieDB.objects.get(movie_id=movie_id)
         return movie
@@ -25,7 +27,7 @@ def check_if_in_db(movie_id: int) -> object:
         return False
 
 
-def add_movie_to_db(movie_id: int):
+def add_movie_to_db(movie_id: int) -> None:
     movie = tmdb.Movies(movie_id)
     info = movie.info()
 
@@ -92,5 +94,17 @@ def return_youtube_trailer(movie_name: str, release_date: str) -> str:
 
     search_result = requests.get(search_url, params=search_params)
     json_result = search_result.json()['items']
-    for result in json_result:
-        return basic_path + result['id']['videoId']
+    path = basic_path + json_result[0]['id']['videoId']
+    return path
+
+
+def return_last_added_entries(entries: dict) -> List[Tuple[object, int]]:
+    last_added = sorted(entries.items(), key=lambda x: x[0].date_created, reverse=True)[:5]
+
+    return last_added
+
+
+def return_total_average_grade(entries: dict) -> int:
+    total_average_grade = sum(entries.values()) // len(entries) if entries else 0
+
+    return total_average_grade
