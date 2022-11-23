@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %} Add Movie - 555 {% endblock %}
+
+{% block page_content %}
+    <div class="sign section--bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="sign__content">
+                        <form method="POST" action="{% url 'add entry' movie_slug %}" class="sign__form">
+                            <a href="{% url 'index' %}" class="sign__logo">
+                                <img src="{% static 'img/logo.png' %}" alt="">
+                            </a>
+                            {% csrf_token %}
+                            {{ form }}
+                            <button class="sign__btn" type="submit">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

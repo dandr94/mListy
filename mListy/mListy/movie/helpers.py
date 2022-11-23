@@ -56,28 +56,6 @@ def add_movie_to_db(movie_id: int) -> None:
     MovieDB(**data).save()
 
 
-def return_list_with_additional_stats(user_lists: list, entries: list) -> dict:
-    data: dict = {}
-
-    for l in user_lists:
-        data[l] = {'average_grade': "", 'total_movies': 0}
-        grades = 0
-        total_movies = 0
-        for e in entries:
-            if e.list.id == l.id:
-                grades += e.grade
-                total_movies += 1
-
-        if total_movies:
-            data[l]['total_movies'] += total_movies
-            data[l]['average_grade'] = f'{grades / total_movies:.2f}'
-        else:
-            data[l]['total_movies'] = 0
-            data[l]['average_grade'] = 0
-
-    return data
-
-
 def return_youtube_trailer(movie_name: str, release_date: str) -> str:
     search_url: str = YOUTUBE_SEARCH_PATH
     basic_path: str = YOUTUBE_BASIC_PATH
@@ -93,9 +71,13 @@ def return_youtube_trailer(movie_name: str, release_date: str) -> str:
     }
 
     search_result = requests.get(search_url, params=search_params)
-    json_result = search_result.json()['items']
-    path = basic_path + json_result[0]['id']['videoId']
-    return path
+
+    try:
+        json_result = search_result.json()['items']
+        path = basic_path + json_result[0]['id']['videoId']
+        return path
+    except KeyError:
+        return ''
 
 
 def return_last_added_entries(entries: dict) -> List[Tuple[object, int]]:
