@@ -1,10 +1,31 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block page_title %} Register {% endblock %}
 {% block page_content %}
-    <form method="POST" action="{% url 'register' %}" class="sign__form">
-        {% csrf_token %}
-        {{ form }}
-        <button class="sign__btn" type="submit">Register</button>
-        <span class="sign__text">Already have an account? <a href="{% url 'login' %}">Log in!</a></span>
-    </form>
+    <div class="sign section--bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="sign__content">
+                        <form method="POST" action="{% url 'register' %}" class="sign__form">
+                            <a href="{% url 'index' %}" class="sign__logo">
+                                <img src="{% static 'img/logo.png' %}" alt="">
+                            </a>
+                            {% for field in form %}
+
+                                <label class="section__title" style="font-size: 20px; margin: 5px; color: #eab33d;"
+                                       for="{{ field.auto_id }}">{{ field.label }}:</label>
+
+                                {{ field }}
+
+                            {% endfor %}
+                            <button class="sign__btn" type="submit">Sign up</button>
+                            <span class="sign__text">Already have an account? <a
+                                    href="{% url 'login' %}">Sign in!</a></span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
