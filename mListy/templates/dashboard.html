@@ -1,23 +1,100 @@
 {% extends 'base.html' %}
-{% block page_title %} Dashboard {% endblock %}
+{% load static %}
+{% block page_title %} {{ user.username }}'s Dashboard {% endblock %}
 
 {% block page_content %}
-    <h1>Dashboard</h1>
-    <h1>Hello</h1>
-    {% if not lists %}
-        <p>No list yet.</p>
-    {% else %}
-        {% for list in lists %}
-            <ul>
-                <li>List name:{{ list.title }} </li>
-                <li>Slug: {{ list.slug }}</li>
-                <li>List created: {{ list.date_created }}</li>
-                <li>List last updated: {{ list.last_updated }}</li>
-                <li><a href="{% url 'details list' user list.slug %}">DETAILS</a></li>
-                <li><a href="{% url 'edit list' user list.slug %}">EDIT</a>
-                <li><a href="{% url 'delete list' user list.slug %}">Delete</a>
-                </li>
-            </ul>
-        {% endfor %}
-    {% endif %}
+    <section class="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% if lists %}
+                        <h1 class="home__title"><b>Your</b> lists</h1>
+                    {% else %}
+                        <h2 class="home__title "><b><a href="{% url 'create list' %}">Create</a></b> a list</h2>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="catalog">
+            <div class="container">
+                <div class="row row--grid">
+                    {% for list in lists %}
+                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    {% if list.cover %}
+                                        <img src="{{ list.cover }}" alt="">
+                                    {% else %}
+                                        <img src="{% static 'img/covers/cover.jpg' %}" alt="">
+                                    {% endif %}
+                                    <a href="{% url 'details list' user.username list.slug %}" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a
+                                            href="{% url 'details list' user.username list.slug %}">{{ list.title }}</a>
+                                    </h3>
+                                    <span class="card__category">
+
+                                        <a href="{% url 'edit list' user.username list.slug %}"><i
+                                                class="icon ion-ios-create"></i></a>
+                                        <a href="{% url 'delete list' user.username list.slug %}"><i
+                                                class="icon ion-ios-trash"></i></a>
+								    </span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section section--border">
+        <div class="container">
+            <div class="row">
+                <!-- section title -->
+                <div class="col-12">
+                    <div class="section__title-wrap">
+                        <h2 class="section__title">Last Viewed Movies</h2>
+
+                        <div class="section__nav-wrap">
+                            <a href="catalog.html" class="section__view">View All</a>
+
+                            <button class="section__nav section__nav--prev" type="button" data-nav="#carousel1">
+                                <i class="icon ion-ios-arrow-back"></i>
+                            </button>
+
+                            <button class="section__nav section__nav--next" type="button" data-nav="#carousel1">
+                                <i class="icon ion-ios-arrow-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- end section title -->
+
+                <!-- carousel -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card__cover">
+                            <img src="{% static 'img/covers/cover.jpg' %}" alt="">
+                            <a href="#" class="card__play">
+                                <i class="icon ion-ios-play"></i>
+                            </a>
+                            <span class="card__rate card__rate--green">8.4</span>
+                        </div>
+                        {% for m in last_viewed_movies %}
+                            <div class="card__content">
+                                <h3 class="card__title"><a href="#">m.name</a></h3>
+                                <span class="card__category">
+									<a href="#">Action</a>
+									<a href="#">Triler</a>
+								</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
