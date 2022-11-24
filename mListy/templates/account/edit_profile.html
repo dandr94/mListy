@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+    <div class="sign section--bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="sign__content">
+                        <form method="POST" action="{% url 'edit profile' profile.slug %}" class="sign__form">
+                            {% csrf_token %}
+                            {% for field in form %}
+
+                                <label class="section__title" style="font-size: 20px; margin: 5px; color: #eab33d;"
+                                       for="{{ field.auto_id }}">{{ field.label }}:</label>
+
+                                {{ field }}
+
+                            {% endfor %}
+                            <button class="sign__btn" type="submit">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
