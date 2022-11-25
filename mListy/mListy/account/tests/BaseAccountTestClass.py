@@ -4,10 +4,12 @@ from django.urls import reverse
 
 from mListy.account.models import Profile
 from mListy.account.tests.utils import VALID_USER_CREDENTIALS, VALID_LOGIN_CREDENTIALS, VALID_PROFILE_META_DATA
-from mListy.list.models import List, ListEntry
+from mListy.list.models import List
+from mListy.list_entry.models import ListEntry
 from mListy.list.tests.utils import VALID_LIST_DATA
 from mListy.movie.models import MovieDB
-from mListy.movie.tests.utils import VALID_MOVIEDB_DATA, VALID_LIST_ENTRY_DATA
+from mListy.movie.tests.utils import VALID_MOVIEDB_DATA
+from mListy.list_entry.tests.utils import VALID_LIST_ENTRY_DATA
 
 
 class BaseAccountTestClass(TestCase):
