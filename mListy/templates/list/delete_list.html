@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block page_title %} Delete {{ list.title }} {% endblock %}
 
 {% block page_content %}
-    <form method="POST" action="{% url 'delete list' user.username list.slug %}" class="sign__form">
-        {% csrf_token %}
-        <h3>Delete {{ list.title }}?</h3>
-        {{ form }}
-        <button type="submit">Delete</button>
-    </form>
+    <div class="sign section--bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="sign__content">
+                        <form method="POST" action="{% url 'delete list' user.username list.slug %}" class="sign__form">
+                            <a href="{% url 'dashboard' %}" class="sign__logo">
+                                <img src="{% static 'img/logo.png' %}" alt="">
+                            </a>
+                            {% csrf_token %}
+                            <h3 class="section__text">Delete {{ list.title }}?</h3>
+                            {{ form }}
+                            <button class="sign__btn" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
