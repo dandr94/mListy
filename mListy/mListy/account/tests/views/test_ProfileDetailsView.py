@@ -2,10 +2,12 @@ from django.urls import reverse
 from mListy.account.models import Profile
 from mListy.account.tests.BaseAccountTestClass import BaseAccountTestClass
 from mListy.account.tests.utils import VALID_PROFILE_META_DATA
-from mListy.list.models import ListEntry, List
+from mListy.list.models import List
+from mListy.list_entry.models import ListEntry
 from mListy.list.tests.utils import VALID_LIST_DATA2
 from mListy.movie.models import MovieDB
-from mListy.movie.tests.utils import VALID_MOVIEDB_DATA_2, VALID_LIST_ENTRY_DATA_2
+from mListy.movie.tests.utils import VALID_MOVIEDB_DATA_2
+from mListy.list_entry.tests.utils import VALID_LIST_ENTRY_DATA_2
 
 
 class ProfileDetailsViewTests(BaseAccountTestClass):
