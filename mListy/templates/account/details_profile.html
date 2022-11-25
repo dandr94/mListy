@@ -7,7 +7,7 @@
                     <div class="col-12 col-sm-6 col-xl-3">
                         <div class="stats">
                             <span>Username</span>
-                            <p>{{ profile.user.username }}</p>
+                            <p>{{ profile.slug }}</p>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
@@ -19,7 +19,7 @@
                     <div class="col-12 col-sm-6 col-xl-3">
                         <div class="stats">
                             <span>Total Movies</span>
-                            <p><a href="#">{{ entries.count}}</a></p>
+                            <p><a href="#">{{ total_movies}}</a></p>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
@@ -65,25 +65,12 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="main__table-text">Facebook</div>
+                                            <div class="main__table-text">Website</div>
                                         </td>
                                         <td>
-                                            {% if profile.facebook %}
+                                            {% if profile.website %}
                                                 <div class="main__table-text"><a
-                                                        href="{{ profile.facebook }}">{{ profile.facebook }}</a></div>
-                                            {% else %}
-                                                <div class="main__table-text">N/A</div>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="main__table-text">Instagram</div>
-                                        </td>
-                                        <td>
-                                            {% if profile.instagram %}
-                                                <div class="main__table-text"><a
-                                                        href="{{ profile.instagram }}">{{ profile.instagram }}</a></div>
+                                                        href="{{ profile.website }}">{{ profile.website }}</a></div>
                                             {% else %}
                                                 <div class="main__table-text">N/A</div>
                                             {% endif %}
@@ -104,12 +91,25 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="main__table-text">Website</div>
+                                            <div class="main__table-text">Instagram</div>
                                         </td>
                                         <td>
-                                            {% if profile.website %}
+                                            {% if profile.instagram %}
                                                 <div class="main__table-text"><a
-                                                        href="{{ profile.website }}">{{ profile.website }}</a></div>
+                                                        href="{{ profile.instagram }}">{{ profile.instagram }}</a></div>
+                                            {% else %}
+                                                <div class="main__table-text">N/A</div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="main__table-text">Facebook</div>
+                                        </td>
+                                        <td>
+                                            {% if profile.facebook %}
+                                                <div class="main__table-text"><a
+                                                        href="{{ profile.facebook }}">{{ profile.facebook }}</a></div>
                                             {% else %}
                                                 <div class="main__table-text">N/A</div>
                                             {% endif %}
@@ -118,8 +118,8 @@
                                     </tbody>
                                 </table>
                             {% if is_owner %}
-                            <a href="#"><button class="sign__btn" type="submit">Edit</button></a>
-                            <a href="#"><button class="sign__btn" type="submit">Change password</button></a>
+                            <a href="{% url 'edit profile' profile.slug %}"><button class="sign__btn" type="submit">Edit</button></a>
+                            <a href="{% url 'change password' %}"><button class="sign__btn" type="submit">Change password</button></a>
                             </div>
                             {% endif %}
                         </div>
@@ -127,30 +127,30 @@
                     <div class="col-12 col-xl-6">
                         <div class="dashbox">
                             <div class="dashbox__title">
-                                <h3>Your Lists</h3>
+                                <h3>Last Added</h3>
                             </div>
                             <div class="dashbox__table-wrap">
                                 <table class="main__table main__table--dash">
                                     <thead>
                                     <tr>
                                         <th>Title</th>
-                                        <th>Movies Count</th>
-                                        <th>Average Grade</th>
+                                        <th>Grade</th>
+                                        <th>List</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for l, v in user_lists_dict.items %}
+                                    {% for m, v in last_added%}
                                         <tr>
                                             <td>
-                                                <div class="main__table-text"><a href="{% url 'details list' l.user.username l.slug %}">{{ l.title }}</a>
+                                                <div class="main__table-text"><a href="{% url 'details movie' m.slug %}">{{ m.movie.name }}</a>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="main__table-text">{{ v.total_movies }}</div>
+                                                <div class="main__table-text"><i
+                                                        class="icon ion-ios-star"></i>{{ v }}</div>
                                             </td>
                                             <td>
-                                                <div class="main__table-text main__table-text--rate"><i
-                                                        class="icon ion-ios-star"></i> {{ v.average_grade }}
+                                                <div class="main__table-text main__table-text--rate"> <a href="{% url 'details list' profile.slug m.list.slug %}">{{ m.list.title }}</a>
                                                 </div>
                                             </td>
                                         </tr>
