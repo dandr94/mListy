@@ -8,7 +8,7 @@ from mListy.movie.models import MovieDB
 
 
 class AddListEntryView(LoginRequiredMixin, CreateView):
-    template_name = 'movie/add_entry.html'
+    template_name = 'list_entry/add_entry.html'
     form_class = AddListEntryForm
 
     def get_form_kwargs(self):
@@ -30,7 +30,7 @@ class AddListEntryView(LoginRequiredMixin, CreateView):
 
 class EditListEntryView(LoginRequiredMixin, UpdateView):
     model = ListEntry
-    template_name = 'movie/edit_entry.html'
+    template_name = 'list_entry/edit_entry.html'
     form_class = EditListEntryForm
     context_object_name = 'entry'
 
@@ -45,7 +45,7 @@ class EditListEntryView(LoginRequiredMixin, UpdateView):
 
 class DeleteListEntryView(LoginRequiredMixin, DeleteView):
     model = ListEntry
-    template_name = 'movie/delete_entry.html'
+    template_name = 'list_entry/delete_entry.html'
     context_object_name = 'entry'
     form_class = DeleteListEntryForm
 
