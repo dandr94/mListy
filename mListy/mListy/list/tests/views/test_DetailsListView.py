@@ -1,4 +1,4 @@
-from mListy.list.models import ListEntry
+from mListy.list_entry.models import ListEntry
 from mListy.list.tests.BaseListTestClass import BaseListTestClass
 from mListy.movie.models import MovieDB
 from mListy.movie.tests.utils import VALID_MOVIEDB_DATA, VALID_MOVIEDB_DATA_2
