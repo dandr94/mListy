@@ -1,17 +1,60 @@
 {% extends 'base.html' %}
-{% block page_title %} Movie Details - 555 {% endblock %}
-
+{% load static %}
 {% block page_content %}
-    <p>Movie name: {{ movie.name }}</p>
-    <p>Movie description: {{ movie.description }}</p>
-    <p>Movie release_date: {{ movie.release_date }}</p>
-    <p>Movie actors: {{ movie.actors }}</p>
-    <p>Movie roles: {{ movie.roles }}</p>
-    <p>Movie average_grade: {{ movie.average_grade }}</p>
-    <p>Movie budget: {{ movie.budget }}</p>
-    <p>Movie production_companies: {{ movie.production_companies }}</p>
-    <p>Movie duration: {{ movie.duration }}</p>
-    <p>Movie imdb: {{ movie.imdb_link }}</p>
+    <section class="section section--details section--bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="section__title section__title--mb">{{ movie.name }}</h1>
+                </div>
+                <div class="col-12 col-xl-6">
+                    <div class="card card--details">
+                        <div class="row">
+                            <div class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5">
+                                <div class="card__cover">
+                                    <img src="{{ movie.poster }}" alt="">
+                                    {% if movie.average_grade %}
+                                    <span class="card__rate card__rate--green">{{ movie.average_grade|floatformat:1 }}</span>
+                                    {% else %}
+                                    <span class="card__rate card__rate--green">N/A</span>
+                                    {% endif %}
+                                </div>
+                                <a href="{{ youtube_trailer }}" class="card__trailer"> Watch trailer</a>
+                                <a href="{% url 'add entry' movie.slug %}">
+                                    <button class="sign__btn" type="button"> Add MV to List</button>
+                                </a>
+                            </div>
+                            <div class="col-12 col-md-8 col-lg-9 col-xl-7">
+                                <div class="card__content">
+                                    <ul class="card__meta">
+                                        <li><span>Status:</span> <a>{{ movie.status }}</a></li>
+                                        <li><span>Cast:</span><a>{{ movie.actors }}</a></li>
+                                        <li><span>Genre:</span><a>{{ movie.genres }}</a></li>
+                                        <li><span>Release date:</span> {{ movie.release_date }}</li>
+                                        <li><span>Duration:</span> {{ movie.duration }}m</li>
+                                        <li><span>Original Language:</span>{{ movie.language }}</li>
+                                    </ul>
+                                    <div class="card__description">
+                                        <p>Description:</p>
+                                        {{ movie.description }}
+                                    </div>
+                                </div>
+                            </div>
 
-    <a href="{% url 'add entry' movie.slug %}">ADD</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-6">
+                    <div class="card__content">
+                        <ul class="card__meta">
+                            <li><span>Budget:</span> {{ movie.budget|floatformat:2 }}</li>
+                            <li><span>Roles:</span> <a>{{ movie.roles }}</a></li>
+                            <li><span>Production companies:</span>{{ movie.production_companies }}</li>
+                            <li><span>IMDB link:</span> <a href="{{ movie.imdb_link }}">{{ movie.imdb_link }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
