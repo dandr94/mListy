@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
+            <div class="row row--grid">
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="stats">
+                        <span>Total Movies</span>
+                        <p>{{ movie_list.listentry_set.all.count }}</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="stats">
+                        <span>Time Spend Watching</span>
+                        <p>Days: {{ total_time_days|floatformat:0 }}</p>
+                        <p>Hours: {{ total_time_hours|floatformat:0 }}</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="stats">
+                        <span>Average grade</span>
+                        <p><a href="#">{{ average_grade|floatformat:2 }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
