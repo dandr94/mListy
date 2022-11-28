@@ -1,23 +1,10 @@
 {% extends 'base.html' %}
 {% block page_title %} Search {% endblock %}
-
+{% load static %}
 {% block page_content %}
-    <div>
-        <form method="GET" class="form form--contacts" action="{% url 'search movie' %}">
-            <input type="text" class="form__input" name="search"
-                   placeholder="Type the name of the movie...">
-            <button type="submit" class="form__btn">Search
-            </button>
-        </form>
-    </div>
-    <div>
-        {% if movies %}
-            {% for movie in movies %}
-                <img src="{{ movie.image }}" alt="">
-                <a href="{% url 'details movie' movie.slug %}" class="card__play"></a>
-                <a href="{% url 'details movie' movie.slug %}">{{ movie.title }}</a>
 
-            {% endfor %}
-        {% endif %}
-    </div>
+    {% include 'movie/search_field.html' %}
+
+    {% include 'movie/search_results.html' %}
+
 {% endblock %}
