@@ -2,11 +2,27 @@
 {% block page_title %} Edit {% endblock %}
 
 {% block page_content %}
-    <form method="POST" action="{% url 'edit entry' entry.pk entry.slug %}" class="sign__form">
-        <h1>{{ entry.movie_name }}</h1>
-        {% csrf_token %}
-        {{ form }}
-        <button class="sign__btn" type="submit">Edit</button>
-    </form>
+    <div class="sign section--bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="sign__content">
+                        <form method="POST" action="{% url 'edit entry' entry.pk entry.slug %}" class="sign__form">
+                            <h1>{{ entry.movie_name }}</h1>
+                            {% csrf_token %}
+                            {% for field in form %}
 
+                                <label class="section__title" style="font-size: 20px; margin: 5px; color: #eab33d;"
+                                       for="{{ field.auto_id }}">{{ field.label }}:</label>
+
+                                {{ field }}
+
+                            {% endfor %}
+                            <button class="sign__btn" type="submit">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
