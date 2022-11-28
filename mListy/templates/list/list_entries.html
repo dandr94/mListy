@@ -1,0 +1,69 @@
+<div class="main__table-wrap">
+    <table class="main__table">
+        <thead>
+        <tr>
+            <th>N.</th>
+            <th>TITLE</th>
+            <th>GRADE</th>
+            <th>WOULD_RECOMMEND</th>
+            <th>STATUS</th>
+            <th>ADDED DATE</th>
+            <th>ACTIONS</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% if movie_list %}
+            {% for movie in movie_list.listentry_set.all %}
+                <tr>
+                    <td>
+                        <div class="main__table-text">{{ forloop.counter }}</div>
+                    </td>
+                    <td>
+                        <div class="main__table-text"><a
+                                href="{% url 'details movie' movie.slug %}">{{ movie.movie.name }}</a></div>
+                    </td>
+                    <td>
+                        <div class="main__table-text main__table-text--rate"><i
+                                class="icon ion-ios-star"></i>{{ movie.grade }}</div>
+                    </td>
+                    <td>
+                        {% if movie.would_recommend == 'Yes' %}
+                            <div class="main__table-text main__table-text--green">{{ movie.would_recommend }}</div>
+                        {% elif movie.would_recommend == 'No' %}
+                            <div class="main__table-text main__table-text--red">{{ movie.would_recommend }}</div>
+                        {% else %}
+                            <div class="main__table-text">{{ movie.would_recommend }}</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if movie.status == 'Completed' %}
+                            <div class="main__table-text main__table-text--green">{{ movie.status }}</div>
+                        {% elif movie.status == 'Watching' %}
+                            <div class="main__table-text main__table-text--orange">{{ movie.status }}</div>
+                        {% else %}
+                            <div class="main__table-text main__table-text--red">{{ movie.status }}</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="main__table-text">{{ movie.date_created|date:"d-M-Y" }}</div>
+
+                    </td>
+                    <td>
+                        <div class="main__table-btns">
+                            <a href="{% url 'edit entry' movie.id movie.slug %}"
+                               class="main__table-btn main__table-btn--edit edit-btn">
+                                <i class="icon ion-ios-create"></i>
+                            </a>
+                            <a href="{% url 'delete entry' movie.id movie.slug %}"
+                               class="main__table-btn main__table-btn--delete open-modal delete-btn">
+                                <i class="icon ion-ios-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>
