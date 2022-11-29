@@ -6,7 +6,7 @@ from mListy.list.models import List
 
 
 class HomeViewNoProfile(TemplateView):
-    template_name = 'index.html'
+    template_name = 'home/index.html'
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -16,7 +16,7 @@ class HomeViewNoProfile(TemplateView):
 
 
 class Dashboard(LoginRequiredMixin, ListView):
-    template_name = 'dashboard.html'
+    template_name = 'home/dashboard.html'
     context_object_name = 'lists'
 
     def get_queryset(self):
