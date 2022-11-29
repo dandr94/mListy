@@ -1,0 +1,33 @@
+{% load  static %}
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="footer__content">
+                    <a href="{% url 'index' %}" class="header__logo">
+                        <span class="logo-first">m</span><span class="logo-second">Listy</span><i
+                            class="fa-solid fa-film"></i>
+                    </a>
+                    <a href="https://www.themoviedb.org/" class="footer__logo" style="margin-left: 30px">
+                        <img src="{% static 'img/tmdb_logo.svg' %}" alt=""/>
+                    </a>
+                    <span class="footer__copyright"
+                    >© mListy <br/>
+                Created by
+                <a
+                        href="https://github.com/dandr94"
+                        target="_blank"
+                >dandr94</a
+                ></span
+                    >
+                    <nav class="footer__nav">
+                        <a href="#">About us</a>
+                    </nav>
+                    <button class="footer__back" type="button">
+                        <i class="icon ion-ios-arrow-round-up"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
