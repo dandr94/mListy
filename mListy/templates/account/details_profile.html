@@ -1,4 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
+{% block page_title %} {{ profile.slug }} {% endblock %}
+{% block nav_items %}
+    {% include 'nav&footer/nav_items.html' %}
+{% endblock %}
 {% block page_content %}
     <div class="container">
         <div class="tab-content">
@@ -13,13 +17,13 @@
                     <div class="col-12 col-sm-6 col-xl-3">
                         <div class="stats">
                             <span>Total Lists</span>
-                            <p><a href="#">{{ user_lists.count}}</a></p>
+                            <p><a href="#">{{ user_lists.count }}</a></p>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
                         <div class="stats">
                             <span>Total Movies</span>
-                            <p><a href="#">{{ total_movies}}</a></p>
+                            <p><a href="#">{{ total_movies }}</a></p>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
@@ -117,11 +121,15 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                            {% if is_owner %}
-                            <a href="{% url 'edit profile' profile.slug %}"><button class="sign__btn" type="submit">Edit</button></a>
-                            <a href="{% url 'change password' %}"><button class="sign__btn" type="submit">Change password</button></a>
-                            </div>
-                            {% endif %}
+                                {% if is_owner %}
+                                    <a href="{% url 'edit profile' profile.slug %}">
+                                        <button class="sign__btn" type="submit">Edit</button>
+                                    </a>
+                                    <a href="{% url 'change password' %}">
+                                        <button class="sign__btn" type="submit">Change password</button>
+                                    </a>
+                                    </div>
+                                {% endif %}
                         </div>
                     </div>
                     <div class="col-12 col-xl-6">
@@ -139,10 +147,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for m, v in last_added%}
+                                    {% for m, v in last_added %}
                                         <tr>
                                             <td>
-                                                <div class="main__table-text"><a href="{% url 'details movie' m.slug %}">{{ m.movie.name }}</a>
+                                                <div class="main__table-text"><a
+                                                        href="{% url 'details movie' m.slug %}">{{ m.movie.name }}</a>
                                                 </div>
                                             </td>
                                             <td>
@@ -150,7 +159,8 @@
                                                         class="icon ion-ios-star"></i>{{ v }}</div>
                                             </td>
                                             <td>
-                                                <div class="main__table-text main__table-text--rate"> <a href="{% url 'details list' profile.slug m.list.slug %}">{{ m.list.title }}</a>
+                                                <div class="main__table-text main__table-text--rate"><a
+                                                        href="{% url 'details list' profile.slug m.list.slug %}">{{ m.list.title }}</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -164,4 +174,8 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'nav&footer/footer.html' %}
 {% endblock %}
