@@ -1,26 +1,26 @@
 {% if movies %}
-        <div class="catalog">
-            <div class="container">
-                <div class="row row--grid">
-                    {% for movie in movies %}
-                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                            <div class="card">
-                                <div class="card__cover">
-                                    <img src="{{ movie.image }}" alt="">
-                                    <span class="card__rate card__rate--green">{{ movie.vote_average }}</span>
-                                    <a href="{% url 'details movie' movie.slug %}" class="card__play">
-                                        <i class="icon ion-ios-play"></i>
-                                    </a>
-                                </div>
-                                <div class="card__content">
-                                    <h3 class="card__title"><a
-                                            href="{% url 'details movie' movie.slug %}">{{ movie.title }}</a>
-                                    </h3>
-                                </div>
+    <div class="catalog">
+        <div class="container">
+            <div class="row row--grid">
+                {% for movie in movies %}
+                    <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                        <div class="card">
+                            <div class="card__cover">
+                                <img src="{{ movie.image }}" alt="">
+                                <span class="card__rate card__rate--green">{{ movie.vote_average }}</span>
+                                <a href="{% url 'details movie' movie.slug %}" class="card__play">
+                                    <i class="icon ion-ios-play"></i>
+                                </a>
+                            </div>
+                            <div class="card__content">
+                                <h3 class="card__title"><a
+                                        href="{% url 'details movie' movie.slug %}">{{ movie.title }}</a>
+                                </h3>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
+    </div>
 {% endif %}
