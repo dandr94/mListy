@@ -47,6 +47,16 @@ class EditListEntryForm(ModelForm, CssStyleFormMixin):
         self._init_css_style_form_controls()
         self.fields['list'].queryset = user_lists
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        user_list = cleaned_data.get('list')
+
+        exists = ListEntry.objects.filter(movie__id=self.instance.movie.id, list__title=user_list).exists()
+
+        if exists and user_list != self.instance.list:
+            raise ValidationError(f'{self.instance.movie.name} is already in {user_list}.')
+
     class Meta:
         model = ListEntry
         fields = ['grade', 'list', 'would_recommend', 'status']
