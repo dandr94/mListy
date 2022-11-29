@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 {% block page_title %} Delete {{ list.title }} {% endblock %}
 
 {% block page_content %}
@@ -8,8 +8,12 @@
                 <div class="col-12">
                     <div class="sign__content">
                         <form method="POST" action="{% url 'delete entry' entry.pk entry.slug %}" class="sign__form">
+                            <a href="{% url 'index' %}" class="sign__logo">
+                                <span class="logo-first">m</span><span class="logo-second">Listy</span><i
+                                    class="fa-solid fa-film"></i>
+                            </a>
                             {% csrf_token %}
-                            <h3 class="section__text">Delete {{ entry.movie.name }} from {{ entry.list }}?</h3>
+                            <h3 class="section__text">Delete <span>{{ entry.movie.name }}</span> from <span>{{ entry.list }}</span>?</h3>
                             {{ form }}
                             <button class='sign__btn' type="submit">Delete</button>
                         </form>
