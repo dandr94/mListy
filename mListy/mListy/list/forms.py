@@ -45,7 +45,9 @@ class EditListForm(ModelForm, CssStyleFormMixin):
 
         title = cleaned_data.get('title')
 
-        if List.objects.filter(title=title, user_id=self.instance.user_id).exists():
+        exists = List.objects.filter(title=title, user_id=self.instance.user_id).exists()
+
+        if exists and self.instance.title != title:
             raise ValidationError(UNIQUE_TITLE_ERROR_MESSAGE)
 
     class Meta:
