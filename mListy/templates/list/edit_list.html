@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 {% load static %}
 {% block page_title %} Edit {{ list.title }} {% endblock %}
 
@@ -10,17 +10,24 @@
                     <div class="sign__content">
                         <form method="POST" action="{% url 'edit list' user.username list.slug %}" class="sign__form">
                             <a href="{% url 'index' %}" class="sign__logo">
-                                <img src="{% static 'img/logo.png' %}" alt="">
+                                <span class="logo-first">m</span><span class="logo-second">Listy</span><i
+                                    class="fa-solid fa-film"></i>
                             </a>
+                            {% if form.errors %}
+                                <div class="form-errors">{{ form.non_field_errors }}</div>
+                            {% endif %}
                             {% csrf_token %}
                             {% for field in form %}
-
-                                <label class="section__title" style="font-size: 20px; margin: 5px; color: #eab33d;"
+                                <label class="section__title" style="font-size: 20px; margin: 5px;"
                                        for="{{ field.auto_id }}">{{ field.label }}:</label>
+
+                                <label class="section__title" style="font-size: 15px; margin: 5px; color: #f9ab00"
+                                       for="{{ field.auto_id }}">{{ field.errors }}</label>
 
                                 {{ field }}
 
                             {% endfor %}
+
                             <button class="sign__btn" type="submit">Edit</button>
                         </form>
                     </div>
