@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from mListy.list.models import List, ListEntry
+from mListy.list.models import List
+from mListy.list_entry.models import ListEntry
 
 
 @admin.register(List)
