@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 from django.shortcuts import render
 from django.utils.text import slugify
 from django.views.generic import DetailView, ListView
@@ -14,10 +15,15 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         movie_id = kwargs['slug'].split('-')[0]
-        exists = check_if_in_db(movie_id)
+
+        try:
+            exists = check_if_in_db(movie_id)
+        except ValueError:
+            raise Http404
+
         if not exists:
             add_movie_to_db(movie_id)
-        kwargs['movie'] = exists
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
