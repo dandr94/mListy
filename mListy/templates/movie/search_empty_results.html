@@ -4,21 +4,22 @@
             <div class="row searchfield">
                 <div class="col-12">
                     <div class="form--wrapper">
-                        <form method="GET" class="form form--contacts">
-                            <a href="{% url 'index' %}" class="sign__logo" style="text-align: center">
-                                <span class="logo-first">m</span><span class="logo-second">Listy</span><i
-                                    class="fa-solid fa-film"></i>
-                            </a>
-                            <h2 style="text-align: center; color: #f9ab00">Your List is empty.</h2>
-                            <div class="row row--form btnsearch">
-                                <div class="col-12">
-                                    <input type="text" class="form__input" name="search"
-                                           placeholder="Type the name of the movie...">
+                        {% if is_owner %}
+                            <form method="GET" class="form form--contacts">
+                                <a href="{% url 'index' %}" class="sign__logo" style="text-align: center">
+                                    <span class="logo-first">m</span><span class="logo-second">Listy</span><i
+                                        class="fa-solid fa-film"></i>
+                                </a>
+                                <h2 style="text-align: center; color: #f9ab00">Your List is empty.</h2>
+                                <div class="row row--form btnsearch">
+
+                                    <button class="form__btn"><a style="color: #fff" href="{% url 'search movie' %}">Search</a>
+                                    </button>
                                 </div>
-                                <button type="submit" class="form__btn">Search
-                                </button>
-                            </div>
-                        </form>
+                            </form>
+                        {% else %}
+                            <h2 style="text-align: center; margin-top: 300px ;color: #f9ab00">List is empty.</h2>
+                        {% endif %}
                     </div>
                 </div>
             </div>
