@@ -1,6 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
+from django.views.generic.detail import SingleObjectMixin
 
 from mListy.account.mixins import PermissionHandlerMixin
 from mListy.list.forms import CreateListForm, EditListForm, DeleteListForm
@@ -25,7 +27,7 @@ class EditListView(LoginRequiredMixin, PermissionHandlerMixin, UpdateView):
     success_url = reverse_lazy('dashboard')
 
 
-class DeleteListView(DeleteView):
+class DeleteListView(LoginRequiredMixin, PermissionHandlerMixin, DeleteView):
     template_name = 'list/delete_list.html'
     form_class = DeleteListForm
     model = List
@@ -38,11 +40,16 @@ class DetailsListView(ListView):
     context_object_name = 'movie_list'
 
     def get_queryset(self):
-        queryset = List.objects.prefetch_related('listentry_set__movie').get(slug=self.kwargs['slug'])
+        try:
+            queryset = List.objects.prefetch_related('listentry_set__movie').get(slug=self.kwargs['slug'])
+        except List.DoesNotExist:
+            raise Http404
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['is_owner'] = context['object_list'].user.id == self.request.user.id
         context['total_time_minutes'] = sum(
             [movie.movie.duration for movie in context['movie_list'].listentry_set.all()])
         context['total_time_hours'] = context['total_time_minutes'] // 60
