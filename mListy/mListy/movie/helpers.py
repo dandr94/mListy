@@ -19,12 +19,13 @@ YOUTUBE_SEARCH_TYPE = 'video'
 YOUTUBE_API_KEY = YOUTUBE_SEARCH_API_KEY
 
 
-def check_if_in_db(movie_id: int) -> object or bool:  # FIX
-    try:
-        movie = MovieDB.objects.get(movie_id=movie_id)
-        return movie
-    except ObjectDoesNotExist:
-        return False
+def check_if_in_db(movie_id: int) -> bool:
+    exists = MovieDB.objects.filter(movie_id=movie_id).exists()
+
+    if exists:
+        return True
+
+    return False
 
 
 def add_movie_to_db(movie_id: int) -> None:
