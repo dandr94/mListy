@@ -1,6 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
+
+from mListy.account.mixins import EntryPermissionHandlerMixin
 from mListy.list.models import List
 from mListy.list_entry.forms import AddListEntryForm, EditListEntryForm, DeleteListEntryForm
 from mListy.list_entry.models import ListEntry
@@ -28,7 +31,7 @@ class AddListEntryView(LoginRequiredMixin, CreateView):
         return context
 
 
-class EditListEntryView(LoginRequiredMixin, UpdateView):
+class EditListEntryView(LoginRequiredMixin, EntryPermissionHandlerMixin, UpdateView):
     model = ListEntry
     template_name = 'list_entry/edit_entry.html'
     form_class = EditListEntryForm
@@ -43,7 +46,7 @@ class EditListEntryView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('details list', kwargs={'str': self.request.user.username, 'slug': self.object.list.slug})
 
 
-class DeleteListEntryView(LoginRequiredMixin, DeleteView):
+class DeleteListEntryView(LoginRequiredMixin, EntryPermissionHandlerMixin, DeleteView):
     model = ListEntry
     template_name = 'list_entry/delete_entry.html'
     context_object_name = 'entry'
