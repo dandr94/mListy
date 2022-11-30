@@ -8,7 +8,9 @@
             <th>WOULD RECOMMEND</th>
             <th>STATUS</th>
             <th>ADDED DATE</th>
-            <th>ACTIONS</th>
+            {% if request.user == movie_list.user %}
+                <th>ACTIONS</th>
+            {% endif %}
         </tr>
         </thead>
 
@@ -48,18 +50,20 @@
                     <div class="main__table-text">{{ movie.date_created|date:"d-M-Y" }}</div>
 
                 </td>
-                <td>
-                    <div class="main__table-btns">
-                        <a href="{% url 'edit entry' movie.id movie.slug %}"
-                           class="main__table-btn main__table-btn--edit edit-btn">
-                            <i class="icon ion-ios-create"></i>
-                        </a>
-                        <a href="{% url 'delete entry' movie.id movie.slug %}"
-                           class="main__table-btn main__table-btn--delete open-modal delete-btn">
-                            <i class="icon ion-ios-trash"></i>
-                        </a>
-                    </div>
-                </td>
+                {% if request.user == movie_list.user %}
+                    <td>
+                        <div class="main__table-btns">
+                            <a href="{% url 'edit entry' movie.id movie.slug %}"
+                               class="main__table-btn main__table-btn--edit edit-btn">
+                                <i class="icon ion-ios-create"></i>
+                            </a>
+                            <a href="{% url 'delete entry' movie.id movie.slug %}"
+                               class="main__table-btn main__table-btn--delete open-modal delete-btn">
+                                <i class="icon ion-ios-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
