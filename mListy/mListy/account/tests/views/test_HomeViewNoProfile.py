@@ -2,8 +2,8 @@ from mListy.account.tests.BaseAccountTestClass import BaseAccountTestClass
 
 class HomeViewNoProfileTests(BaseAccountTestClass):
     PATH = 'index'
-    TEMPLATE = 'index.html'
-    DASHBOARD_TEMPLATE = 'dashboard.html'
+    TEMPLATE = 'home/index.html'
+    DASHBOARD_TEMPLATE = 'home/dashboard.html'
 
     def setUp(self) -> None:
         self.user, self.profile = self.create_valid_user_and_profile()
