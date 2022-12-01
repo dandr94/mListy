@@ -23,6 +23,9 @@ class BaseListTestClass(TestCase):
         )
         self.client.login(**VALID_LOGIN_CREDENTIALS)
 
+    def create_user(self, **credentials):
+        return self.UserModel.objects.create_user(**credentials)
+
     @staticmethod
     def create_list(user):
         return List.objects.create(**VALID_LIST_DATA, user=user)
