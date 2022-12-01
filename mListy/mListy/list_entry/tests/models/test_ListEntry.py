@@ -19,7 +19,7 @@ class ListEntryTests(BaseListEntryTestClass):
     def test_creat_list_entry__expect_correct_values(self):
         self.create_entry()
 
-        entry = ListEntry.objects.get(list__id=self.user.id)
+        entry = ListEntry.objects.get(list=self.user_list)
 
         expected_slug_value = '54212-foobarbarz'
 
