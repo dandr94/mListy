@@ -4,7 +4,7 @@ from mListy.list_entry.tests.BaseListEntryTestClass import BaseListEntryTestClas
 
 
 class AddListEntryViewTests(BaseListEntryTestClass):
-    TEMPLATE = 'movie/add_entry.html'
+    TEMPLATE = 'list_entry/add_entry.html'
 
     PATH = 'add entry'
 
