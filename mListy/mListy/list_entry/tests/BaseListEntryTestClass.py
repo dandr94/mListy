@@ -35,6 +35,9 @@ class BaseListEntryTestClass(TestCase):
         self.user_list = List.objects.create(**VALID_LIST_DATA, user=self.user)
         self.movie = MovieDB.objects.create(**VALID_MOVIEDB_DATA)
 
+    def create_user(self, **credentials):
+        return self.UserModel.objects.create_user(**credentials)
+
     def create_entry(self):
         return ListEntry.objects.create(**VALID_LIST_ENTRY_DATA, movie=self.movie, list=self.user_list)
 
