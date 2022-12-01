@@ -4,7 +4,7 @@ from mListy.list_entry.tests.utils import VALID_LIST_ENTRY_DATA
 
 
 class EditListEntryViewTests(BaseListEntryTestClass):
-    TEMPLATE = 'movie/edit_entry.html'
+    TEMPLATE = 'list_entry/edit_entry.html'
 
     PATH = 'edit entry'
 
@@ -57,3 +57,26 @@ class EditListEntryViewTests(BaseListEntryTestClass):
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, expected_url)
+
+
+    def test_edit_from_request_that_is_not_owner__expect_403(self):
+        self.client.logout()
+
+        user2_data = {
+            'username': 'brumbroombrim',
+            'email': 'brumbroombrim@foo.bar',
+            'password': 'hellobye123',
+        }
+
+        self.create_user(**user2_data)
+
+        user_2_login_credentials = {
+            'username': 'brumbroombrim',
+            'password': 'hellobye123'
+        }
+
+        self.client.login(**user_2_login_credentials)
+
+        response = self.client.post(reverse(self.PATH, kwargs={'pk': self.entry.id, 'slug': self.entry.slug}))
+
+        self.assertEqual(response.status_code, 403)
