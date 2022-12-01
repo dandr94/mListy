@@ -1,3 +1,5 @@
+from django.urls import reverse
+
 from mListy.account.tests.BaseAccountTestClass import BaseAccountTestClass
 
 
@@ -58,3 +60,23 @@ class EditProfileViewTests(BaseAccountTestClass):
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, expected_url)
+
+    def test_edit_from_request_that_is_not_owner__expect_403(self):
+        self.logout_user()
+        user2_data = {
+            'username': 'brumbroombrim',
+            'email': 'brumbroombrim@foo.bar',
+            'password': 'hellobye123',
+        }
+        user2 = self.create_user(**user2_data)
+
+        user_2_login_credentials = {
+            'username': 'brumbroombrim',
+            'password': 'hellobye123'
+        }
+
+        self.client.login(**user_2_login_credentials)
+
+        response = self.client.post(reverse(self.PATH, kwargs={'slug': self.user.username}))
+
+        self.assertEqual(response.status_code, 403)
