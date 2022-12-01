@@ -1,3 +1,4 @@
+from mListy.list.models import List
 from mListy.list.tests.BaseListTestClass import BaseListTestClass
 
 
@@ -24,8 +25,12 @@ class EditListFormTests(BaseListTestClass):
         self.assertFormError(response, self.FORM, field_name_key, expected_empty_field_error_msg)
 
     def test_title_that_already_exists_should_return_correct_error_msg(self):
+        mock_list = List.objects.create(title='Fantasy', user=self.user)
+
+        self.assertTrue(mock_list.pk)
+
         expected_unique_error_msg = 'You already have a list with that title. Please choose another.'
 
-        response = self.post_response_for_list(self.user_list, self.profile, self.VALID_LIST_DATA)
+        response = self.post_response_for_list(mock_list, self.profile, self.VALID_LIST_DATA)
 
         self.assertFormError(response, self.FORM, None, expected_unique_error_msg)
