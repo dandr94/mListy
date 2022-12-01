@@ -42,3 +42,25 @@ class DeleteListViewTests(BaseListTestClass):
         expected_redirect_url = reverse('dashboard')
 
         self.assertRedirects(response, expected_redirect_url)
+
+    def test_delete_from_request_that_is_not_owner__expect_403(self):
+        self.client.logout()
+
+        user2_data = {
+            'username': 'brumbroombrim',
+            'email': 'brumbroombrim@foo.bar',
+            'password': 'hellobye123',
+        }
+
+        self.create_user(**user2_data)
+
+        user_2_login_credentials = {
+            'username': 'brumbroombrim',
+            'password': 'hellobye123'
+        }
+
+        self.client.login(**user_2_login_credentials)
+
+        response = self.client.post(reverse(self.PATH, kwargs={'str': self.profile.slug, 'slug': self.user_list.slug}))
+
+        self.assertEqual(response.status_code, 403)
