@@ -7,7 +7,7 @@ from mListy.account.forms import EditProfileForm, ChangePasswordForm
 from mListy.account.mixins import PermissionHandlerMixin
 from mListy.account.models import Profile
 from mListy.list.models import List
-from mListy.movie.helpers import return_last_added_entries, return_total_average_grade
+from mListy.account.helpers import return_last_added_entries, return_total_average_grade
 
 
 class ProfileDetailsView(DetailView):
