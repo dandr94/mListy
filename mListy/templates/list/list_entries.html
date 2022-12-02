@@ -8,7 +8,7 @@
             <th>WOULD RECOMMEND</th>
             <th>STATUS</th>
             <th>ADDED DATE</th>
-            {% if request.user == movie_list.user %}
+            {% if is_owner %}
                 <th>ACTIONS</th>
             {% endif %}
         </tr>
@@ -50,7 +50,7 @@
                     <div class="main__table-text">{{ movie.date_created|date:"d-M-Y" }}</div>
 
                 </td>
-                {% if request.user == movie_list.user %}
+                {% if is_owner %}
                     <td>
                         <div class="main__table-btns">
                             <a href="{% url 'edit entry' movie.id movie.slug %}"
