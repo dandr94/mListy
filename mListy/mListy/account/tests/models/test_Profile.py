@@ -50,8 +50,6 @@ class ProfileTests(TestCase):
 
         with self.assertRaises(ValidationError) as context:
             profile.full_clean()
-            profile.save()
-
         self.assertIsNotNone(context.exception)
 
     def test_profile_create__when_first_name_contains_a_space__expect_to_fail(self):
@@ -60,7 +58,6 @@ class ProfileTests(TestCase):
 
         with self.assertRaises(ValidationError) as context:
             profile.full_clean()
-            profile.save()
 
         self.assertIsNotNone(context.exception)
 
@@ -70,7 +67,6 @@ class ProfileTests(TestCase):
 
         with self.assertRaises(ValidationError) as context:
             profile.full_clean()
-            profile.save()
 
         self.assertIsNotNone(context.exception)
 
@@ -88,7 +84,6 @@ class ProfileTests(TestCase):
 
         with self.assertRaises(ValidationError) as context:
             profile.full_clean()
-            profile.save()
 
         self.assertIsNotNone(context.exception)
 
@@ -98,7 +93,6 @@ class ProfileTests(TestCase):
 
         with self.assertRaises(ValidationError) as context:
             profile.full_clean()
-            profile.save()
 
         self.assertIsNotNone(context.exception)
 
@@ -108,7 +102,6 @@ class ProfileTests(TestCase):
 
         with self.assertRaises(ValidationError) as context:
             profile.full_clean()
-            profile.save()
 
         self.assertIsNotNone(context.exception)
 
