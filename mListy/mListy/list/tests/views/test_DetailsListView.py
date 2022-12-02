@@ -56,8 +56,9 @@ class DetailsListViewTests(BaseListTestClass):
         response = self.get_response_for_list(self.user_list, self.profile)
 
         minutes = self.movie.duration + self.movie_2.duration
-        expected_hours = minutes // 60
-        expected_days = expected_hours // 24
+        expected_days = minutes / 1440
+        left_over_min = minutes % 1440
+        expected_hours = left_over_min / 60
 
         self.assertEqual(response.context['total_time_hours'], expected_hours)
         self.assertEqual(response.context['total_time_days'], expected_days)
