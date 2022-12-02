@@ -1,8 +1,5 @@
-from typing import List, Tuple
-
 import requests
 import tmdbsimple as tmdb
-from django.core.exceptions import ObjectDoesNotExist
 
 from mListy.movie.models import MovieDB
 from mListy.settings import YOUTUBE_SEARCH_API_KEY
@@ -79,15 +76,3 @@ def return_youtube_trailer(movie_name: str, release_date: str) -> str:
         return path
     except KeyError:
         return ''
-
-
-def return_last_added_entries(entries: dict) -> List[Tuple[object, int]]:
-    last_added = sorted(entries.items(), key=lambda x: x[0].date_created, reverse=True)[:5]
-
-    return last_added
-
-
-def return_total_average_grade(entries: dict) -> int:
-    total_average_grade = sum(entries.values()) // len(entries) if entries else 0
-
-    return total_average_grade
