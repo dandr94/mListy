@@ -2,10 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
-from django.views.generic.detail import SingleObjectMixin
 
 from mListy.account.mixins import PermissionHandlerMixin
 from mListy.list.forms import CreateListForm, EditListForm, DeleteListForm
+from mListy.list.helpers import return_time_stats, return_minutes, return_list_average_grade
 from mListy.list.models import List
 
 
@@ -49,12 +49,17 @@ class DetailsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context['is_owner'] = context['object_list'].user.id == self.request.user.id
-        context['total_time_minutes'] = sum(
-            [movie.movie.duration for movie in context['movie_list'].listentry_set.all()])
-        context['total_time_hours'] = context['total_time_minutes'] // 60
-        context['total_time_days'] = context['total_time_hours'] // 24
-        context['average_grade'] = sum([movie.grade for movie in context['movie_list'].listentry_set.all()]) // len(
-            context['movie_list'].listentry_set.all()) \
-            if context['movie_list'].listentry_set.all() else 0
+
+        entries_dict = {x: [x.movie.duration, x.grade] for x in context['movie_list'].listentry_set.all()}
+
+        total_time_minutes = return_minutes(entries_dict)
+
+        stats = return_time_stats(total_time_minutes)
+
+        context['total_time_days'] = stats[0]
+        context['total_time_hours'] = stats[1]
+        context['average_grade'] = return_list_average_grade(entries_dict)
+
         return context
