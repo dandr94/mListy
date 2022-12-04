@@ -33,17 +33,20 @@
                             <div class="col-12 col-md-8 col-lg-9 col-xl-7">
                                 <div class="card__content">
                                     <ul class="card__meta">
-                                        <li><span>Status:</span> <a>{{ movie.status }}</a></li>
-                                        <li><span>Cast:</span><a>{{ movie.actors }}</a></li>
-                                        <li><span>Genre:</span><a>{{ movie.genres }}</a></li>
+                                        <li><span>Status:</span>{{ movie.status }}</li>
+                                        <li><span>Cast:</span>{{ movie.actors }}</li>
+                                        <li><span>Genre:</span>{{ movie.genres }}</li>
                                         <li><span>Release date:</span> {{ movie.release_date }}</li>
                                         <li><span>Duration:</span> {{ movie.duration }}m</li>
                                         <li><span>Original Language:</span>{{ movie.language }}</li>
+                                        <li><span>Budget:</span> {{ movie.budget|floatformat:2 }}</li>
+                                        <li><span>Roles:</span>{{ movie.roles }}</li>
+                                        <li><span>Production companies:</span>{{ movie.production_companies }}</li>
+                                        <li><span>IMDB link:</span> <a
+                                                href="{{ movie.imdb_link }}">{{ movie.imdb_link }}</a></li>
+                                        <li>
                                     </ul>
-                                    <div class="card__description">
-                                        <p>Description:</p>
-                                        {{ movie.description }}
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -52,14 +55,15 @@
                 </div>
                 <div class="col-12 col-xl-6">
                     <div class="card__content">
-                        <ul class="card__meta">
-                            <li><span>Budget:</span> {{ movie.budget|floatformat:2 }}</li>
-                            <li><span>Roles:</span> <a>{{ movie.roles }}</a></li>
-                            <li><span>Production companies:</span>{{ movie.production_companies }}</li>
-                            <li><span>IMDB link:</span> <a href="{{ movie.imdb_link }}">{{ movie.imdb_link }}</a></li>
-                        </ul>
+
+                        <div class="card__description">
+                            <p>Description:</p>
+                            {{ movie.description }}
+                        </div>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </section>
