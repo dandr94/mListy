@@ -16,5 +16,7 @@
 {% endblock %}
 
 {% block footer %}
-    {% include 'nav&footer/footer.html' %}
+    {% if movie_list.listentry_set.all.count > 5 %}
+        {% include 'nav&footer/footer.html' %}
+    {% endif %}
 {% endblock %}
