@@ -22,3 +22,7 @@ class Dashboard(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = List.objects.filter(user=self.request.user).order_by('date_created')
         return queryset
+
+
+class About(TemplateView):
+    template_name = 'about.html'
