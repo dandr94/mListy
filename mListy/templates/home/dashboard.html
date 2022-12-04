@@ -58,5 +58,7 @@
 {% endblock %}
 
 {% block footer %}
-    {% include 'nav&footer/footer.html' %}
+    {% if lists %}
+        {% include 'nav&footer/footer.html' %}
+    {% endif %}
 {% endblock %}
