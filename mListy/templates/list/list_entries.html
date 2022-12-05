@@ -1,7 +1,7 @@
-<div class="main__table-wrap" style="margin-left: 50px">
+<div class="main__table-wrap" style="width: 84%; margin: auto">
     <table class="main__table">
-        <thead>
-        <tr>
+        <thead class="list__table-thead">
+        <tr class="list__table-main-tr">
             <th>N.</th>
             <th>TITLE</th>
             <th>GRADE</th>
@@ -14,11 +14,11 @@
         </tr>
         </thead>
 
-        <tbody>
-        {% for movie in movie_list.listentry_set.all %}
-            <tr>
+        <tbody >
+        {% for movie in entries %}
+            <tr class="list__table-tr">
                 <td>
-                    <div class="main__table-text">{{ forloop.counter }}.</div>
+                    <div class="main__table-text list-text">{{ forloop.counter }}.</div>
                 </td>
                 <td>
                     <div class="main__table-text"><a
