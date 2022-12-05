@@ -20,9 +20,9 @@
                                 <div class="card__cover">
                                     <img src="{{ movie.poster }}" alt="">
                                     {% if movie.average_grade %}
-                                        <span class="card__rate card__rate--green">{{ movie.average_grade|floatformat:1 }}</span>
+                                        <span class="card__rate card__rate--red">{{ movie.average_grade|floatformat:1 }}</span>
                                     {% else %}
-                                        <span class="card__rate card__rate--green">N/A</span>
+                                        <span class="card__rate card__rate--red">N/A</span>
                                     {% endif %}
                                 </div>
                                 <a href="{{ youtube_trailer }}" class="card__trailer"> Watch trailer</a>
@@ -39,7 +39,7 @@
                                         <li><span>Release date:</span> {{ movie.release_date }}</li>
                                         <li><span>Duration:</span> {{ movie.duration }}m</li>
                                         <li><span>Original Language:</span>{{ movie.language }}</li>
-                                        <li><span>Budget:</span> {{ movie.budget|floatformat:2 }}</li>
+                                        <li><span>Budget:</span> {{ movie.budget|floatformat:2 }}$</li>
                                         <li><span>Roles:</span>{{ movie.roles }}</li>
                                         <li><span>Production companies:</span>{{ movie.production_companies }}</li>
                                         <li><span>IMDB link:</span> <a
