@@ -5,20 +5,20 @@
                 <div class="col-12">
                     <div class="form--wrapper">
                         {% if is_owner %}
-                            <form method="GET" class="form form--contacts">
+                            <div class="form form--contacts">
                                 <a href="{% url 'index' %}" class="sign__logo" style="text-align: center">
                                     <span class="logo-first">m</span><span class="logo-second">Listy</span><i
                                         class="fa-solid fa-film"></i>
                                 </a>
-                                <h2 style="text-align: center; color: #f9ab00">Your List is empty.</h2>
+                                <h2 style="text-align: center; color: #fff;">Your List is empty.</h2>
                                 <div class="row row--form btnsearch">
 
                                     <button class="form__btn"><a style="color: #fff" href="{% url 'search movie' %}">Search</a>
                                     </button>
                                 </div>
-                            </form>
+                            </div>
                         {% else %}
-                            <h2 style="text-align: center; margin-top: 300px ;color: #f9ab00">List is empty.</h2>
+                            <h2 style="text-align: center; margin-top: 300px ;color: #fff;">List is empty.</h2>
                         {% endif %}
                     </div>
                 </div>
