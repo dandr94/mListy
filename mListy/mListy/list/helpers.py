@@ -19,3 +19,9 @@ def return_minutes(entries):
     minutes = sum(x for x, _ in entries.values())
 
     return minutes
+
+
+def sort_entries_by_grade_name(entries):
+    sort = sorted(entries, key=lambda x: (-x.grade, x.movie.name))
+
+    return sort
