@@ -5,7 +5,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 
 from mListy.account.mixins import PermissionHandlerMixin
 from mListy.list.forms import CreateListForm, EditListForm, DeleteListForm
-from mListy.list.helpers import return_time_stats, return_minutes, return_list_average_grade
+from mListy.list.helpers import return_time_stats, return_minutes, return_list_average_grade, sort_entries_by_grade_name
 from mListy.list.models import List
 
 
@@ -51,6 +51,8 @@ class DetailsListView(ListView):
         context = super().get_context_data(**kwargs)
 
         context['is_owner'] = context['object_list'].user.id == self.request.user.id
+
+        context['entries'] = sort_entries_by_grade_name(context['movie_list'].listentry_set.all())
 
         entries_dict = {x: [x.movie.duration, x.grade] for x in context['movie_list'].listentry_set.all()}
 
