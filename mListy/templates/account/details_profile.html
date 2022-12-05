@@ -12,18 +12,21 @@
                         <div class="stats">
                             <span>Username</span>
                             <p>{{ profile.slug }}</p>
+                            <i class="fa-solid fa-user"></i>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
                         <div class="stats">
                             <span>Total Lists</span>
                             <p><a href="#">{{ user_lists.count }}</a></p>
+                            <i class="fa-solid fa-list"></i>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
                         <div class="stats">
                             <span>Total Movies</span>
                             <p><a href="#">{{ total_movies }}</a></p>
+                            <i class="fa-solid fa-film"></i>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
@@ -37,6 +40,7 @@
                         <div class="dashbox">
                             <div class="dashbox__title">
                                 <h3>Profile Info</h3>
+                                <i class="fa-solid fa-hashtag"></i>
                             </div>
                             <div class="dashbox__table-wrap">
                                 <table class="main__table main__table--dash">
@@ -45,7 +49,7 @@
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <div class="main__table-text">First Name</div>
+                                            <div class="main__table-text">First Name:</div>
                                         </td>
                                         <td>
                                             {% if profile.first_name %}
@@ -69,7 +73,8 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="main__table-text">Website</div>
+                                            <div class="main__table-text"><i class="fa-sharp fa-solid fa-globe"></i>Website:
+                                            </div>
                                         </td>
                                         <td>
                                             {% if profile.website %}
@@ -82,7 +87,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="main__table-text">Twitter</div>
+                                            <div class="main__table-text"><i class="fa-brands fa-twitter"></i>Twitter:</div>
                                         </td>
                                         <td>
                                             {% if profile.twitter %}
@@ -95,7 +100,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="main__table-text">Instagram</div>
+                                            <div class="main__table-text"><i class="fa-brands fa-instagram"></i>Instagram:</div>
                                         </td>
                                         <td>
                                             {% if profile.instagram %}
@@ -108,7 +113,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="main__table-text">Facebook</div>
+                                            <div class="main__table-text"><i class="fa-brands fa-facebook"></i>Facebook:</div>
                                         </td>
                                         <td>
                                             {% if profile.facebook %}
@@ -136,6 +141,7 @@
                         <div class="dashbox">
                             <div class="dashbox__title">
                                 <h3>Last Added</h3>
+                                <i class="fa-solid fa-calendar"></i>
                             </div>
                             <div class="dashbox__table-wrap">
                                 <table class="main__table main__table--dash">
