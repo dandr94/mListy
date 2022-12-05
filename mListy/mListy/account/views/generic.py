@@ -25,4 +25,4 @@ class Dashboard(LoginRequiredMixin, ListView):
 
 
 class About(TemplateView):
-    template_name = 'about.html'
+    template_name = 'about/about.html'
