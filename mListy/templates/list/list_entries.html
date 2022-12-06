@@ -8,13 +8,11 @@
             <th>WOULD RECOMMEND</th>
             <th>STATUS</th>
             <th>ADDED DATE</th>
-            {% if is_owner %}
-                <th>ACTIONS</th>
-            {% endif %}
+            <th>ACTIONS</th>
         </tr>
         </thead>
 
-        <tbody >
+        <tbody>
         {% for movie in entries %}
             <tr class="list__table-tr">
                 <td>
@@ -48,7 +46,6 @@
                 </td>
                 <td>
                     <div class="main__table-text">{{ movie.date_created|date:"d-M-Y" }}</div>
-
                 </td>
                 {% if is_owner %}
                     <td>
@@ -62,6 +59,14 @@
                                 <i class="icon ion-ios-trash"></i>
                             </a>
                         </div>
+                    </td>
+                {% else %}
+                    <td>
+                        <div class="main__table-btns">
+                            <a
+                               class="main__table-btn main__table-btn--delete open-modal list-n-a">
+                                <i>N/A</i>
+                            </a></div>
                     </td>
                 {% endif %}
             </tr>
