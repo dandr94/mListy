@@ -54,14 +54,13 @@ class DetailsListView(ListView):
 
         context['entries'] = sort_entries_by_grade_name(context['movie_list'].listentry_set.all())
 
-        entries_dict = {x: [x.movie.duration, x.grade] for x in context['movie_list'].listentry_set.all()}
-
-        total_time_minutes = return_minutes(entries_dict)
+        total_time_minutes = return_minutes(context['entries'])
 
         stats = return_time_stats(total_time_minutes)
 
         context['total_time_days'] = stats[0]
         context['total_time_hours'] = stats[1]
-        context['average_grade'] = return_list_average_grade(entries_dict)
+
+        context['average_grade'] = return_list_average_grade(context['entries'])
 
         return context
