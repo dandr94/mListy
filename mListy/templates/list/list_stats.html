@@ -6,19 +6,22 @@
                     <div class="stats">
                         <span>Total Movies</span>
                         <p>{{ movie_list.listentry_set.all.count }}</p>
+                        <i class="fa-solid fa-film"></i>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-xl-3">
                     <div class="stats">
-                        <span>Time Spend Watching</span>
+                        <span>Time Spent Watching</span>
                         <p>Days: {{ total_time_days|floatformat:0 }}</p>
                         <p>Hours: {{ total_time_hours|floatformat:0 }}</p>
+                        <i class="fa-solid fa-clock"></i>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-xl-3">
                     <div class="stats">
                         <span>Average grade</span>
-                        <p><a href="#">{{ average_grade|floatformat:2 }}</a></p>
+                        <p>{{ average_grade|floatformat:2 }}</p>
+                        <i class="icon ion-ios-star-half"></i>
                     </div>
                 </div>
             </div>
