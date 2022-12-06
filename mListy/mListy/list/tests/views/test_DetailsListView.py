@@ -56,12 +56,14 @@ class DetailsListViewTests(BaseListTestClass):
         response = self.get_response_for_list(self.user_list, self.profile)
 
         minutes = self.movie.duration + self.movie_2.duration
-        expected_days = minutes / 1440
+        expected_days = minutes // 1440
         left_over_min = minutes % 1440
-        expected_hours = left_over_min / 60
+        expected_hours = left_over_min // 60
+        expected_minutes = minutes % 60
 
-        self.assertEqual(response.context['total_time_hours'], expected_hours)
         self.assertEqual(response.context['total_time_days'], expected_days)
+        self.assertEqual(response.context['total_time_hours'], expected_hours)
+        self.assertEqual(response.context['total_time_minutes'], expected_minutes)
 
     def test_average_grade_stats(self):
         response = self.get_response_for_list(self.user_list, self.profile)
