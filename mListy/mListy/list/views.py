@@ -60,6 +60,7 @@ class DetailsListView(ListView):
 
         context['total_time_days'] = stats[0]
         context['total_time_hours'] = stats[1]
+        context['total_time_minutes'] = stats[2]
 
         context['average_grade'] = return_list_average_grade(context['entries'])
 
