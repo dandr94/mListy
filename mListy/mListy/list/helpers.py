@@ -9,14 +9,14 @@ def return_time_stats(total_minutes: int) -> Tuple[float, float]:
     return days, minutes
 
 
-def return_list_average_grade(entries):
-    grade = sum(x for _, x in entries.values()) // len(entries) if entries else 0
+def return_list_average_grade(entries: list) -> int:
+    grade = sum(x.grade for x in entries) // len(entries) if entries else 0
 
     return grade
 
 
-def return_minutes(entries):
-    minutes = sum(x for x, _ in entries.values())
+def return_minutes(entries: list) -> int:
+    minutes = sum(x.movie.duration for x in entries)
 
     return minutes
 
