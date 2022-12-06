@@ -11,12 +11,10 @@
         {% include 'list/list_stats.html' %}
         {% include 'list/list_entries.html' %}
     {% else %}
-        {% include 'movie/search_empty_results.html' %}
+        {% include 'list/list_empty.html' %}
     {% endif %}
 {% endblock %}
 
 {% block footer %}
-    {% if movie_list.listentry_set.all.count > 5 %}
-        {% include 'nav&footer/footer.html' %}
-    {% endif %}
+    {% include 'nav&footer/footer.html' %}
 {% endblock %}
