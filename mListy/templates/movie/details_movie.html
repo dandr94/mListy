@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block page_title %} {{ movie.name }} {% endblock %}
 
 {% block nav_items %}
@@ -25,9 +26,10 @@
                                         <span class="card__rate card__rate--red">N/A</span>
                                     {% endif %}
                                 </div>
-                                <a href="{{ youtube_trailer }}" class="card__trailer"> Watch trailer</a>
-                                <a href="{% url 'add entry' movie.slug %}">
-                                    <button class="sign__btn" type="button"> Add MV to List</button>
+                                <a href="{{ youtube_trailer }}" class="card__trailer"><i class="fa-solid fa-play"></i>
+                                    Watch trailer</a>
+                                <a href="{% url 'add entry' movie.slug %}" class="card__add-to-list">
+                                    <i class="fa-solid fa-plus"></i> Add MV to List
                                 </a>
                             </div>
                             <div class="col-12 col-md-8 col-lg-9 col-xl-7">
@@ -39,7 +41,20 @@
                                         <li><span>Release date:</span> {{ movie.release_date }}</li>
                                         <li><span>Duration:</span> {{ movie.duration }}m</li>
                                         <li><span>Original Language:</span>{{ movie.language }}</li>
-                                        <li><span>Budget:</span> {{ movie.budget|floatformat:2 }}$</li>
+                                        {% if movie.budget == 0 %}
+                                            <li><span>Budget:</span>N/A</li>
+                                        {% elif movie.budget < 1_000_000 %}
+                                            <li><span>Budget:</span> {{ movie.budget|intcomma }} $</li>
+                                        {% else %}
+                                            <li><span>Budget:</span> {{ movie.budget|intword }} $</li>
+                                        {% endif %}
+                                        {% if movie.revenue == 0 %}
+                                            <li><span>Revenue:</span>N/A</li>
+                                        {% elif movie.budget < 1_000_000 %}
+                                            <li><span>Revenue:</span> {{ movie.revenue|intcomma }} $</li>
+                                        {% else %}
+                                            <li><span>Revenue:</span> {{ movie.revenue|intword }} $</li>
+                                        {% endif %}
                                         <li><span>Roles:</span>{{ movie.roles }}</li>
                                         <li><span>Production companies:</span>{{ movie.production_companies }}</li>
                                         <li><span>IMDB link:</span> <a
