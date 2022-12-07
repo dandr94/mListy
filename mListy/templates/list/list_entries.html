@@ -23,8 +23,7 @@
                             href="{% url 'details movie' movie.slug %}">{{ movie.movie.name|truncatewords:10 }}</a></div>
                 </td>
                 <td>
-                    <div class="main__table-text main__table-text--rate"><i
-                            class="icon ion-ios-star"></i>{{ movie.grade }}</div>
+                    <div class="main__table-text main__table-text--rate"><i class="fa-solid fa-star"></i>{{ movie.grade }}</div>
                 </td>
                 <td>
                     {% if movie.would_recommend == 'Yes' %}
@@ -52,11 +51,11 @@
                         <div class="main__table-btns">
                             <a href="{% url 'edit entry' movie.id movie.slug %}"
                                class="main__table-btn main__table-btn--edit edit-btn">
-                                <i class="icon ion-ios-create"></i>
+                                <i class="fa-solid fa-pen-to-square"></i>
                             </a>
                             <a href="{% url 'delete entry' movie.id movie.slug %}"
                                class="main__table-btn main__table-btn--delete open-modal delete-btn">
-                                <i class="icon ion-ios-trash"></i>
+                                <i class="fa-solid fa-trash"></i>
                             </a>
                         </div>
                     </td>
