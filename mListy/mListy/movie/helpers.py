@@ -48,7 +48,8 @@ def add_movie_to_db(movie_id: int) -> None:
             'production_companies'] else NOT_AVAILABLE,
         'language': info['original_language'].upper() if info['original_language'] else NOT_AVAILABLE,
         'imdb_link': IMDB_PATH + info['imdb_id'] if info['imdb_id'] else NOT_AVAILABLE,
-        'budget': info['budget'],
+        'budget': info['budget'] if info['budget'] else 0,
+        'revenue': info['revenue'] if info['revenue'] else 0,
         'release_date': info['release_date'],
         'status': info['status'] if info['status'] else NOT_AVAILABLE
 
