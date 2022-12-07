@@ -30,7 +30,7 @@
                                     {% if list.cover %}
                                         <img src="{{ list.cover }}" alt="">
                                     {% else %}
-                                        <img src="{% static 'img/covers/cover.jpg' %}" alt="">
+                                        <img src="{% static 'img/covers/cover-default.jpg' %}" alt="">
                                     {% endif %}
                                     <a href="{% url 'details list' list.slug %}" class="card__play">
                                         <i class="icon ion-ios-play"></i>
