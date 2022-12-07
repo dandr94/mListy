@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block page_title %} {{ movie_list }} {% endblock %}
+{% block page_title %} {{ user.username }}'s {{ movie_list }} list {% endblock %}
 
 {% block nav_items %}
     {% include 'nav&footer/nav_items.html' %}
