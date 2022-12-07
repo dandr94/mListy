@@ -6,7 +6,7 @@ UserModel = get_user_model()
 
 
 class MovieDB(models.Model):
-    MOVIE_NAME_MAX_CHAR = 100
+    MOVIE_NAME_MAX_CHAR = 240
     GENRES_MAX_CHAR = 100
     ACTORS_MAX_CHAR = 1000
     ROLES_MAX_CHAR = 1000
