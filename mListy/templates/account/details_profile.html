@@ -168,7 +168,7 @@
                                         <tr>
                                             <td>
                                                 <div class="main__table-text"><a
-                                                        href="{% url 'details movie' m.slug %}">{{ m.movie.name }}</a>
+                                                        href="{% url 'details movie' m.slug %}">{{ m.movie.name|truncatewords:10 }}</a>
                                                 </div>
                                             </td>
                                             <td>
