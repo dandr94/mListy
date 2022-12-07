@@ -36,7 +36,7 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
 class SearchMovieView(LoginRequiredMixin, ListView):
     template_name = 'movie/search_movie.html'
     IMG_PATH = 'https://image.tmdb.org/t/p/w500/'
-    IMG_NOT_FOUND = 'https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png'
+    IMG_NOT_FOUND = 'https://res.cloudinary.com/dpdcgsg6l/image/upload/v1670422356/image-not-available_bu5h9z.png'
 
     def get(self, request, *args, **kwargs):
         keyword = request.GET.get('search', '')
