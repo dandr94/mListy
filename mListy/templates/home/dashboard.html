@@ -33,7 +33,7 @@
                                         <img src="{% static 'img/covers/cover-default.jpg' %}" alt="">
                                     {% endif %}
                                     <a href="{% url 'details list' list.slug %}" class="card__play">
-                                        <i class="icon ion-ios-play"></i>
+                                        <i class="fa-solid fa-play"></i>
                                     </a>
                                 </div>
                                 <div class="card__content">
@@ -42,10 +42,9 @@
                                     </h3>
                                     <span class="card__category">
 
-                                        <a href="{% url 'edit list' list.slug %}"><i
-                                                class="icon ion-ios-create"></i></a>
-                                        <a href="{% url 'delete list' list.slug %}"><i
-                                                class="icon ion-ios-trash"></i></a>
+                                        <a href="{% url 'edit list' list.slug %}"><i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a href="{% url 'delete list' list.slug %}"><i class="fa-solid fa-trash"></i></a>
 								    </span>
                                 </div>
                             </div>
