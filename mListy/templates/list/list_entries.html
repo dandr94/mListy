@@ -20,7 +20,7 @@
                 </td>
                 <td>
                     <div class="main__table-text"><a
-                            href="{% url 'details movie' movie.slug %}">{{ movie.movie.name }}</a></div>
+                            href="{% url 'details movie' movie.slug %}">{{ movie.movie.name|truncatewords:10 }}</a></div>
                 </td>
                 <td>
                     <div class="main__table-text main__table-text--rate"><i
