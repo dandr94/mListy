@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="sign__content">
-                        <form method="POST" action="{% url 'delete list' user.username list.slug %}" class="sign__form">
+                        <form method="POST" action="{% url 'delete list' list.slug %}" class="sign__form">
                             <a href="{% url 'index' %}" class="sign__logo">
                                 <span class="logo-first">m</span><span class="logo-second">Listy</span><i
                                     class="fa-solid fa-film"></i>
