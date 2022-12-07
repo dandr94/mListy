@@ -38,7 +38,7 @@ class List(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        slug = slugify(self.title)
+        slug = slugify(str(self.user) + '-' + self.title)
 
         if not self.slug:
             self.slug = slug
