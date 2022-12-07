@@ -43,7 +43,7 @@ class EditListEntryView(LoginRequiredMixin, EntryPermissionHandlerMixin, UpdateV
         return kwargs
 
     def get_success_url(self):
-        return reverse_lazy('details list', kwargs={'str': self.request.user.username, 'slug': self.object.list.slug})
+        return reverse_lazy('details list', kwargs={'slug': self.object.list.slug})
 
 
 class DeleteListEntryView(LoginRequiredMixin, EntryPermissionHandlerMixin, DeleteView):
@@ -53,4 +53,4 @@ class DeleteListEntryView(LoginRequiredMixin, EntryPermissionHandlerMixin, Delet
     form_class = DeleteListEntryForm
 
     def get_success_url(self):
-        return reverse_lazy('details list', kwargs={'str': self.request.user.username, 'slug': self.object.list.slug})
+        return reverse_lazy('details list', kwargs={'slug': self.object.list.slug})
