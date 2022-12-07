@@ -8,6 +8,6 @@ def return_last_added_entries(entries: list) -> List[object]:
 
 
 def return_total_average_grade(entries: list) -> int:
-    total_average_grade = sum(e.grade for e in entries) // len(entries) if entries else 0
+    total_average_grade = sum(e.grade for e in entries) / len(entries) if entries else 0
 
     return total_average_grade
