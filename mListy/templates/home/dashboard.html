@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-12">
                     {% if lists %}
-                        <h1 class="home__title"><b>Your</b> lists</h1>
+                        <h1 class="home__title">Your <b>Lists</b></h1>
                     {% else %}
                         <h2 class="home__title "><b><a href="{% url 'create list' %}">Create</a></b> a list</h2>
                     {% endif %}
@@ -32,19 +32,19 @@
                                     {% else %}
                                         <img src="{% static 'img/covers/cover.jpg' %}" alt="">
                                     {% endif %}
-                                    <a href="{% url 'details list' user.username list.slug %}" class="card__play">
+                                    <a href="{% url 'details list' list.slug %}" class="card__play">
                                         <i class="icon ion-ios-play"></i>
                                     </a>
                                 </div>
                                 <div class="card__content">
                                     <h3 class="card__title"><a
-                                            href="{% url 'details list' user.username list.slug %}">{{ list.title }}</a>
+                                            href="{% url 'details list' list.slug %}">{{ list.title }}</a>
                                     </h3>
                                     <span class="card__category">
 
-                                        <a href="{% url 'edit list' user.username list.slug %}"><i
+                                        <a href="{% url 'edit list' list.slug %}"><i
                                                 class="icon ion-ios-create"></i></a>
-                                        <a href="{% url 'delete list' user.username list.slug %}"><i
+                                        <a href="{% url 'delete list' list.slug %}"><i
                                                 class="icon ion-ios-trash"></i></a>
 								    </span>
                                 </div>
