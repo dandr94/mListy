@@ -11,7 +11,7 @@ def return_time_stats(total_minutes: int) -> Tuple[float, ...]:
 
 
 def return_list_average_grade(entries: list) -> int:
-    grade = sum(x.grade for x in entries) // len(entries) if entries else 0
+    grade = sum(x.grade for x in entries) / len(entries) if entries else 0
 
     return grade
 
