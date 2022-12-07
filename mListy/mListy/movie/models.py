@@ -78,9 +78,14 @@ class MovieDB(models.Model):
         null=True,
     )
 
-    budget = models.FloatField(
+    budget = models.IntegerField(
         blank=True,
         null=True,
+    )
+
+    revenue = models.IntegerField(
+        blank=True,
+        null=True
     )
 
     release_date = models.DateField(
