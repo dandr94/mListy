@@ -30,10 +30,10 @@ class BaseListTestClass(TestCase):
     def create_list(user):
         return List.objects.create(**VALID_LIST_DATA, user=user)
 
-    def get_response_for_list(self, user_list, profile):
-        return self.client.get(reverse(self.PATH, kwargs={'str': profile.slug, 'slug': user_list.slug}))
+    def get_response_for_list(self, user_list,):
+        return self.client.get(reverse(self.PATH, kwargs={'slug': user_list.slug}))
 
-    def post_response_for_list(self, user_list, profile, credentials, follow=False):
-        return self.client.post(reverse(self.PATH, kwargs={'str': profile.slug, 'slug': user_list.slug}),
+    def post_response_for_list(self, user_list, credentials, follow=False):
+        return self.client.post(reverse(self.PATH, kwargs={'slug': user_list.slug}),
                                 credentials,
                                 follow=follow)
