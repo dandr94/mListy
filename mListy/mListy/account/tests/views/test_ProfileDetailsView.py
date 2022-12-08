@@ -140,7 +140,7 @@ class ProfileDetailsViewTests(BaseAccountTestClass):
 
         response = self.get_response_for_profile(self.profile)
 
-        self.assertEqual(response.context['last_added'][0][0], entry)
+        self.assertEqual(response.context['last_added'][0], entry)
 
     def test_profile_details_last_added_elements_are_sorted_correctly_by_date_created(self):
         _, _, entry = self.create_list_movie_and_entry(
@@ -163,5 +163,5 @@ class ProfileDetailsViewTests(BaseAccountTestClass):
 
         response = self.get_response_for_profile(self.profile)
 
-        self.assertEqual(response.context['last_added'][0][0], entry_2)
-        self.assertEqual(response.context['last_added'][1][0], entry)
+        self.assertEqual(response.context['last_added'][0], entry_2)
+        self.assertEqual(response.context['last_added'][1], entry)
