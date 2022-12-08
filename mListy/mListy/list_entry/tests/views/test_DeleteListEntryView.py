@@ -32,7 +32,7 @@ class DeleteListEntryViewTests(BaseListEntryTestClass):
     def test_redirect_after_deletion(self):
         response = self.post_response_for_list_entry(self.entry, {})
 
-        expected_redirect_url = reverse('details list', kwargs={'str': self.user.username, 'slug': self.user_list.slug})
+        expected_redirect_url = reverse('details list', kwargs={'slug': self.user_list.slug})
 
         self.assertRedirects(response, expected_redirect_url)
 
