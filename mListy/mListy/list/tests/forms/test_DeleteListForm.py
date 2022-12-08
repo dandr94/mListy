@@ -14,7 +14,7 @@ class DeleteListFormTests(BaseListTestClass):
     def test_successful_list_deletion(self):
         user_list = List.objects.get(title=self.VALID_LIST_TITLE_NAME, user=self.user)
         self.assertIsNotNone(user_list)
-        response = self.post_response_for_list(self.user_list, self.profile, {})
+        response = self.post_response_for_list(self.user_list, {})
         user_list = List.objects.first()
 
         self.assertIsNone(user_list)
