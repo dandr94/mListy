@@ -48,6 +48,6 @@ class BaseListEntryTestClass(TestCase):
         return self.client.get(reverse(self.PATH, kwargs={'pk': entry.id, 'slug': entry.movie.slug}))
 
     def post_response_for_list_entry(self, entry, credentials, follow=False):
-        return self.client.post(reverse(self.PATH, kwargs={'pk': entry.id, 'slug': entry.list.slug}),
+        return self.client.post(reverse(self.PATH, kwargs={'pk': entry.id, 'slug': entry.movie.slug}),
                                 credentials,
                                 follow=follow)
