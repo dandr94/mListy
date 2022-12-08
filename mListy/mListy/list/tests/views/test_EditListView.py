@@ -26,12 +26,12 @@ class EditListViewTests(BaseListTestClass):
         self.user_list = self.create_list(self.user)
 
     def test_correct_template_is_used(self):
-        response = self.get_response_for_list(self.user_list, self.profile)
+        response = self.get_response_for_list(self.user_list)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.TEMPLATE)
 
     def test_edit_list_with_valid_credentials(self):
-        response = self.get_response_for_list(self.user_list, self.profile)
+        response = self.get_response_for_list(self.user_list)
         form = response.context[self.FORM]
         data = form.initial
 
@@ -40,13 +40,13 @@ class EditListViewTests(BaseListTestClass):
         data[self.TITLE_KEY] = self.NEW_VALUES[self.TITLE_KEY]
         data[self.COVER_KEY] = self.NEW_VALUES[self.COVER_KEY]
 
-        response = self.post_response_for_list(self.user_list, self.profile, data, follow=True)
+        response = self.post_response_for_list(self.user_list, data, follow=True)
 
         self.assertContains(response, self.NEW_VALUES[self.TITLE_KEY])
         self.assertNotContains(response, self.VALID_LIST_DATA[self.TITLE_KEY])
 
     def test_redirect_after_valid_edit(self):
-        response = self.get_response_for_list(self.user_list, self.profile)
+        response = self.get_response_for_list(self.user_list)
         form = response.context[self.FORM]
         data = form.initial
 
@@ -55,7 +55,7 @@ class EditListViewTests(BaseListTestClass):
         data[self.TITLE_KEY] = self.NEW_VALUES[self.TITLE_KEY]
         data[self.COVER_KEY] = self.NEW_VALUES[self.COVER_KEY]
 
-        response = self.post_response_for_list(self.user_list, self.profile, data)
+        response = self.post_response_for_list(self.user_list, data)
         expected_url = '/dashboard/'
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, expected_url)
@@ -78,6 +78,6 @@ class EditListViewTests(BaseListTestClass):
 
         self.client.login(**user_2_login_credentials)
 
-        response = self.client.post(reverse(self.PATH, kwargs={'str': self.profile.slug, 'slug': self.user_list.slug}))
+        response = self.client.post(reverse(self.PATH, kwargs={'slug': self.user_list.slug}))
 
         self.assertEqual(response.status_code, 403)
