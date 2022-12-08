@@ -18,7 +18,7 @@ class ListTests(BaseListTestClass):
     def test_create_list_with_valid_data__expect_slug_to_be_correct_value(self):
         user_list = List.objects.create(title=self.VALID_TITLE_NAME, user=self.user)
 
-        expected_slug_value = 'drama'
+        expected_slug_value = f'{str(self.user)}-drama'
 
         self.assertEqual(expected_slug_value, user_list.slug)
 
