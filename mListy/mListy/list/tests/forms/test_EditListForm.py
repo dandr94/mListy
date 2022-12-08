@@ -21,7 +21,7 @@ class EditListFormTests(BaseListTestClass):
         field_name_key = 'title'
         expected_empty_field_error_msg = 'This field is required.'
 
-        response = self.post_response_for_list(self.user_list, self.profile, self.INVALID_LIST_DATA)
+        response = self.post_response_for_list(self.user_list, self.INVALID_LIST_DATA)
         self.assertFormError(response, self.FORM, field_name_key, expected_empty_field_error_msg)
 
     def test_title_that_already_exists_should_return_correct_error_msg(self):
@@ -31,6 +31,6 @@ class EditListFormTests(BaseListTestClass):
 
         expected_unique_error_msg = 'You already have a list with that title. Please choose another.'
 
-        response = self.post_response_for_list(mock_list, self.profile, self.VALID_LIST_DATA)
+        response = self.post_response_for_list(mock_list, self.VALID_LIST_DATA)
 
         self.assertFormError(response, self.FORM, None, expected_unique_error_msg)
