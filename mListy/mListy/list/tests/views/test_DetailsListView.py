@@ -30,12 +30,12 @@ class DetailsListViewTests(BaseListTestClass):
         self.entry2 = ListEntry.objects.create(**self.VALID_ENTRY_DATA_2, movie=self.movie_2, list=self.user_list)
 
     def test_correct_template_is_used(self):
-        response = self.get_response_for_list(self.user_list, self.profile)
+        response = self.get_response_for_list(self.user_list)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.TEMPLATE)
 
     def test_correct_data_is_listed(self):
-        response = self.get_response_for_list(self.user_list, self.profile)
+        response = self.get_response_for_list(self.user_list)
 
         entries = [self.entry, self.entry2]
         for i, v in enumerate(response.context['movie_list'].listentry_set.all()):
@@ -46,14 +46,14 @@ class DetailsListViewTests(BaseListTestClass):
             self.assertEqual(v.list, entries[i].list)
 
     def test_total_movies_stats(self):
-        response = self.get_response_for_list(self.user_list, self.profile)
+        response = self.get_response_for_list(self.user_list)
 
         expected_total_movie_value = 2
 
         self.assertEqual(len(response.context['movie_list'].listentry_set.all()), expected_total_movie_value)
 
     def test_time_spend_watching_stats(self):
-        response = self.get_response_for_list(self.user_list, self.profile)
+        response = self.get_response_for_list(self.user_list)
 
         minutes = self.movie.duration + self.movie_2.duration
         expected_days = minutes // 1440
@@ -66,7 +66,7 @@ class DetailsListViewTests(BaseListTestClass):
         self.assertEqual(response.context['total_time_minutes'], expected_minutes)
 
     def test_average_grade_stats(self):
-        response = self.get_response_for_list(self.user_list, self.profile)
+        response = self.get_response_for_list(self.user_list)
 
         expected_average_grade = (self.entry.grade + self.entry2.grade) // 2
 
