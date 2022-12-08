@@ -53,7 +53,7 @@ class EditListEntryViewTests(BaseListEntryTestClass):
 
         response = self.post_response_for_list_entry(self.entry, data)
 
-        expected_url = reverse('details list', kwargs={'str': self.user.username, 'slug': self.user_list.slug})
+        expected_url = reverse('details list', kwargs={'slug': self.user_list.slug})
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, expected_url)
