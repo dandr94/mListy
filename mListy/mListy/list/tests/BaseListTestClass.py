@@ -16,6 +16,10 @@ class BaseListTestClass(TestCase):
 
     FORM = 'form'
 
+    VALID_LIST_DATA = {
+        'title': 'Drama'
+    }
+
     def setUp(self):
         self.user = self.UserModel.objects.create_user(**VALID_USER_CREDENTIALS)
         self.profile = Profile.objects.create(
@@ -30,7 +34,10 @@ class BaseListTestClass(TestCase):
     def create_list(user):
         return List.objects.create(**VALID_LIST_DATA, user=user)
 
-    def get_response_for_list(self, user_list,):
+    def post_response_for_create_list(self, credentials):
+        return self.client.post(reverse(self.PATH), credentials)
+
+    def get_response_for_list(self, user_list):
         return self.client.get(reverse(self.PATH, kwargs={'slug': user_list.slug}))
 
     def post_response_for_list(self, user_list, credentials, follow=False):
