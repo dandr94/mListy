@@ -3,10 +3,6 @@ from mListy.list.tests.BaseListTestClass import BaseListTestClass
 
 
 class EditListFormTests(BaseListTestClass):
-    VALID_LIST_DATA = {
-        'title': 'Drama'
-    }
-
     INVALID_LIST_DATA = {
         'title': ''
     }
