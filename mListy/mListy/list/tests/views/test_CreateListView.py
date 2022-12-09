@@ -9,10 +9,6 @@ class CreateListViewTests(BaseListTestClass):
 
     TEMPLATE = 'list/create_list.html'
 
-    VALID_LIST_DATA = {
-        'title': 'Drama'
-    }
-
     def setUp(self):
         super().setUp()
         self.client.login(**VALID_LOGIN_CREDENTIALS)
@@ -23,7 +19,7 @@ class CreateListViewTests(BaseListTestClass):
         self.assertTemplateUsed(response, self.TEMPLATE)
 
     def test_create_list_with_valid_credentials(self):
-        self.client.post(reverse(self.PATH), data=self.VALID_LIST_DATA)
+        self.post_response_for_create_list(self.VALID_LIST_DATA)
 
         user_list = List.objects.get(title=self.VALID_LIST_DATA['title'], user=self.user)
 
@@ -31,10 +27,10 @@ class CreateListViewTests(BaseListTestClass):
         self.assertEqual(self.VALID_LIST_DATA['title'], user_list.title)
 
     def test_status_code_after_valid_list_creation__expect_302(self):
-        response = self.client.post(reverse(self.PATH), self.VALID_LIST_DATA)
+        response = self.post_response_for_create_list(self.VALID_LIST_DATA)
         self.assertEqual(response.status_code, 302)
 
     def test_redirect_after_valid_list_creation(self):
-        response = self.client.post(reverse(self.PATH), self.VALID_LIST_DATA)
+        response = self.post_response_for_create_list(self.VALID_LIST_DATA)
         expected_url = '/dashboard/'
         self.assertRedirects(response, expected_url)
