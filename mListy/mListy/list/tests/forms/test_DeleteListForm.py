@@ -3,8 +3,6 @@ from mListy.list.tests.BaseListTestClass import BaseListTestClass
 
 
 class DeleteListFormTests(BaseListTestClass):
-    VALID_LIST_TITLE_NAME = 'Drama'
-
     PATH = 'delete list'
 
     def setUp(self):
@@ -12,9 +10,9 @@ class DeleteListFormTests(BaseListTestClass):
         self.user_list = self.create_list(self.user)
 
     def test_successful_list_deletion(self):
-        user_list = List.objects.get(title=self.VALID_LIST_TITLE_NAME, user=self.user)
+        user_list = List.objects.get(title=self.VALID_LIST_DATA['title'], user=self.user)
         self.assertIsNotNone(user_list)
-        response = self.post_response_for_list(self.user_list, {})
+        self.post_response_for_list(self.user_list, {})
         user_list = List.objects.first()
 
         self.assertIsNone(user_list)
