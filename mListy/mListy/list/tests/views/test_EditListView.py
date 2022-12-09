@@ -1,5 +1,3 @@
-from django.urls import reverse
-
 from mListy.list.tests.BaseListTestClass import BaseListTestClass
 
 
@@ -78,6 +76,6 @@ class EditListViewTests(BaseListTestClass):
 
         self.client.login(**user_2_login_credentials)
 
-        response = self.client.post(reverse(self.PATH, kwargs={'slug': self.user_list.slug}))
+        response = self.post_response_for_list(self.user_list, {})
 
         self.assertEqual(response.status_code, 403)
