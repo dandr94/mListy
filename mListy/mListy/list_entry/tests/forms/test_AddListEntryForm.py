@@ -4,7 +4,7 @@ from mListy.list_entry.tests.BaseListEntryTestClass import BaseListEntryTestClas
 
 class AddListEntryFormTests(BaseListEntryTestClass):
     PATH = 'add entry'
-    EXPECTED_EMPTY_FIELD_ERROR_MSG = 'This field is required.'
+    EMPTY_FIELD_ERROR_MSG = 'This field is required.'
 
     def __return_post_response_(self):
         return self.client.post(reverse(self.PATH, kwargs={'slug': self.movie.slug}), self.FIELD_DATA)
@@ -16,7 +16,7 @@ class AddListEntryFormTests(BaseListEntryTestClass):
 
         response = self.__return_post_response_()
 
-        self.assertFormError(response, self.FORM, field_name_key, self.EXPECTED_EMPTY_FIELD_ERROR_MSG)
+        self.assertFormError(response, self.FORM, field_name_key, self.EMPTY_FIELD_ERROR_MSG)
 
     def test_empty_list_field__should_return_correct_error_msg(self):
         field_name_key = 'list'
@@ -25,7 +25,7 @@ class AddListEntryFormTests(BaseListEntryTestClass):
 
         response = self.__return_post_response_()
 
-        self.assertFormError(response, self.FORM, field_name_key, self.EXPECTED_EMPTY_FIELD_ERROR_MSG)
+        self.assertFormError(response, self.FORM, field_name_key, self.EMPTY_FIELD_ERROR_MSG)
 
     def test_empty_status_field__should_return_correct_error_msg(self):
         field_name_key = 'status'
@@ -34,7 +34,7 @@ class AddListEntryFormTests(BaseListEntryTestClass):
 
         response = self.__return_post_response_()
 
-        self.assertFormError(response, self.FORM, field_name_key, self.EXPECTED_EMPTY_FIELD_ERROR_MSG)
+        self.assertFormError(response, self.FORM, field_name_key, self.EMPTY_FIELD_ERROR_MSG)
 
     def test_add_entry_in_a_list_with_existing_identical_entry__expect_correct_error_msg(self):
         self.create_entry()
