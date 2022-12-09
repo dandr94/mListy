@@ -77,6 +77,6 @@ class EditListEntryViewTests(BaseListEntryTestClass):
 
         self.client.login(**user_2_login_credentials)
 
-        response = self.client.post(reverse(self.PATH, kwargs={'pk': self.entry.id, 'slug': self.entry.slug}))
+        response = self.post_response_for_list_entry(self.entry, {})
 
         self.assertEqual(response.status_code, 403)
