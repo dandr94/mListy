@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 
@@ -13,6 +12,7 @@ from mListy.movie.models import MovieDB
 class AddListEntryView(LoginRequiredMixin, CreateView):
     template_name = 'list_entry/add_entry.html'
     form_class = AddListEntryForm
+    context_object_name = 'entry'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -28,6 +28,7 @@ class AddListEntryView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['movie_slug'] = self.kwargs['slug']
+        context['movie_name'] = context['form'].movie
         return context
 
 
