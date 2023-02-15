@@ -4,86 +4,91 @@
 {% block page_title %} {{ movie.name }} {% endblock %}
 
 {% block nav_items %}
-    {% include 'nav&footer/nav_items.html' %}
+{% include 'nav&footer/nav_items.html' %}
 {% endblock %}
 
 {% block page_content %}
-    <section class="section section--details section--bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="section__title section__title--mb">{{ movie.name }}</h1>
-                </div>
-                <div class="col-12 col-xl-6">
-                    <div class="card card--details">
-                        <div class="row">
-                            <div class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5">
-                                <div class="card__cover">
-                                    <img src="{{ movie.poster }}" alt="">
-                                    {% if movie.average_grade %}
-                                        <span class="card__rate card__rate--red">{{ movie.average_grade|floatformat:1 }}</span>
+<section class="section section--details section--bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="section__title section__title--mb">{{ movie.name }}</h1>
+            </div>
+            <div class="col-12 col-xl-6">
+                <div class="card card--details">
+                    <div class="row">
+                        <div class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5">
+                            <div class="card__cover">
+                                <img src="{{ movie.poster }}" alt="">
+                                {% if movie.average_grade %}
+                                <span class="card__rate card__rate--red">{{ movie.average_grade|floatformat:1 }}</span>
+                                {% else %}
+                                <span class="card__rate card__rate--red">N/A</span>
+                                {% endif %}
+                            </div>
+                            <a href="{{ youtube_trailer }}" class="card__trailer"><i class="fa-solid fa-play"></i>
+                                Watch trailer</a>
+                            <a href="{% url 'add entry' movie.slug %}" class="card__add-to-list">
+                                <i class="fa-solid fa-plus"></i> Add MV to List
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-9 col-xl-7">
+                            <div class="card__content">
+                                <ul class="card__meta">
+                                    <li><span>Status:</span>{{ movie.status }}</li>
+                                    <li><span>Cast:</span>{{ movie.actors }}</li>
+                                    <li><span>Genre:</span>{{ movie.genres }}</li>
+                                    <li><span>Release date:</span> {{ movie.release_date }}</li>
+                                    <li><span>Duration:</span> {{ movie.duration }}m</li>
+                                    <li><span>Original Language:</span>{{ movie.language }}</li>
+                                    {% if movie.budget == 0 %}
+                                    <li><span>Budget:</span>N/A</li>
+                                    {% elif movie.budget < 1_000_000 %}
+                                    <li><span>Budget:</span> {{ movie.budget|intcomma }} $</li>
                                     {% else %}
-                                        <span class="card__rate card__rate--red">N/A</span>
+                                    <li><span>Budget:</span> {{ movie.budget|intword }} $</li>
                                     {% endif %}
-                                </div>
-                                <a href="{{ youtube_trailer }}" class="card__trailer"><i class="fa-solid fa-play"></i>
-                                    Watch trailer</a>
-                                <a href="{% url 'add entry' movie.slug %}" class="card__add-to-list">
-                                    <i class="fa-solid fa-plus"></i> Add MV to List
-                                </a>
-                            </div>
-                            <div class="col-12 col-md-8 col-lg-9 col-xl-7">
-                                <div class="card__content">
-                                    <ul class="card__meta">
-                                        <li><span>Status:</span>{{ movie.status }}</li>
-                                        <li><span>Cast:</span>{{ movie.actors }}</li>
-                                        <li><span>Genre:</span>{{ movie.genres }}</li>
-                                        <li><span>Release date:</span> {{ movie.release_date }}</li>
-                                        <li><span>Duration:</span> {{ movie.duration }}m</li>
-                                        <li><span>Original Language:</span>{{ movie.language }}</li>
-                                        {% if movie.budget == 0 %}
-                                            <li><span>Budget:</span>N/A</li>
-                                        {% elif movie.budget < 1_000_000 %}
-                                            <li><span>Budget:</span> {{ movie.budget|intcomma }} $</li>
+                                    {% if movie.revenue == 0 %}
+                                    <li><span>Revenue:</span>N/A</li>
+                                    {% elif movie.budget < 1_000_000 %}
+                                    <li><span>Revenue:</span> {{ movie.revenue|intcomma }} $</li>
+                                    {% else %}
+                                    <li><span>Revenue:</span> {{ movie.revenue|intword }} $</li>
+                                    {% endif %}
+                                    <li><span>Roles:</span>{{ movie.roles }}</li>
+                                    <li><span>Production companies:</span>{{ movie.production_companies }}</li>
+                                    {% if movie.imdb_link == 'N/A' %}
+                                    <li><span>IMDB link:</span>{{ movie.imdb_link }}</li>
+                                    <li>
                                         {% else %}
-                                            <li><span>Budget:</span> {{ movie.budget|intword }} $</li>
+                                    <li><span>IMDB link:</span> <a
+                                            href="{{ movie.imdb_link }}">{{ movie.imdb_link }}</a></li>
+                                    <li>
                                         {% endif %}
-                                        {% if movie.revenue == 0 %}
-                                            <li><span>Revenue:</span>N/A</li>
-                                        {% elif movie.budget < 1_000_000 %}
-                                            <li><span>Revenue:</span> {{ movie.revenue|intcomma }} $</li>
-                                        {% else %}
-                                            <li><span>Revenue:</span> {{ movie.revenue|intword }} $</li>
-                                        {% endif %}
-                                        <li><span>Roles:</span>{{ movie.roles }}</li>
-                                        <li><span>Production companies:</span>{{ movie.production_companies }}</li>
-                                        <li><span>IMDB link:</span> <a
-                                                href="{{ movie.imdb_link }}">{{ movie.imdb_link }}</a></li>
-                                        <li>
-                                    </ul>
+                                </ul>
 
-                                </div>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
-                <div class="col-12 col-xl-6">
-                    <div class="card__content">
+            </div>
+            <div class="col-12 col-xl-6">
+                <div class="card__content">
 
-                        <div class="card__description">
-                            <p>Description:</p>
-                            {{ movie.description }}
-                        </div>
+                    <div class="card__description">
+                        <p>Description:</p>
+                        {{ movie.description }}
                     </div>
-
                 </div>
 
             </div>
+
         </div>
-    </section>
+    </div>
+</section>
 {% endblock %}
 
 {% block footer %}
-    {% include 'nav&footer/footer.html' %}
+{% include 'nav&footer/footer.html' %}
 {% endblock %}
