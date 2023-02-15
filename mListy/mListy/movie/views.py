@@ -36,7 +36,6 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
 class SearchMovieView(LoginRequiredMixin, ListView):
     template_name = 'movie/search_movie.html'
     IMG_PATH = 'https://image.tmdb.org/t/p/w500/'
-    IMG_NOT_FOUND = 'https://res.cloudinary.com/dpdcgsg6l/image/upload/v1670422356/image-not-available_bu5h9z.png'
 
     def get(self, request, *args, **kwargs):
         keyword = request.GET.get('search', '')
@@ -54,10 +53,12 @@ class SearchMovieView(LoginRequiredMixin, ListView):
         movies = []
 
         for item in response['results']:
+            if not item['release_date'] or not item['poster_path']:
+                continue
             item_result = {
                 'title': item['title'],
                 'vote_average': item['vote_average'],
-                'image': self.IMG_PATH + item['poster_path'] if item['poster_path'] else self.IMG_NOT_FOUND,
+                'image': self.IMG_PATH + item['poster_path'],
                 'slug': slugify(str(item['id']) + '-' + item['title'])
             }
 
