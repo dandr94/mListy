@@ -3,13 +3,13 @@ from typing import List, Tuple
 import requests
 import tmdbsimple as tmdb
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.text import slugify
 
 from mListy.movie.models import MovieDB
 from mListy.settings import YOUTUBE_SEARCH_API_KEY
 
 TMDB_IMG_PATH = 'https://image.tmdb.org/t/p/w500/'
 IMDB_PATH = 'https://www.imdb.com/title/'
-IMG_NOT_FOUND = 'https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png'
 NOT_AVAILABLE = 'N/A'
 YOUTUBE_SEARCH_PATH = 'https://www.googleapis.com/youtube/v3/search'
 YOUTUBE_BASIC_PATH = 'https://www.youtube.com/watch?v='
@@ -17,6 +17,18 @@ YOUTUBE_ADDITIONAL_QUERY_SEARCH_WORD = 'trailer hd'
 YOUTUBE_MAX_RESULT_PAGES = 1
 YOUTUBE_SEARCH_TYPE = 'video'
 YOUTUBE_API_KEY = YOUTUBE_SEARCH_API_KEY
+
+
+class SimilarMovie:
+    def __init__(self, movie_id, title, poster, vote_average):
+        self.movie_id = movie_id
+        self.title = title
+        self.poster = TMDB_IMG_PATH + poster
+        self.vote_average = vote_average
+        self.slug = slugify(str(self.movie_id) + '-' + self.title)
+
+    def __str__(self):
+        return self.title
 
 
 def check_if_in_db(movie_id: int) -> bool:
@@ -28,14 +40,14 @@ def check_if_in_db(movie_id: int) -> bool:
     return False
 
 
-def add_movie_to_db(movie_id: int) -> None:
+def add_movie_to_db(movie_id: str) -> None:
     movie = tmdb.Movies(movie_id)
     info = movie.info()
 
     data = {
-        'movie_id': movie_id,
+        'movie_id': int(movie_id),
         'name': info['title'],
-        'poster': TMDB_IMG_PATH + info['poster_path'] if info['poster_path'] else IMG_NOT_FOUND,
+        'poster': TMDB_IMG_PATH + info['poster_path'],
         'description': info['overview'] if info['overview'] else NOT_AVAILABLE,
         'duration': info['runtime'] if info['runtime'] else 0,
         'genres': ", ".join([g['name'] for g in info['genres']]) if info['genres'] else NOT_AVAILABLE,
@@ -81,3 +93,15 @@ def return_youtube_trailer(movie_name: str, release_date: str) -> str:
     except KeyError:
         return ''
 
+
+def return_similar_movies(movie_id: str):
+    movie = tmdb.Movies(movie_id)
+    recommendations = movie.recommendations(page=1)
+
+    result = []
+
+    for movie in recommendations['results'][0:18]:
+        if not movie['poster_path'] or movie['vote_average'] < 1:
+            continue
+        result.append(SimilarMovie(movie['id'], movie['original_title'], movie['poster_path'], movie['vote_average']))
+    return result
