@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import render
 from django.utils.text import slugify
 from django.views.generic import DetailView, ListView
-from mListy.movie.helpers import check_if_in_db, add_movie_to_db, return_youtube_trailer
+from mListy.movie.helpers import check_if_in_db, add_movie_to_db, return_youtube_trailer, return_similar_movies
 from mListy.movie.models import MovieDB
 import tmdbsimple as tmdb
 
@@ -30,6 +30,9 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['youtube_trailer'] = return_youtube_trailer(context['movie'].name,
                                                             str(context['movie'].release_date.year))
+
+        # TODO: Find why Avengers:Endgame gives error
+        context['similar_movies'] = return_similar_movies(context['movie'].movie_id)
         return context
 
 
