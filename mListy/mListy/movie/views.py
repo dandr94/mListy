@@ -6,6 +6,7 @@ from django.views.generic import DetailView, ListView
 from mListy.movie.helpers import check_if_in_db, add_movie_to_db, return_youtube_trailer, return_similar_movies
 from mListy.movie.models import MovieDB
 import tmdbsimple as tmdb
+from helpers import TMDB_IMG_PATH
 
 
 class MovieDetailsView(LoginRequiredMixin, DetailView):
@@ -38,7 +39,6 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
 
 class SearchMovieView(LoginRequiredMixin, ListView):
     template_name = 'movie/search_movie.html'
-    IMG_PATH = 'https://image.tmdb.org/t/p/w500/'
 
     def get(self, request, *args, **kwargs):
         keyword = request.GET.get('search', '')
@@ -61,7 +61,7 @@ class SearchMovieView(LoginRequiredMixin, ListView):
             item_result = {
                 'title': item['title'],
                 'vote_average': item['vote_average'],
-                'image': self.IMG_PATH + item['poster_path'],
+                'image': TMDB_IMG_PATH + item['poster_path'],
                 'slug': slugify(str(item['id']) + '-' + item['title'])
             }
 
