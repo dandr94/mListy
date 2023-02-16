@@ -6,7 +6,7 @@ from django.views.generic import DetailView, ListView
 from mListy.movie.helpers import check_if_in_db, add_movie_to_db, return_youtube_trailer, return_similar_movies
 from mListy.movie.models import MovieDB
 import tmdbsimple as tmdb
-from helpers import TMDB_IMG_PATH
+from mListy.movie.helpers import TMDB_IMG_PATH
 
 
 class MovieDetailsView(LoginRequiredMixin, DetailView):
