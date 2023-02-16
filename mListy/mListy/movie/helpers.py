@@ -20,7 +20,7 @@ YOUTUBE_API_KEY = YOUTUBE_SEARCH_API_KEY
 
 
 class SimilarMovie:
-    def __init__(self, movie_id, title, poster, vote_average):
+    def __init__(self, movie_id: int, title: str, poster: str, vote_average: float):
         self.movie_id = movie_id
         self.title = title
         self.poster = TMDB_IMG_PATH + poster
@@ -94,7 +94,7 @@ def return_youtube_trailer(movie_name: str, release_date: str) -> str:
         return ''
 
 
-def return_similar_movies(movie_id: str):
+def return_similar_movies(movie_id: str) -> List[SimilarMovie]:
     movie = tmdb.Movies(movie_id)
     recommendations = movie.recommendations(page=1)
 
