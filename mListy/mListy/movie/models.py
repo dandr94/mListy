@@ -78,12 +78,12 @@ class MovieDB(models.Model):
         null=True,
     )
 
-    budget = models.IntegerField(
+    budget = models.BigIntegerField(
         blank=True,
         null=True,
     )
 
-    revenue = models.IntegerField(
+    revenue = models.BigIntegerField(
         blank=True,
         null=True
     )
