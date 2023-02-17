@@ -103,5 +103,5 @@ def return_similar_movies(movie_id: str) -> List[SimilarMovie]:
     for movie in recommendations['results'][0:18]:
         if not movie['poster_path'] or movie['vote_average'] < 1:
             continue
-        result.append(SimilarMovie(movie['id'], movie['original_title'], movie['poster_path'], movie['vote_average']))
+        result.append(SimilarMovie(movie['id'], movie['title'], movie['poster_path'], movie['vote_average']))
     return result
