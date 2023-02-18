@@ -6,8 +6,8 @@ from mListy.list.models import List
 from mListy.list_entry.models import ListEntry
 from mListy.list.tests.utils import VALID_LIST_DATA2
 from mListy.movie.models import MovieDB
-from mListy.movie.tests.utils import VALID_MOVIEDB_DATA_2
-from mListy.list_entry.tests.utils import VALID_LIST_ENTRY_DATA_2
+from mListy.movie.tests.utils import VALID_MOVIEDB_DATA_2, VALID_MOVIEDB_DATA_3
+from mListy.list_entry.tests.utils import VALID_LIST_ENTRY_DATA_2, VALID_LIST_ENTRY_DATA_3
 
 
 class ProfileDetailsViewTests(BaseAccountTestClass):
@@ -120,7 +120,32 @@ class ProfileDetailsViewTests(BaseAccountTestClass):
         user_list, _, _ = self.create_list_movie_and_entry(self.user)
 
         movie = MovieDB.objects.create(**VALID_MOVIEDB_DATA_2)
+        ListEntry.objects.create(**VALID_LIST_ENTRY_DATA_3, movie=movie, list=user_list)
+
+        response = self.get_response_for_profile(self.profile)
+
+        expected_value = 6
+
+        self.assertEqual(response.context_data['total_average_grade'], expected_value)
+
+    def test_profile_details_average_grade_with_three_entries_one_which_is_not_completed_status__expect_grade_to_be_6(self):
+        """
+        entry_1_grade = 4 - Completed
+        entry_2_grade = 8 - Dropped
+        entry_3_grade = 8 - Completed
+
+        Three entries which on of them with status Dropped, means what it should not be calculated in average_grade.
+
+        """
+
+        user_list, _, _ = self.create_list_movie_and_entry(self.user)
+
+        movie = MovieDB.objects.create(**VALID_MOVIEDB_DATA_2)
+        movie_2 = MovieDB.objects.create(**VALID_MOVIEDB_DATA_3)
+
         ListEntry.objects.create(**VALID_LIST_ENTRY_DATA_2, movie=movie, list=user_list)
+
+        ListEntry.objects.create(**VALID_LIST_ENTRY_DATA_3, movie=movie_2, list=user_list)
 
         response = self.get_response_for_profile(self.profile)
 
