@@ -27,13 +27,16 @@ class ProfileDetailsView(DetailView):
 
         entries = [x for i in context['user_lists'] for x in i.listentry_set.all()]
 
-        total_time_minutes = return_minutes(entries)
+        # Calculate stats only for completed movies
+        completed_entries = [x for x in entries if x.status == 'Completed']
+
+        total_time_minutes = return_minutes(completed_entries)
 
         stats = return_time_stats(total_time_minutes)
 
         context['total_movies'] = len(entries)
 
-        context['total_average_grade'] = return_total_average_grade(entries)
+        context['total_average_grade'] = return_total_average_grade(completed_entries)
 
         context['last_added'] = return_last_added_entries(entries)
 
