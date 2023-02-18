@@ -160,6 +160,7 @@
                                     <tr>
                                         <th>Title</th>
                                         <th>Grade</th>
+                                        <th>Status</th>
                                         <th>List</th>
                                     </tr>
                                     </thead>
@@ -173,6 +174,15 @@
                                             </td>
                                             <td>
                                                 <div class="main__table-text"><i class="fa-solid fa-star"></i>{{ m.grade }}</div>
+                                            </td>
+                                            <td>
+                                                {% if m.status == 'Completed' %}
+                                                    <div class="main__table-text main__table-text--green">{{ m.status }}</div>
+                                                {% elif m.status == 'Watching' %}
+                                                    <div class="main__table-text main__table-text--orange">{{ m.status }}</div>
+                                                {% else %}
+                                                    <div class="main__table-text main__table-text--red">{{ m.status }}</div>
+                                                {% endif %}
                                             </td>
                                             <td>
                                                 <div class="main__table-text main__table-text--rate"><a
