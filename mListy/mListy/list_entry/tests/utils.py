@@ -9,3 +9,9 @@ VALID_LIST_ENTRY_DATA_2 = {
     'would_recommend': 'No',
     'status': 'Dropped'
 }
+
+VALID_LIST_ENTRY_DATA_3 = {
+    'grade': 8,
+    'would_recommend': 'Yes',
+    'status': 'Completed'
+}
