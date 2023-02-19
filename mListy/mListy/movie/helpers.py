@@ -1,3 +1,4 @@
+import datetime, json
 from typing import List, Tuple
 
 import requests
@@ -19,7 +20,7 @@ YOUTUBE_SEARCH_TYPE = 'video'
 YOUTUBE_API_KEY = YOUTUBE_SEARCH_API_KEY
 
 
-class SimilarMovie:
+class MovieBlueprint:
     def __init__(self, movie_id: int, title: str, poster: str, vote_average: float):
         self.movie_id = movie_id
         self.title = title
@@ -94,14 +95,14 @@ def return_youtube_trailer(movie_name: str, release_date: str) -> str:
         return ''
 
 
-def return_similar_movies(movie_id: str) -> List[SimilarMovie]:
+def return_similar_movies(movie_id: str) -> List[MovieBlueprint]:
     movie = tmdb.Movies(movie_id)
     recommendations = movie.recommendations(page=1)
 
     result = []
 
-    for movie in recommendations['results'][0:18]:
-        if not movie['poster_path'] or movie['vote_average'] < 1:
+    for movie in recommendations['results']:
+        if not movie['poster_path'] or movie['vote_average'] < 1 or movie['adult'] or movie['popularity'] < 100:
             continue
-        result.append(SimilarMovie(movie['id'], movie['title'], movie['poster_path'], movie['vote_average']))
-    return result
+        result.append(MovieBlueprint(movie['id'], movie['title'], movie['poster_path'], movie['vote_average']))
+    return result[0:12]
