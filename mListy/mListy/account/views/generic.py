@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 
+from mListy.account.helpers import return_trending_movies
 from mListy.list.models import List
 
 
@@ -22,6 +23,13 @@ class Dashboard(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = List.objects.filter(user=self.request.user).order_by('date_created')
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['trending'] = return_trending_movies()
+
+        return context
 
 
 class About(TemplateView):
