@@ -5,7 +5,7 @@ from mListy.movie.tests.utils import VALID_MOVIEDB_DATA, VALID_MOVIEDB_DATA_2
 
 
 class DetailsListViewTests(BaseListTestClass):
-    TEMPLATE = 'list/details_list.html'
+    TEMPLATE = 'list/details/details_list.html'
 
     VALID_ENTRY_DATA = {
         'grade': 8,
