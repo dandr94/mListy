@@ -13,7 +13,7 @@ from mListy.account.helpers import return_last_added_entries, return_total_avera
 
 class ProfileDetailsView(DetailView):
     model = Profile
-    template_name = 'account/details_profile.html'
+    template_name = 'account/details/details_profile.html'
     context_object_name = 'profile'
 
     def get_context_data(self, **kwargs):
