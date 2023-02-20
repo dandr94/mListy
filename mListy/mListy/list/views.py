@@ -36,7 +36,7 @@ class DeleteListView(LoginRequiredMixin, PermissionHandlerMixin, DeleteView):
 
 class DetailsListView(ListView):
     model = List
-    template_name = 'list/details_list.html'
+    template_name = 'list/details/details_list.html'
     context_object_name = 'movie_list'
 
     def get_queryset(self):
@@ -53,6 +53,10 @@ class DetailsListView(ListView):
         context['is_owner'] = context['object_list'].user.id == self.request.user.id
 
         context['entries'] = sort_entries_by_grade_name(context['movie_list'].listentry_set.all())
+
+        # Total time here is not calculated only for Completed because maybe you can have a list
+        # that is only for planned movies, and you want to see how much time you will need to spend
+        # to watch them all. For that reason maybe change the text to something more clear.
 
         total_time_minutes = return_minutes(context['entries'])
 
