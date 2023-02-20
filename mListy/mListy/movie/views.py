@@ -11,7 +11,7 @@ from mListy.movie.helpers import TMDB_IMG_PATH
 
 class MovieDetailsView(LoginRequiredMixin, DetailView):
     model = MovieDB
-    template_name = 'movie/details_movie.html'
+    template_name = 'movie/details/details_movie.html'
     context_object_name = 'movie'
 
     def dispatch(self, request, *args, **kwargs):
@@ -22,6 +22,9 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
         except ValueError:
             raise Http404
 
+        # TODO: Check for change in Movie Details
+        # TODO: Example - You look at Movie that is Upcoming but after it releases the DB Info will be wrong
+
         if not exists:
             add_movie_to_db(movie_id)
 
@@ -31,14 +34,12 @@ class MovieDetailsView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['youtube_trailer'] = return_youtube_trailer(context['movie'].name,
                                                             str(context['movie'].release_date.year))
-
-        # TODO: Find why Avengers:Endgame gives error
         context['similar_movies'] = return_similar_movies(context['movie'].movie_id)
         return context
 
 
 class SearchMovieView(LoginRequiredMixin, ListView):
-    template_name = 'movie/search_movie.html'
+    template_name = 'movie/search/search_movie.html'
 
     def get(self, request, *args, **kwargs):
         keyword = request.GET.get('search', '')
