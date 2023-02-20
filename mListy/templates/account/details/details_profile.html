@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% block page_title %} {{ profile.slug }} {% endblock %}
+{% block nav_items %}
+    {% include 'nav&footer/nav_items.html' %}
+{% endblock %}
+{% block page_content %}
+    <div class="container">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
+                <div class="row row--grid">
+                    {% include 'account/details/stats.html' %}
+                    {% include 'account/details/socials.html' %}
+                    {% include 'account/details/last_added.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'nav&footer/footer.html' %}
+{% endblock %}

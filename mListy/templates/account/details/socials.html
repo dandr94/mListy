@@ -1,0 +1,104 @@
+<div class="col-12 col-xl-6">
+    <div class="dashbox">
+        <div class="dashbox__title">
+            <h3>Profile Info</h3>
+            <i class="fa-solid fa-hashtag"></i>
+        </div>
+        <div class="dashbox__table-wrap">
+            <table class="main__table main__table--dash">
+                <thead>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="main__table-text"><i class="fa-solid fa-user"></i>First Name:</div>
+                    </td>
+                    <td>
+                        {% if profile.first_name %}
+                        <div class="main__table-text">{{ profile.first_name }}</div>
+                        {% else %}
+                        <div class="main__table-text">N/A</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="main__table-text"><i class="fa-solid fa-user"></i>Last Name:</div>
+                    </td>
+                    <td>
+                        {% if profile.last_name %}
+                        <div class="main__table-text">{{ profile.last_name }}</div>
+                        {% else %}
+                        <div class="main__table-text">N/A</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="main__table-text "><i class="fa-sharp fa-solid fa-globe "></i>Website:
+                        </div>
+                    </td>
+                    <td>
+                        {% if profile.website %}
+                        <div class="main__table-text"><a
+                                href="{{ profile.website }}">{{ profile.website }}</a></div>
+                        {% else %}
+                        <div class="main__table-text">N/A</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="main__table-text"><i class="fa-brands fa-twitter"></i>Twitter:
+                        </div>
+                    </td>
+                    <td>
+                        {% if profile.twitter %}
+                        <div class="main__table-text"><a
+                                href="{{ profile.twitter }}">{{ profile.twitter }}</a></div>
+                        {% else %}
+                        <div class="main__table-text">N/A</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="main__table-text"><i class="fa-brands fa-instagram"></i>Instagram:
+                        </div>
+                    </td>
+                    <td>
+                        {% if profile.instagram %}
+                        <div class="main__table-text"><a
+                                href="{{ profile.instagram }}">{{ profile.instagram }}</a></div>
+                        {% else %}
+                        <div class="main__table-text">N/A</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="main__table-text"><i class="fa-brands fa-facebook"></i>Facebook:
+                        </div>
+                    </td>
+                    <td>
+                        {% if profile.facebook %}
+                        <div class="main__table-text"><a
+                                href="{{ profile.facebook }}">{{ profile.facebook }}</a></div>
+                        {% else %}
+                        <div class="main__table-text">N/A</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            {% if is_owner %}
+            <a href="{% url 'edit profile' profile.slug %}">
+                <button class="sign__btn" type="submit">Edit</button>
+            </a>
+            <a href="{% url 'change password' %}">
+                <button class="sign__btn" type="submit">Change password</button>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

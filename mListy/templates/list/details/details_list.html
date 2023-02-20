@@ -8,10 +8,10 @@
 
 {% block page_content %}
     {% if movie_list.listentry_set.all %}
-        {% include 'list/list_stats.html' %}
-        {% include 'list/list_entries.html' %}
+        {% include 'list/details/list_stats.html' %}
+        {% include 'list/details/list_entries.html' %}
     {% else %}
-        {% include 'list/list_empty.html' %}
+        {% include 'list/details/list_empty.html' %}
     {% endif %}
 {% endblock %}
 

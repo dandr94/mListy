@@ -1,0 +1,48 @@
+<div class="col-12 col-xl-6">
+    <div class="dashbox">
+        <div class="dashbox__title">
+            <h3>Last Added</h3>
+            <i class="fa-solid fa-calendar"></i>
+        </div>
+        <div class="dashbox__table-wrap">
+            <table class="main__table main__table--dash">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Grade</th>
+                    <th>Status</th>
+                    <th>List</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for m in last_added %}
+                <tr>
+                    <td>
+                        <div class="main__table-text"><a
+                                href="{% url 'details movie' m.slug %}">{{ m.movie.name|truncatewords:10 }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="main__table-text"><i class="fa-solid fa-star"></i>{{ m.grade }}</div>
+                    </td>
+                    <td>
+                        {% if m.status == 'Completed' %}
+                        <div class="main__table-text main__table-text--green">{{ m.status }}</div>
+                        {% elif m.status == 'Watching' %}
+                        <div class="main__table-text main__table-text--orange">{{ m.status }}</div>
+                        {% else %}
+                        <div class="main__table-text main__table-text--red">{{ m.status }}</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="main__table-text main__table-text--rate"><a
+                                href="{% url 'details list' m.list.slug %}">{{ m.list.title }}</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

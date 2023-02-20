@@ -1,0 +1,37 @@
+{% if similar_movies %}
+<section class="section section--border">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section__title-wrap">
+                    <h2 class="section__title">If you like {{movie.name }} maybe you will like:</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="catalog">
+        <div class="container">
+            <div class="row row--grid">
+                {% for movie in similar_movies %}
+                    <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                        <div class="card">
+                            <div class="card__cover">
+                                <img src="{{ movie.poster }}" alt="">
+                                <span class="card__rate card__rate--red">{{ movie.vote_average|floatformat:1 }}</span>
+                                <a href="{% url 'details movie' movie.slug %}" class="card__play">
+                                    <i class="fa-solid fa-play"></i>
+                                </a>
+                            </div>
+                            <div class="card__content">
+                                <h3 class="card__title"><a
+                                        href="{% url 'details movie' movie.slug %}">{{ movie.title }}</a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
