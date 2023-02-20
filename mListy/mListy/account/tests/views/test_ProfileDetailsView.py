@@ -12,7 +12,7 @@ from mListy.list_entry.tests.utils import VALID_LIST_ENTRY_DATA_2, VALID_LIST_EN
 
 class ProfileDetailsViewTests(BaseAccountTestClass):
     PATH = 'details profile'
-    TEMPLATE = 'account/details_profile.html'
+    TEMPLATE = 'account/details/details_profile.html'
 
     CONTEXT_KEY = 'profile'
 
