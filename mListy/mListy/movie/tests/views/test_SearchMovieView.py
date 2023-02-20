@@ -3,7 +3,7 @@ from mListy.movie.tests.BaseMovieTestClass import BaseMovieTestClass
 
 
 class SearchMovieViewTests(BaseMovieTestClass):
-    TEMPLATE = 'movie/search_movie.html'
+    TEMPLATE = 'movie/search/search_movie.html'
 
     PATH = 'search movie'
 

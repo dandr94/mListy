@@ -1,9 +1,8 @@
 from mListy.movie.tests.BaseMovieTestClass import BaseMovieTestClass
 from mListy.movie.tests.utils import VALID_MOVIEDB_DATA
 
-
 class MovieDetailsViewTests(BaseMovieTestClass):
-    DETAILS_MOVIE_TEMPLATE = 'movie/details_movie.html'
+    DETAILS_MOVIE_TEMPLATE = 'movie/details/details.html'
 
     PATH = 'details movie'
 
