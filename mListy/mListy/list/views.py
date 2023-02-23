@@ -52,6 +52,8 @@ class DetailsListView(ListView):
 
         context['is_owner'] = context['object_list'].user.id == self.request.user.id
 
+        context['user_lists'] = List.objects.filter(user=context['object_list'].user)
+
         context['entries'] = sort_entries_by_grade_name(context['movie_list'].listentry_set.all())
 
         # Total time here is not calculated only for Completed because maybe you can have a list
