@@ -27,6 +27,7 @@
                                 {{ field }}
 
                             {% endfor %}
+                            <input type="hidden" name="next" value="{{ next }}">
                             <button class="sign__btn" type="submit">Sign in</button>
                             <span class="sign__text">Don't have an account? <a
                                     href="{% url 'register' %}">Sign up!</a></span>
