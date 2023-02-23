@@ -7,6 +7,9 @@
 {% endblock %}
 
 {% block page_content %}
+    {% if is_owner %}
+        {% include 'list/details/sidebar.html' %}
+    {% endif %}
     {% if movie_list.listentry_set.all %}
         {% include 'list/details/list_stats.html' %}
         {% include 'list/details/list_entries.html' %}
