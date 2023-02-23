@@ -1,0 +1,14 @@
+{% load static %}
+<div class="fixed first" data-auto-close="15000">
+    <div class="handle">
+    </div>
+    <ul class="list-bar-items">
+        {% for list in user_lists %}
+        <li class="list-bar-item">
+            {{forloop.counter}}.
+            <a href="{% url 'details list' list.slug %}">{{list.title|truncatewords:10}}</a>
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>
