@@ -115,6 +115,16 @@ LOGOUT_REDIRECT_URL = 'index'
 
 LOGIN_URL = 'login'
 
+LOGIN_REDIRECT_URL = 'dashboard'
+
+# Email Configuration
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
 
 YOUTUBE_SEARCH_API_KEY = os.getenv('YOUTUBE_SEARCH_API_KEY')
