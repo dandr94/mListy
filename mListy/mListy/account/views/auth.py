@@ -1,10 +1,11 @@
 from django.contrib.auth import login
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, \
+    PasswordResetConfirmView, PasswordResetCompleteView
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from mListy.account.forms import CreateUserForm, LoginAccountForm
+from mListy.account.forms import CreateUserForm, LoginAccountForm, ResetPasswordForm, ResetPasswordConfirmForm
 
 
 class RegisterUserView(CreateView):
@@ -33,3 +34,21 @@ class LoginUserView(LoginView):
 
 class LogoutUserView(LogoutView):
     pass
+
+
+class ResetPasswordView(PasswordResetView):
+    template_name = 'account/password_reset/reset_password.html'
+    form_class = ResetPasswordForm
+
+
+class ResetPasswordDoneView(PasswordResetDoneView):
+    template_name = 'account/password_reset/password_reset_done.html'
+
+
+class ResetPasswordConfirmView(PasswordResetConfirmView):
+    template_name = 'account/password_reset/password_reset_confirm.html'
+    form_class = ResetPasswordConfirmForm
+
+
+class ResetPasswordCompleteView(PasswordResetCompleteView):
+    template_name = 'account/password_reset/password_reset_complete.html'
