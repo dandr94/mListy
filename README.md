@@ -1,10 +1,10 @@
 # mListy
 
-Deployed at: www.mlisty.com
+Deployed at: www.mlisty.info
 
 ## Summary
 mListy is Django based website that allows you to create customs Lists and add Movies to them.
-Visit [About](www.mlisty.com/about/) for more information.
+Visit [About](www.mlisty.info/about/) for more information.
 
 ## Features
 
@@ -19,7 +19,7 @@ Visit [About](www.mlisty.com/about/) for more information.
 - Languages: Python, JS
 - Framework: [Django](https://www.djangoproject.com/)
 - Database: [Supabase](https://www.supabase.com/)
-- Hosting: [Railway](https://www.railway.app/)
+- Hosting: [Railway](https://www.railway.com/)
 - Icons: [FontAwesome](https://fontawesome.com/)
 
 ## More information
