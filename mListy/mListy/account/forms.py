@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, PasswordResetForm, \
-    SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, SetPasswordForm, \
+    PasswordResetForm
 from django.core.exceptions import ValidationError
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 from mListy.account.models import Profile
 from mListy.movie.mixins import CssStyleFormMixin
@@ -11,7 +13,11 @@ UserModel = get_user_model()
 
 
 class CreateUserForm(UserCreationForm, CssStyleFormMixin):
-    FIELD_NAME_HELP_TEXT_TO_IGNORE = ['username', 'email', 'password1', 'password2']
+    FIELD_NAME_HELP_TEXT_TO_IGNORE = ['username', 'email', 'password1', 'password2', 'captcha']
+
+    captcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox()
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -32,10 +38,12 @@ class CreateUserForm(UserCreationForm, CssStyleFormMixin):
 
     class Meta:
         model = UserModel
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2', 'captcha']
 
 
 class LoginAccountForm(AuthenticationForm, CssStyleFormMixin):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_css_style_form_controls()

@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     'mListy.list',
     'mListy.list_entry',
     'mListy.movie',
+
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,6 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
 
 YOUTUBE_SEARCH_API_KEY = os.getenv('YOUTUBE_SEARCH_API_KEY')
+
+RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
