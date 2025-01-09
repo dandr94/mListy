@@ -1,57 +1,60 @@
 {% extends 'base/base.html' %}
 {% block page_content %}
-    <header class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="header__content">
-                        <a href="{% url 'index' %}" class="header__logo">
-                            <span class="logo-first">m</span><span class="logo-second">Listy</span><i
-                                class="fa-solid fa-film logo-icon"></i>
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header__content">
+                    <a href="{% url 'index' %}" class="header__logo">
+                        <span class="logo-first">m</span><span class="logo-second">Listy</span><i
+                            class="fa-solid fa-film logo-icon"></i>
+                    </a>
+
+                    <ul class="header__nav">
+                        {% if not request.user.is_authenticated %}
+                        <a href="{% url 'login' %}" class="header__sign-in">
+                            <i class="icon ion-ios-log-in"></i>
+                            <span>Sign In</span>
                         </a>
+                        {% else %}
+                        <li class="header__nav-item">
+                            <a href="{% url 'create list' %}" class="header__nav-link">Create List</a>
+                        </li>
+                        <li class="header__nav-item">
+                            <a href="{% url 'search movie' %}" class="header__nav-link">Search</a>
+                        </li>
+                        <li class="header__nav-item">
+                            <a href="{% url 'details profile' user.profile.slug %}"
+                               class="header__nav-link">Profile</a>
+                        </li>
+                    </ul>
+                    <div class="header__auth">
+                        <form method="GET" action="{% url 'search movie' %}" class="header__search">
+                            <input class="header__search-input" type="text" name='search'
+                                   placeholder="Search...">
+                            <button class="header__search-button" type="button">
+                                <i class="icon ion-ios-search"></i>
+                            </button>
+                            <button class="header__search-close" type="button">
+                                <i class="icon ion-md-close"></i>
+                            </button>
+                        </form>
 
-                        <ul class="header__nav">
-                            {% if not request.user.is_authenticated %}
-                                <a href="{% url 'login' %}" class="header__sign-in">
-                                    <i class="icon ion-ios-log-in"></i>
-                                    <span>Sign In</span>
-                                </a>
-                            {% else %}
-                                <li class="header__nav-item">
-                                    <a href="{% url 'create list' %}" class="header__nav-link">Create List</a>
-                                </li>
-                                <li class="header__nav-item">
-                                    <a href="{% url 'search movie' %}" class="header__nav-link">Search</a>
-                                </li>
-                                <li class="header__nav-item">
-                                    <a href="{% url 'details profile' user.profile.slug %}"
-                                       class="header__nav-link">Profile</a>
-                                </li>
-                                </ul>
-                                <div class="header__auth">
-                                <form method="GET" action="{% url 'search movie' %}" class="header__search">
-                                    <input class="header__search-input" type="text" name='search'
-                                           placeholder="Search...">
-                                    <button class="header__search-button" type="button">
-                                        <i class="icon ion-ios-search"></i>
-                                    </button>
-                                    <button class="header__search-close" type="button">
-                                        <i class="icon ion-md-close"></i>
-                                    </button>
-                                </form>
-
-                                <button class="header__search-btn" type="button">
-                                    <i class="icon ion-ios-search"></i>
-                                </button>
-                                <a href="{% url 'logout' %}" class="header__sign-in">
-                                    <i class="icon ion-ios-log-in"></i>
-                                    <span>Sign out</span>
-                                </a>
-                            {% endif %}
-                            </div>
+                        <button class="header__search-btn" type="button">
+                            <i class="icon ion-ios-search"></i>
+                        </button>
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="header__sign-in">
+                                <i class="icon ion-ios-log-in"></i>
+                                <span>Sign out</span>
+                            </button>
+                        </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 {% endblock %}
